@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Rust Alert Clone</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body class="bg-gray-900 text-white font-sans">
+  <header class="p-4 bg-gray-800 shadow-md">
+    <h1 class="text-3xl font-bold text-orange-400">Rust Server Alerts</h1>
+    <p class="text-sm text-gray-400">Datos actualizados automáticamente (ficticios)</p>
+  </header>
+
+  <main class="p-6 grid gap-6 md:grid-cols-2">
+    <section class="bg-gray-800 p-4 rounded-xl shadow-xl">
+      <h2 class="text-xl font-semibold text-orange-300 mb-2">🔔 Últimas alertas</h2>
+      <ul id="alerts" class="list-disc pl-5 space-y-1">
+        <!-- Datos se rellenan por JS -->
+      </ul>
+    </section>
+
+    <section class="bg-gray-800 p-4 rounded-xl shadow-xl">
+      <h2 class="text-xl font-semibold text-orange-300 mb-2">🖥️ Servidores activos</h2>
+      <table class="w-full text-sm">
+        <thead>
+          <tr class="text-gray-300 border-b border-gray-600">
+            <th class="text-left py-2">Nombre</th>
+            <th class="text-left">Jugadores</th>
+            <th class="text-left">Estado</th>
+          </tr>
+        </thead>
+        <tbody id="servers" class="text-white">
+          <!-- Datos se rellenan por JS -->
+        </tbody>
+      </table>
+    </section>
+  </main>
+
+  <script>
+    const alerts = [
+      "Wipe completado hace 2 horas",
+      "Reinicio programado a las 03:00",
+      "Evento PvP en zona norte activo",
+    ];
+
+    const servers = [
+      { name: "RustLand [EU]", players: "125/200", status: "🟢 Online" },
+      { name: "Desert PvP [US]", players: "64/150", status: "🟢 Online" },
+      { name: "Vanilla Solo/Duo", players: "Offline", status: "🔴 Offline" },
+    ];
+
+    const alertList = document.getElementById("alerts");
+    alerts.forEach(alert => {
+      const li = document.createElement("li");
+      li.textContent = alert;
+      alertList.appendChild(li);
+    });
+
+    const serverTable = document.getElementById("servers");
+    servers.forEach(server => {
+      const row = document.createElement("tr");
+      row.innerHTML = `
+        <td class="py-1">${server.name}</td>
+        <td>${server.players}</td>
+        <td>${server.status}</td>
+      `;
+      serverTable.appendChild(row);
+    });
+  </script>
+</body>
+</html>
