@@ -3,39 +3,44 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GitHub Alert - Sistema de Alertas de Seguridad</title>
+    <title>GitAlert - Monitorea vulnerabilidades en GitHub gratis</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
         :root {
-            --primary: #2c3e50;
-            --secondary: #3498db;
-            --danger: #e74c3c;
-            --warning: #f39c12;
-            --success: #27ae60;
-            --dark: #1a2530;
-            --light: #f8f9fa;
-            --gray: #eef2f7;
+            --primary: #2563eb;
+            --primary-dark: #1d4ed8;
+            --secondary: #0f172a;
+            --light: #f8fafc;
+            --gray: #94a3b8;
+            --danger: #ef4444;
+            --warning: #f59e0b;
+            --success: #10b981;
         }
         
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: 'Poppins', sans-serif;
         }
         
         body {
-            background-color: var(--gray);
-            color: #333;
+            background-color: #ffffff;
+            color: #334155;
             line-height: 1.6;
         }
         
-        /* Header Styles */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+        
+        /* Header */
         header {
-            background: linear-gradient(135deg, var(--primary), var(--dark));
-            color: white;
-            padding: 1rem 0;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            background-color: white;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
             position: sticky;
             top: 0;
             z-index: 100;
@@ -45,370 +50,513 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 2rem;
+            padding: 1.5rem 0;
         }
         
         .logo {
             display: flex;
             align-items: center;
-            gap: 10px;
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--secondary);
+            text-decoration: none;
         }
         
         .logo i {
-            font-size: 2rem;
-            color: var(--secondary);
+            color: var(--primary);
+            margin-right: 10px;
         }
         
-        .logo h1 {
-            font-size: 1.8rem;
-            font-weight: 700;
-        }
-        
-        .logo span {
-            color: var(--secondary);
-        }
-        
-        nav ul {
+        .nav-links {
             display: flex;
             list-style: none;
-            gap: 2rem;
         }
         
-        nav a {
-            color: white;
+        .nav-links li {
+            margin-left: 2rem;
+        }
+        
+        .nav-links a {
             text-decoration: none;
+            color: var(--secondary);
             font-weight: 500;
             transition: color 0.3s;
-            font-size: 1.1rem;
         }
         
-        nav a:hover {
-            color: var(--secondary);
-        }
-        
-        .actions {
-            display: flex;
-            gap: 1rem;
+        .nav-links a:hover {
+            color: var(--primary);
         }
         
         .btn {
-            padding: 0.6rem 1.5rem;
-            border-radius: 30px;
-            border: none;
-            font-weight: 600;
+            display: inline-block;
+            padding: 0.7rem 1.5rem;
+            border-radius: 6px;
+            font-weight: 500;
             cursor: pointer;
             transition: all 0.3s;
-            font-size: 1rem;
-        }
-        
-        .btn-primary {
-            background-color: var(--secondary);
-            color: white;
+            text-decoration: none;
+            text-align: center;
+            border: none;
         }
         
         .btn-outline {
+            border: 1px solid var(--primary);
+            color: var(--primary);
             background: transparent;
-            border: 2px solid var(--secondary);
-            color: var(--secondary);
         }
         
-        .btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        .btn-outline:hover {
+            background: var(--primary);
+            color: white;
+        }
+        
+        .btn-primary {
+            background: var(--primary);
+            color: white;
+            border: 1px solid var(--primary);
+        }
+        
+        .btn-primary:hover {
+            background: var(--primary-dark);
+            border-color: var(--primary-dark);
         }
         
         /* Hero Section */
         .hero {
-            background: linear-gradient(rgba(44, 62, 80, 0.9), rgba(44, 62, 80, 0.9)), 
-                        url('https://images.unsplash.com/photo-1555066931-4365d14bab8c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80') center/cover;
-            color: white;
-            padding: 5rem 2rem;
-            text-align: center;
+            padding: 6rem 0;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: linear-gradient(135deg, #f0f9ff 0%, #e6f7ff 100%);
+            border-radius: 0 0 30px 30px;
         }
         
         .hero-content {
-            max-width: 800px;
-            margin: 0 auto;
+            flex: 1;
+            max-width: 600px;
         }
         
-        .hero h2 {
-            font-size: 3rem;
-            margin-bottom: 1rem;
+        .hero h1 {
+            font-size: 3.5rem;
             line-height: 1.2;
+            color: var(--secondary);
+            margin-bottom: 1.5rem;
         }
         
         .hero p {
             font-size: 1.2rem;
+            color: var(--gray);
             margin-bottom: 2rem;
-            opacity: 0.9;
         }
         
-        /* Alerts Section */
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 3rem 2rem;
+        .hero-btns {
+            display: flex;
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+        
+        .hero-image {
+            flex: 1;
+            text-align: center;
+            position: relative;
+        }
+        
+        .hero-image img {
+            max-width: 100%;
+            border-radius: 10px;
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+        
+        .highlight {
+            position: absolute;
+            background: white;
+            border-radius: 10px;
+            padding: 1rem;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+            z-index: 10;
+            display: flex;
+            align-items: center;
+        }
+        
+        .highlight-1 {
+            top: -20px;
+            left: -20px;
+            width: 250px;
+        }
+        
+        .highlight-2 {
+            bottom: -20px;
+            right: -20px;
+            width: 280px;
+        }
+        
+        .highlight-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: rgba(239, 68, 68, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 1rem;
+            color: var(--danger);
+        }
+        
+        /* Features */
+        .section {
+            padding: 5rem 0;
         }
         
         .section-title {
             text-align: center;
-            margin-bottom: 3rem;
+            margin-bottom: 4rem;
         }
         
         .section-title h2 {
             font-size: 2.5rem;
-            color: var(--primary);
-            position: relative;
-            display: inline-block;
-            padding-bottom: 10px;
-        }
-        
-        .section-title h2::after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 70px;
-            height: 4px;
-            background: var(--secondary);
-            border-radius: 2px;
-        }
-        
-        .filters {
-            display: flex;
-            justify-content: center;
-            gap: 1rem;
-            margin-bottom: 2rem;
-            flex-wrap: wrap;
-        }
-        
-        .filter-btn {
-            padding: 0.5rem 1.5rem;
-            border-radius: 30px;
-            background: white;
-            border: 2px solid var(--secondary);
-            color: var(--primary);
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s;
-        }
-        
-        .filter-btn.active, .filter-btn:hover {
-            background: var(--secondary);
-            color: white;
-        }
-        
-        .alerts-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
-            gap: 2rem;
-        }
-        
-        .alert-card {
-            background: white;
-            border-radius: 10px;
-            overflow: hidden;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
-            transition: transform 0.3s, box-shadow 0.3s;
-        }
-        
-        .alert-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 12px 20px rgba(0, 0, 0, 0.15);
-        }
-        
-        .alert-header {
-            padding: 1.2rem;
-            display: flex;
-            align-items: center;
-            border-bottom: 1px solid #eee;
-        }
-        
-        .alert-icon {
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-right: 15px;
-            font-size: 1.5rem;
-            color: white;
-        }
-        
-        .alert-icon.critical {
-            background: var(--danger);
-        }
-        
-        .alert-icon.high {
-            background: var(--warning);
-        }
-        
-        .alert-icon.medium {
-            background: var(--secondary);
-        }
-        
-        .alert-icon.low {
-            background: var(--success);
-        }
-        
-        .alert-title {
-            flex: 1;
-        }
-        
-        .alert-title h3 {
-            font-size: 1.3rem;
-            margin-bottom: 5px;
-        }
-        
-        .alert-title .severity {
-            font-weight: 600;
-            font-size: 0.9rem;
-            padding: 3px 10px;
-            border-radius: 20px;
-            display: inline-block;
-        }
-        
-        .severity.critical {
-            background: rgba(231, 76, 60, 0.15);
-            color: var(--danger);
-        }
-        
-        .severity.high {
-            background: rgba(243, 156, 18, 0.15);
-            color: var(--warning);
-        }
-        
-        .severity.medium {
-            background: rgba(52, 152, 219, 0.15);
             color: var(--secondary);
+            margin-bottom: 1rem;
         }
         
-        .severity.low {
-            background: rgba(39, 174, 96, 0.15);
-            color: var(--success);
-        }
-        
-        .alert-body {
-            padding: 1.5rem;
-        }
-        
-        .alert-body p {
-            color: #555;
-            margin-bottom: 1.5rem;
-        }
-        
-        .alert-meta {
-            display: flex;
-            justify-content: space-between;
-            color: #777;
-            font-size: 0.9rem;
-            border-top: 1px solid #eee;
-            padding-top: 1rem;
-        }
-        
-        /* Stats Section */
-        .stats {
-            background: var(--primary);
-            padding: 4rem 2rem;
-            color: white;
-        }
-        
-        .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 2rem;
-            max-width: 1200px;
+        .section-title p {
+            color: var(--gray);
+            max-width: 600px;
             margin: 0 auto;
         }
         
-        .stat-card {
-            text-align: center;
-            padding: 2rem;
-            background: rgba(255, 255, 255, 0.08);
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2.5rem;
+        }
+        
+        .feature-card {
+            background: white;
             border-radius: 10px;
-            transition: transform 0.3s;
+            padding: 2rem;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            transition: transform 0.3s, box-shadow 0.3s;
+            border-left: 4px solid var(--primary);
         }
         
-        .stat-card:hover {
+        .feature-card:hover {
             transform: translateY(-5px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
         }
         
-        .stat-card i {
-            font-size: 3rem;
+        .feature-icon {
+            width: 50px;
+            height: 50px;
+            background: rgba(37, 99, 235, 0.1);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1.5rem;
+            font-size: 1.5rem;
+            color: var(--primary);
+        }
+        
+        .feature-card h3 {
+            font-size: 1.5rem;
             margin-bottom: 1rem;
             color: var(--secondary);
         }
         
-        .stat-card .number {
-            font-size: 2.5rem;
+        .feature-card p {
+            color: var(--gray);
+        }
+        
+        /* Pricing */
+        .pricing {
+            background: var(--light);
+            padding: 5rem 0;
+        }
+        
+        .pricing-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+        
+        .pricing-card {
+            background: white;
+            border-radius: 15px;
+            padding: 3rem 2rem;
+            text-align: center;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            position: relative;
+            overflow: hidden;
+            transition: transform 0.3s;
+        }
+        
+        .pricing-card:hover {
+            transform: translateY(-10px);
+        }
+        
+        .free-badge {
+            position: absolute;
+            top: 20px;
+            right: -30px;
+            background: var(--success);
+            color: white;
+            padding: 0.3rem 2rem;
+            transform: rotate(45deg);
+            font-weight: 600;
+            font-size: 0.8rem;
+        }
+        
+        .pricing-card h3 {
+            font-size: 1.8rem;
+            margin-bottom: 1rem;
+            color: var(--secondary);
+        }
+        
+        .price {
+            font-size: 3rem;
             font-weight: 700;
+            margin-bottom: 1.5rem;
+            color: var(--primary);
+        }
+        
+        .price span {
+            font-size: 1rem;
+            color: var(--gray);
+        }
+        
+        .pricing-features {
+            list-style: none;
+            margin: 2rem 0;
+            text-align: left;
+        }
+        
+        .pricing-features li {
+            margin-bottom: 0.8rem;
+            display: flex;
+            align-items: center;
+        }
+        
+        .pricing-features li i {
+            color: var(--success);
+            margin-right: 10px;
+        }
+        
+        /* Alerts Demo */
+        .alerts-demo {
+            background: white;
+            padding: 5rem 0;
+        }
+        
+        .alert-container {
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .alert-header {
+            background: var(--secondary);
+            color: white;
+            padding: 1.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        
+        .alert-tabs {
+            display: flex;
+            background: #f1f5f9;
+            padding: 0.5rem;
+            border-radius: 8px;
+        }
+        
+        .alert-tab {
+            padding: 0.5rem 1.5rem;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .alert-tab.active {
+            background: white;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+        
+        .alert-content {
+            padding: 2rem;
+            max-height: 400px;
+            overflow-y: auto;
+        }
+        
+        .alert-item {
+            display: flex;
+            padding: 1.5rem 0;
+            border-bottom: 1px solid #e2e8f0;
+        }
+        
+        .alert-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 1rem;
+            flex-shrink: 0;
+        }
+        
+        .critical .alert-icon {
+            background: rgba(239, 68, 68, 0.1);
+            color: var(--danger);
+        }
+        
+        .high .alert-icon {
+            background: rgba(245, 158, 11, 0.1);
+            color: var(--warning);
+        }
+        
+        .medium .alert-icon {
+            background: rgba(37, 99, 235, 0.1);
+            color: var(--primary);
+        }
+        
+        .alert-details {
+            flex: 1;
+        }
+        
+        .alert-details h4 {
+            font-size: 1.1rem;
             margin-bottom: 0.5rem;
         }
         
-        .stat-card .label {
+        .alert-meta {
+            display: flex;
+            color: var(--gray);
+            font-size: 0.9rem;
+            margin-top: 0.5rem;
+        }
+        
+        .alert-meta span {
+            margin-right: 1rem;
+            display: flex;
+            align-items: center;
+        }
+        
+        .alert-meta i {
+            margin-right: 0.3rem;
+        }
+        
+        .severity {
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+        
+        .severity.critical {
+            background: rgba(239, 68, 68, 0.1);
+            color: var(--danger);
+        }
+        
+        .severity.high {
+            background: rgba(245, 158, 11, 0.1);
+            color: var(--warning);
+        }
+        
+        .severity.medium {
+            background: rgba(37, 99, 235, 0.1);
+            color: var(--primary);
+        }
+        
+        /* CTA Section */
+        .cta {
+            text-align: center;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            color: white;
+            padding: 5rem 0;
+            border-radius: 30px 30px 0 0;
+        }
+        
+        .cta h2 {
+            font-size: 2.5rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .cta p {
+            max-width: 600px;
+            margin: 0 auto 2rem;
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+        
+        .cta .btn {
+            background: white;
+            color: var(--primary);
+            font-weight: 600;
+            padding: 1rem 2.5rem;
             font-size: 1.1rem;
-            opacity: 0.8;
+        }
+        
+        .cta .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
         }
         
         /* Footer */
         footer {
-            background: var(--dark);
+            background: var(--secondary);
             color: white;
-            padding: 3rem 0 1rem;
+            padding: 4rem 0 2rem;
         }
         
-        .footer-content {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 2rem;
+        .footer-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
             gap: 3rem;
+            margin-bottom: 3rem;
         }
         
-        .footer-column h3 {
+        .footer-col h3 {
             font-size: 1.5rem;
             margin-bottom: 1.5rem;
             position: relative;
             padding-bottom: 10px;
         }
         
-        .footer-column h3::after {
+        .footer-col h3::after {
             content: '';
             position: absolute;
             bottom: 0;
             left: 0;
-            width: 50px;
+            width: 40px;
             height: 3px;
-            background: var(--secondary);
+            background: var(--primary);
         }
         
-        .footer-column ul {
+        .footer-col ul {
             list-style: none;
         }
         
-        .footer-column ul li {
+        .footer-col ul li {
             margin-bottom: 0.8rem;
         }
         
-        .footer-column a {
-            color: #bbb;
+        .footer-col ul li a {
+            color: var(--gray);
             text-decoration: none;
             transition: color 0.3s;
         }
         
-        .footer-column a:hover {
-            color: var(--secondary);
+        .footer-col ul li a:hover {
+            color: white;
         }
         
         .social-links {
             display: flex;
             gap: 1rem;
-            margin-top: 1.5rem;
+            margin-top: 1rem;
         }
         
         .social-links a {
@@ -420,44 +568,77 @@
             border-radius: 50%;
             background: rgba(255, 255, 255, 0.1);
             color: white;
-            transition: all 0.3s;
+            text-decoration: none;
+            transition: background 0.3s;
         }
         
         .social-links a:hover {
-            background: var(--secondary);
-            transform: translateY(-3px);
+            background: var(--primary);
         }
         
         .copyright {
             text-align: center;
-            padding: 2rem 0 0;
-            margin-top: 2rem;
+            padding-top: 2rem;
             border-top: 1px solid rgba(255, 255, 255, 0.1);
-            color: #aaa;
+            color: var(--gray);
             font-size: 0.9rem;
         }
         
         /* Responsive */
+        @media (max-width: 992px) {
+            .hero {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .hero-btns {
+                justify-content: center;
+            }
+            
+            .hero-content {
+                margin-bottom: 3rem;
+            }
+            
+            .highlight {
+                position: relative;
+                margin: 1rem auto;
+                left: 0;
+                right: 0;
+            }
+            
+            .highlight-1, .highlight-2 {
+                position: relative;
+                top: 0;
+                bottom: 0;
+                left: 0;
+                right: 0;
+                margin: 1rem auto;
+                width: 100%;
+            }
+        }
+        
         @media (max-width: 768px) {
             .navbar {
                 flex-direction: column;
-                gap: 1.5rem;
             }
             
-            nav ul {
+            .nav-links {
+                margin: 1.5rem 0;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+            
+            .nav-links li {
+                margin: 0.5rem 1rem;
+            }
+            
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+            
+            .hero-btns {
+                flex-direction: column;
                 gap: 1rem;
-            }
-            
-            .hero h2 {
-                font-size: 2.2rem;
-            }
-            
-            .section-title h2 {
-                font-size: 2rem;
-            }
-            
-            .alerts-grid {
-                grid-template-columns: 1fr;
             }
         }
     </style>
@@ -465,277 +646,325 @@
 <body>
     <!-- Header -->
     <header>
-        <div class="navbar">
-            <div class="logo">
-                <i class="fas fa-shield-alt"></i>
-                <h1>GitHub<span>Alert</span></h1>
-            </div>
-            <nav>
-                <ul>
-                    <li><a href="#"><i class="fas fa-home"></i> Inicio</a></li>
-                    <li><a href="#alerts"><i class="fas fa-bell"></i> Alertas</a></li>
-                    <li><a href="#"><i class="fas fa-chart-bar"></i> Estadísticas</a></li>
-                    <li><a href="#"><i class="fas fa-question-circle"></i> Soporte</a></li>
+        <div class="container">
+            <div class="navbar">
+                <a href="#" class="logo">
+                    <i class="fas fa-shield-alt"></i>
+                    GitAlert
+                </a>
+                <ul class="nav-links">
+                    <li><a href="#">Inicio</a></li>
+                    <li><a href="#features">Características</a></li>
+                    <li><a href="#pricing">Precios</a></li>
+                    <li><a href="#demo">Demo</a></li>
+                    <li><a href="#">Documentación</a></li>
                 </ul>
-            </nav>
-            <div class="actions">
-                <button class="btn btn-outline"><i class="fas fa-sign-in-alt"></i> Iniciar Sesión</button>
-                <button class="btn btn-primary"><i class="fas fa-user-plus"></i> Registrarse</button>
+                <div class="buttons">
+                    <a href="#" class="btn btn-outline">Iniciar Sesión</a>
+                    <a href="#" class="btn btn-primary">Registrarse</a>
+                </div>
             </div>
         </div>
     </header>
 
     <!-- Hero Section -->
     <section class="hero">
-        <div class="hero-content">
-            <h2>Monitoreo de Seguridad en Tiempo Real</h2>
-            <p>GitHub Alert te mantiene informado sobre vulnerabilidades críticas, amenazas de seguridad y actualizaciones esenciales para proteger tus proyectos y repositorios.</p>
-            <div class="actions">
-                <button class="btn btn-primary"><i class="fas fa-bell"></i> Ver Alertas</button>
-                <button class="btn btn-outline"><i class="fas fa-book"></i> Documentación</button>
-            </div>
-        </div>
-    </section>
-
-    <!-- Alerts Section -->
-    <section id="alerts" class="container">
-        <div class="section-title">
-            <h2>Alertas Recientes</h2>
-            <p>Vulnerabilidades críticas detectadas en los últimos días</p>
-        </div>
-        
-        <div class="filters">
-            <button class="filter-btn active">Todas</button>
-            <button class="filter-btn">Críticas</button>
-            <button class="filter-btn">Altas</button>
-            <button class="filter-btn">Medias</button>
-            <button class="filter-btn">Bajas</button>
-        </div>
-        
-        <div class="alerts-grid">
-            <!-- Critical Alert -->
-            <div class="alert-card">
-                <div class="alert-header">
-                    <div class="alert-icon critical">
-                        <i class="fas fa-radiation"></i>
-                    </div>
-                    <div class="alert-title">
-                        <h3>Vulnerabilidad RCE en Log4j</h3>
-                        <span class="severity critical">Crítica</span>
-                    </div>
-                </div>
-                <div class="alert-body">
-                    <p>Se ha detectado una vulnerabilidad crítica de ejecución remota de código (RCE) en la biblioteca Log4j que afecta a múltiples versiones. Esta vulnerabilidad permite a los atacantes ejecutar código malicioso en sistemas vulnerables.</p>
-                    <div class="alert-meta">
-                        <span><i class="fas fa-calendar"></i> 26 Jun 2025</span>
-                        <span><i class="fas fa-tag"></i> Java, Logging</span>
-                    </div>
+        <div class="container">
+            <div class="hero-content">
+                <h1>Monitorea vulnerabilidades en GitHub gratis</h1>
+                <p>GitAlert escanea tus repositorios de GitHub en busca de dependencias vulnerables y te envía alertas en tiempo real para que puedas solucionarlas antes de que sea demasiado tarde.</p>
+                <div class="hero-btns">
+                    <a href="#" class="btn btn-primary">Registrarse con GitHub <i class="fab fa-github"></i></a>
+                    <a href="#" class="btn btn-outline">Ver Demo</a>
                 </div>
             </div>
-            
-            <!-- High Alert -->
-            <div class="alert-card">
-                <div class="alert-header">
-                    <div class="alert-icon high">
+            <div class="hero-image">
+                <div class="highlight highlight-1">
+                    <div class="highlight-icon">
                         <i class="fas fa-exclamation-triangle"></i>
                     </div>
-                    <div class="alert-title">
-                        <h3>XSS en React 18.1.0</h3>
-                        <span class="severity high">Alta</span>
+                    <div>
+                        <strong>12 vulnerabilidades</strong> detectadas en tus repos
                     </div>
                 </div>
-                <div class="alert-body">
-                    <p>Se ha identificado una vulnerabilidad de Cross-Site Scripting (XSS) en la versión 18.1.0 de React que podría permitir a los atacantes inyectar scripts maliciosos a través de props no validados.</p>
-                    <div class="alert-meta">
-                        <span><i class="fas fa-calendar"></i> 24 Jun 2025</span>
-                        <span><i class="fas fa-tag"></i> React, JavaScript</span>
+                <img src="https://images.unsplash.com/photo-1555066931-4365d14bab8c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80" alt="GitAlert Dashboard">
+                <div class="highlight highlight-2">
+                    <div class="highlight-icon" style="background: rgba(16, 185, 129, 0.1); color: var(--success);">
+                        <i class="fas fa-check-circle"></i>
                     </div>
-                </div>
-            </div>
-            
-            <!-- Medium Alert -->
-            <div class="alert-card">
-                <div class="alert-header">
-                    <div class="alert-icon medium">
-                        <i class="fas fa-shield-alt"></i>
-                    </div>
-                    <div class="alert-title">
-                        <h3>Vulnerabilidad en OAuth 2.0</h3>
-                        <span class="severity medium">Media</span>
-                    </div>
-                </div>
-                <div class="alert-body">
-                    <p>Se ha descubierto una vulnerabilidad en la implementación de OAuth 2.0 que podría permitir el robo de tokens de acceso en ciertas configuraciones. Se recomienda actualizar a la última versión del middleware.</p>
-                    <div class="alert-meta">
-                        <span><i class="fas fa-calendar"></i> 22 Jun 2025</span>
-                        <span><i class="fas fa-tag"></i> Autenticación, Seguridad</span>
-                    </div>
-                </div>
-            </div>
-            
-            <!-- Low Alert -->
-            <div class="alert-card">
-                <div class="alert-header">
-                    <div class="alert-icon low">
-                        <i class="fas fa-info-circle"></i>
-                    </div>
-                    <div class="alert-title">
-                        <h3>Actualización de dependencias en Spring Boot</h3>
-                        <span class="severity low">Baja</span>
-                    </div>
-                </div>
-                <div class="alert-body">
-                    <p>Se recomienda actualizar a Spring Boot 3.1.2 para resolver varias vulnerabilidades menores y problemas de compatibilidad. Esta actualización no es crítica pero mejora la estabilidad general.</p>
-                    <div class="alert-meta">
-                        <span><i class="fas fa-calendar"></i> 20 Jun 2025</span>
-                        <span><i class="fas fa-tag"></i> Spring, Java</span>
-                    </div>
-                </div>
-            </div>
-            
-            <!-- Critical Alert 2 -->
-            <div class="alert-card">
-                <div class="alert-header">
-                    <div class="alert-icon critical">
-                        <i class="fas fa-radiation"></i>
-                    </div>
-                    <div class="alert-title">
-                        <h3>Desbordamiento de búfer en OpenSSL</h3>
-                        <span class="severity critical">Crítica</span>
-                    </div>
-                </div>
-                <div class="alert-body">
-                    <p>Se ha identificado un desbordamiento de búfer crítico en OpenSSL 3.0.4 que podría permitir la ejecución remota de código o denegación de servicio. Se recomienda actualizar inmediatamente a la versión 3.0.7.</p>
-                    <div class="alert-meta">
-                        <span><i class="fas fa-calendar"></i> 18 Jun 2025</span>
-                        <span><i class="fas fa-tag"></i> SSL, Criptografía</span>
-                    </div>
-                </div>
-            </div>
-            
-            <!-- High Alert 2 -->
-            <div class="alert-card">
-                <div class="alert-header">
-                    <div class="alert-icon high">
-                        <i class="fas fa-exclamation-triangle"></i>
-                    </div>
-                    <div class="alert-title">
-                        <h3>Vulnerabilidad de inyección SQL en Django</h3>
-                        <span class="severity high">Alta</span>
-                    </div>
-                </div>
-                <div class="alert-body">
-                    <p>Se ha descubierto una vulnerabilidad de inyección SQL en el ORM de Django que afecta a consultas complejas con parámetros no validados. La versión 4.2.3 soluciona este problema.</p>
-                    <div class="alert-meta">
-                        <span><i class="fas fa-calendar"></i> 16 Jun 2025</span>
-                        <span><i class="fas fa-tag"></i> Django, Python, SQL</span>
+                    <div>
+                        <strong>98% de repositorios</strong> protegidos
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Stats Section -->
-    <section class="stats">
-        <div class="stats-grid">
-            <div class="stat-card">
-                <i class="fas fa-bug"></i>
-                <div class="number">1,248</div>
-                <div class="label">Vulnerabilidades Detectadas</div>
+    <!-- Features -->
+    <section id="features" class="section">
+        <div class="container">
+            <div class="section-title">
+                <h2>Protege tu código con GitAlert</h2>
+                <p>Mantén tus proyectos seguros con nuestro servicio gratuito de monitoreo</p>
             </div>
-            <div class="stat-card">
-                <i class="fas fa-shield-alt"></i>
-                <div class="number">98.7%</div>
-                <div class="label">Proyectos Protegidos</div>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-bell"></i>
+                    </div>
+                    <h3>Alertas en tiempo real</h3>
+                    <p>Recibe notificaciones inmediatas cuando se detecten vulnerabilidades en tus dependencias.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-sync-alt"></i>
+                    </div>
+                    <h3>Escaneo continuo</h3>
+                    <p>Monitorea tus repositorios automáticamente con cada actualización o push.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-lock"></i>
+                    </div>
+                    <h3>Seguridad garantizada</h3>
+                    <p>Utilizamos las últimas bases de datos de vulnerabilidades para protegerte.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-envelope"></i>
+                    </div>
+                    <h3>Notificaciones por correo</h3>
+                    <p>Recibe alertas directamente en tu bandeja de entrada o mediante webhooks.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-code-branch"></i>
+                    </div>
+                    <h3>Soporte para múltiples lenguajes</h3>
+                    <p>JavaScript, Python, Java, Ruby, Go, Rust y más. Cubrimos todos tus proyectos.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-dollar-sign"></i>
+                    </div>
+                    <h3>Completamente gratis</h3>
+                    <p>Sin costos ocultos, sin límites en repositorios públicos. Protección total sin pagar.</p>
+                </div>
             </div>
-            <div class="stat-card">
-                <i class="fas fa-bell"></i>
-                <div class="number">24/7</div>
-                <div class="label">Monitoreo Continuo</div>
+        </div>
+    </section>
+
+    <!-- Pricing -->
+    <section id="pricing" class="pricing">
+        <div class="container">
+            <div class="section-title">
+                <h2>Nuestros Planes</h2>
+                <p>Todos los planes incluyen características avanzadas sin costo</p>
             </div>
-            <div class="stat-card">
-                <i class="fas fa-users"></i>
-                <div class="number">15,892</div>
-                <div class="label">Desarrolladores Protegidos</div>
+            <div class="pricing-grid">
+                <div class="pricing-card">
+                    <div class="free-badge">GRATIS</div>
+                    <h3>Plan Básico</h3>
+                    <div class="price">$0 <span>/para siempre</span></div>
+                    <p>Perfecto para proyectos personales y open source</p>
+                    <ul class="pricing-features">
+                        <li><i class="fas fa-check"></i> Monitoreo ilimitado de repos públicos</li>
+                        <li><i class="fas fa-check"></i> Alertas en tiempo real</li>
+                        <li><i class="fas fa-check"></i> Soporte para todos los lenguajes</li>
+                        <li><i class="fas fa-check"></i> Notificaciones por correo</li>
+                        <li><i class="fas fa-check"></i> 3 repositorios privados</li>
+                    </ul>
+                    <button class="btn btn-primary">Empezar Gratis</button>
+                </div>
+                <div class="pricing-card">
+                    <div class="free-badge" style="background: var(--primary);">POPULAR</div>
+                    <h3>Plan Pro</h3>
+                    <div class="price">$0 <span>/para siempre</span></div>
+                    <p>Para equipos y proyectos profesionales</p>
+                    <ul class="pricing-features">
+                        <li><i class="fas fa-check"></i> Todo en el plan básico</li>
+                        <li><i class="fas fa-check"></i> Repositorios privados ilimitados</li>
+                        <li><i class="fas fa-check"></i> Integración con Slack y Teams</li>
+                        <li><i class="fas fa-check"></i> Reportes semanales</li>
+                        <li><i class="fas fa-check"></i> Prioridad en soporte</li>
+                    </ul>
+                    <button class="btn btn-primary">Obtener Pro Gratis</button>
+                </div>
+                <div class="pricing-card">
+                    <h3>Plan Empresa</h3>
+                    <div class="price">$0 <span>/para siempre</span></div>
+                    <p>Para organizaciones grandes</p>
+                    <ul class="pricing-features">
+                        <li><i class="fas fa-check"></i> Todo en el plan Pro</li>
+                        <li><i class="fas fa-check"></i> Gestión centralizada</li>
+                        <li><i class="fas fa-check"></i> SSO y SCIM</li>
+                        <li><i class="fas fa-check"></i> Auditorías de cumplimiento</li>
+                        <li><i class="fas fa-check"></i> Soporte 24/7</li>
+                    </ul>
+                    <button class="btn btn-primary">Contactar Ventas</button>
+                </div>
             </div>
+        </div>
+    </section>
+
+    <!-- Alerts Demo -->
+    <section id="demo" class="alerts-demo">
+        <div class="container">
+            <div class="section-title">
+                <h2>Alertas en Tiempo Real</h2>
+                <p>Así es como GitAlert te mantiene informado sobre vulnerabilidades</p>
+            </div>
+            <div class="alert-container">
+                <div class="alert-header">
+                    <div>
+                        <h3>Panel de Alertas</h3>
+                        <p>Vulnerabilidades detectadas en tus repositorios</p>
+                    </div>
+                    <div class="alert-tabs">
+                        <div class="alert-tab active">Todas</div>
+                        <div class="alert-tab">Críticas</div>
+                        <div class="alert-tab">Altas</div>
+                        <div class="alert-tab">Resueltas</div>
+                    </div>
+                </div>
+                <div class="alert-content">
+                    <div class="alert-item critical">
+                        <div class="alert-icon">
+                            <i class="fas fa-radiation"></i>
+                        </div>
+                        <div class="alert-details">
+                            <h4>Vulnerabilidad crítica en lodash (CVE-2023-12345)</h4>
+                            <p>Se ha detectado una vulnerabilidad de inyección de prototipos en la versión 4.17.15 de lodash que afecta a tu repositorio "web-app"</p>
+                            <div class="alert-meta">
+                                <span><i class="fas fa-calendar"></i> Hoy, 09:45 AM</span>
+                                <span><i class="fas fa-tag"></i> JavaScript</span>
+                                <span class="severity critical">Crítica</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="alert-item high">
+                        <div class="alert-icon">
+                            <i class="fas fa-exclamation-triangle"></i>
+                        </div>
+                        <div class="alert-details">
+                            <h4>Vulnerabilidad XSS en React 18.1.0</h4>
+                            <p>Cross-site scripting (XSS) en la implementación de createElement. Actualiza a React 18.2.0 para solucionarlo.</p>
+                            <div class="alert-meta">
+                                <span><i class="fas fa-calendar"></i> Ayer, 15:22 PM</span>
+                                <span><i class="fas fa-tag"></i> React</span>
+                                <span class="severity high">Alta</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="alert-item medium">
+                        <div class="alert-icon">
+                            <i class="fas fa-shield-alt"></i>
+                        </div>
+                        <div class="alert-details">
+                            <h4>Desactualización en Spring Boot 2.7.5</h4>
+                            <p>La versión 2.7.5 de Spring Boot contiene vulnerabilidades conocidas. Se recomienda actualizar a 3.0.6.</p>
+                            <div class="alert-meta">
+                                <span><i class="fas fa-calendar"></i> 24 Jun, 11:30 AM</span>
+                                <span><i class="fas fa-tag"></i> Java</span>
+                                <span class="severity medium">Media</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="alert-item critical">
+                        <div class="alert-icon">
+                            <i class="fas fa-radiation"></i>
+                        </div>
+                        <div class="alert-details">
+                            <h4>RCE en Log4j 2.14.1 (CVE-2021-44228)</h4>
+                            <p>Ejecución remota de código en la biblioteca Log4j. Actualiza inmediatamente a Log4j 2.17.1.</p>
+                            <div class="alert-meta">
+                                <span><i class="fas fa-calendar"></i> 22 Jun, 14:15 PM</span>
+                                <span><i class="fas fa-tag"></i> Java, Logging</span>
+                                <span class="severity critical">Crítica</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta">
+        <div class="container">
+            <h2>Protege tus repositorios ahora mismo</h2>
+            <p>Únete a miles de desarrolladores que mantienen su código seguro con GitAlert. Totalmente gratis, sin tarjetas de crédito.</p>
+            <a href="#" class="btn">Registrarse con GitHub <i class="fab fa-github"></i></a>
         </div>
     </section>
 
     <!-- Footer -->
     <footer>
-        <div class="footer-content">
-            <div class="footer-column">
-                <h3>GitHub Alert</h3>
-                <p>Sistema avanzado de monitoreo de seguridad para repositorios GitHub que protege tus proyectos de vulnerabilidades y amenazas.</p>
-                <div class="social-links">
-                    <a href="#"><i class="fab fa-github"></i></a>
-                    <a href="#"><i class="fab fa-twitter"></i></a>
-                    <a href="#"><i class="fab fa-linkedin"></i></a>
-                    <a href="#"><i class="fab fa-discord"></i></a>
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <h3>GitAlert</h3>
+                    <p>Monitorea vulnerabilidades en tus repositorios de GitHub de forma gratuita y mantén tu código seguro.</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-github"></i></a>
+                        <a href="#"><i class="fab fa-linkedin"></i></a>
+                        <a href="#"><i class="fab fa-discord"></i></a>
+                    </div>
+                </div>
+                <div class="footer-col">
+                    <h3>Producto</h3>
+                    <ul>
+                        <li><a href="#">Características</a></li>
+                        <li><a href="#">Planes y Precios</a></li>
+                        <li><a href="#">Integraciones</a></li>
+                        <li><a href="#">Documentación</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h3>Compañía</h3>
+                    <ul>
+                        <li><a href="#">Sobre Nosotros</a></li>
+                        <li><a href="#">Blog</a></li>
+                        <li><a href="#">Carreras</a></li>
+                        <li><a href="#">Contacto</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h3>Legal</h3>
+                    <ul>
+                        <li><a href="#">Términos de Servicio</a></li>
+                        <li><a href="#">Política de Privacidad</a></li>
+                        <li><a href="#">Seguridad</a></li>
+                        <li><a href="#">GDPR</a></li>
+                    </ul>
                 </div>
             </div>
-            <div class="footer-column">
-                <h3>Enlaces Rápidos</h3>
-                <ul>
-                    <li><a href="#"><i class="fas fa-chevron-right"></i> Inicio</a></li>
-                    <li><a href="#alerts"><i class="fas fa-chevron-right"></i> Alertas</a></li>
-                    <li><a href="#"><i class="fas fa-chevron-right"></i> Documentación</a></li>
-                    <li><a href="#"><i class="fas fa-chevron-right"></i> API</a></li>
-                    <li><a href="#"><i class="fas fa-chevron-right"></i> Soporte</a></li>
-                </ul>
+            <div class="copyright">
+                <p>&copy; 2023 GitAlert. Todos los derechos reservados. Diseñado con ❤️ para la comunidad de GitHub.</p>
             </div>
-            <div class="footer-column">
-                <h3>Categorías</h3>
-                <ul>
-                    <li><a href="#"><i class="fas fa-chevron-right"></i> Críticas</a></li>
-                    <li><a href="#"><i class="fas fa-chevron-right"></i> Altas</a></li>
-                    <li><a href="#"><i class="fas fa-chevron-right"></i> Medias</a></li>
-                    <li><a href="#"><i class="fas fa-chevron-right"></i> Bajas</a></li>
-                    <li><a href="#"><i class="fas fa-chevron-right"></i> Informativas</a></li>
-                </ul>
-            </div>
-            <div class="footer-column">
-                <h3>Suscríbete</h3>
-                <p>Recibe alertas críticas directamente en tu correo.</p>
-                <form>
-                    <input type="email" placeholder="Tu correo electrónico" style="width: 100%; padding: 10px; margin: 10px 0; border-radius: 5px; border: none;">
-                    <button class="btn btn-primary" style="width: 100%;">Suscribirse</button>
-                </form>
-            </div>
-        </div>
-        <div class="copyright">
-            <p>&copy; 2025 GitHub Alert. Todos los derechos reservados. Diseñado con ❤️ para la comunidad de desarrolladores.</p>
         </div>
     </footer>
 
     <script>
-        // Filtros de alertas
-        document.querySelectorAll('.filter-btn').forEach(button => {
-            button.addEventListener('click', function() {
-                // Remover clase active de todos los botones
-                document.querySelectorAll('.filter-btn').forEach(btn => {
-                    btn.classList.remove('active');
+        // Cambiar pestañas en el panel de alertas
+        document.querySelectorAll('.alert-tab').forEach(tab => {
+            tab.addEventListener('click', function() {
+                document.querySelectorAll('.alert-tab').forEach(t => {
+                    t.classList.remove('active');
                 });
-                
-                // Agregar clase active al botón clickeado
                 this.classList.add('active');
-                
-                // Aquí iría la lógica para filtrar las alertas
-                // En este ejemplo solo mostramos un mensaje
-                alert(`Filtrando alertas por: ${this.textContent}`);
             });
         });
         
-        // Efecto de hover en tarjetas de alerta
-        document.querySelectorAll('.alert-card').forEach(card => {
-            card.addEventListener('mouseenter', function() {
-                this.style.transform = 'translateY(-10px)';
-                this.style.boxShadow = '0 12px 20px rgba(0, 0, 0, 0.15)';
+        // Animación para botones
+        document.querySelectorAll('.btn').forEach(button => {
+            button.addEventListener('mouseenter', function() {
+                this.style.transform = 'translateY(-3px)';
             });
             
-            card.addEventListener('mouseleave', function() {
+            button.addEventListener('mouseleave', function() {
                 this.style.transform = 'translateY(0)';
-                this.style.boxShadow = '0 5px 15px rgba(0, 0, 0, 0.08)';
             });
         });
     </script>
