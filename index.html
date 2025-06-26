@@ -3,68 +3,71 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GitAlert - Monitorea vulnerabilidades en GitHub gratis</title>
+    <title>GitAlert - Alertas Gratuitas para Rust</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
     <style>
         :root {
-            --primary: #2563eb;
-            --primary-dark: #1d4ed8;
-            --secondary: #0f172a;
-            --light: #f8fafc;
-            --gray: #94a3b8;
-            --danger: #ef4444;
-            --warning: #f59e0b;
-            --success: #10b981;
+            --rust-dark: #2c1e1a;
+            --rust-orange: #e67e22;
+            --rust-red: #e74c3c;
+            --rust-gray: #7f8c8d;
+            --rust-light: #ecf0f1;
+            --rust-metal: #95a5a6;
         }
         
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Poppins', sans-serif;
         }
         
         body {
-            background-color: #ffffff;
-            color: #334155;
+            font-family: 'Roboto', sans-serif;
+            background: linear-gradient(135deg, var(--rust-dark) 0%, #1a120f 100%);
+            color: var(--rust-light);
             line-height: 1.6;
+            overflow-x: hidden;
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><rect width="100" height="100" fill="%232c1e1a"/><path d="M0 50 L100 50" stroke="%233a2925" stroke-width="1"/><path d="M50 0 L50 100" stroke="%233a2925" stroke-width="1"/></svg>');
         }
         
         .container {
             max-width: 1200px;
             margin: 0 auto;
-            padding: 0 2rem;
+            padding: 0 20px;
         }
         
         /* Header */
         header {
-            background-color: white;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            background-color: rgba(0, 0, 0, 0.7);
             position: sticky;
             top: 0;
             z-index: 100;
+            backdrop-filter: blur(5px);
+            border-bottom: 1px solid var(--rust-orange);
         }
         
         .navbar {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 1.5rem 0;
+            padding: 1.2rem 0;
         }
         
         .logo {
             display: flex;
             align-items: center;
-            font-size: 1.5rem;
+            font-size: 1.8rem;
             font-weight: 700;
-            color: var(--secondary);
+            color: var(--rust-light);
             text-decoration: none;
+            font-family: 'Orbitron', sans-serif;
         }
         
         .logo i {
-            color: var(--primary);
+            color: var(--rust-orange);
             margin-right: 10px;
+            text-shadow: 0 0 10px rgba(230, 126, 34, 0.5);
         }
         
         .nav-links {
@@ -73,137 +76,149 @@
         }
         
         .nav-links li {
-            margin-left: 2rem;
+            margin-left: 1.8rem;
         }
         
         .nav-links a {
             text-decoration: none;
-            color: var(--secondary);
+            color: var(--rust-light);
             font-weight: 500;
             transition: color 0.3s;
+            font-size: 1.1rem;
+            position: relative;
+            padding: 5px 0;
         }
         
-        .nav-links a:hover {
-            color: var(--primary);
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--rust-orange);
+            transition: width 0.3s;
+        }
+        
+        .nav-links a:hover::after {
+            width: 100%;
         }
         
         .btn {
             display: inline-block;
-            padding: 0.7rem 1.5rem;
-            border-radius: 6px;
-            font-weight: 500;
+            padding: 0.8rem 1.8rem;
+            border-radius: 4px;
+            font-weight: 600;
             cursor: pointer;
             transition: all 0.3s;
             text-decoration: none;
             text-align: center;
             border: none;
+            font-size: 1rem;
+            font-family: 'Orbitron', sans-serif;
+            letter-spacing: 1px;
         }
         
         .btn-outline {
-            border: 1px solid var(--primary);
-            color: var(--primary);
+            border: 2px solid var(--rust-orange);
+            color: var(--rust-orange);
             background: transparent;
         }
         
         .btn-outline:hover {
-            background: var(--primary);
+            background: var(--rust-orange);
             color: white;
+            box-shadow: 0 0 15px rgba(230, 126, 34, 0.5);
         }
         
         .btn-primary {
-            background: var(--primary);
+            background: var(--rust-orange);
             color: white;
-            border: 1px solid var(--primary);
+            border: 2px solid var(--rust-orange);
+            box-shadow: 0 0 10px rgba(230, 126, 34, 0.3);
         }
         
         .btn-primary:hover {
-            background: var(--primary-dark);
-            border-color: var(--primary-dark);
+            background: #d35400;
+            border-color: #d35400;
+            box-shadow: 0 0 20px rgba(230, 126, 34, 0.7);
         }
         
         /* Hero Section */
         .hero {
-            padding: 6rem 0;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            background: linear-gradient(135deg, #f0f9ff 0%, #e6f7ff 100%);
-            border-radius: 0 0 30px 30px;
+            padding: 6rem 0 4rem;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(230, 126, 34, 0.1) 0%, transparent 70%);
+            z-index: -1;
         }
         
         .hero-content {
-            flex: 1;
-            max-width: 600px;
+            max-width: 800px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 2;
         }
         
         .hero h1 {
             font-size: 3.5rem;
             line-height: 1.2;
-            color: var(--secondary);
             margin-bottom: 1.5rem;
+            font-family: 'Orbitron', sans-serif;
+            text-transform: uppercase;
+            text-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+        }
+        
+        .hero h1 span {
+            color: var(--rust-orange);
+            text-shadow: 0 0 10px rgba(230, 126, 34, 0.7);
         }
         
         .hero p {
-            font-size: 1.2rem;
-            color: var(--gray);
+            font-size: 1.4rem;
             margin-bottom: 2rem;
+            color: var(--rust-light);
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
         }
         
         .hero-btns {
             display: flex;
-            gap: 1rem;
-            margin-top: 2rem;
+            gap: 1.5rem;
+            justify-content: center;
+            margin-top: 2.5rem;
         }
         
         .hero-image {
-            flex: 1;
-            text-align: center;
+            margin-top: 3rem;
             position: relative;
+            max-width: 900px;
+            margin-left: auto;
+            margin-right: auto;
+            border: 2px solid var(--rust-orange);
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
         }
         
         .hero-image img {
-            max-width: 100%;
-            border-radius: 10px;
-            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
-        }
-        
-        .highlight {
-            position: absolute;
-            background: white;
-            border-radius: 10px;
-            padding: 1rem;
-            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
-            z-index: 10;
-            display: flex;
-            align-items: center;
-        }
-        
-        .highlight-1 {
-            top: -20px;
-            left: -20px;
-            width: 250px;
-        }
-        
-        .highlight-2 {
-            bottom: -20px;
-            right: -20px;
-            width: 280px;
-        }
-        
-        .highlight-icon {
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            background: rgba(239, 68, 68, 0.1);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-right: 1rem;
-            color: var(--danger);
+            width: 100%;
+            display: block;
         }
         
         /* Features */
-        .section {
+        .features {
             padding: 5rem 0;
         }
         
@@ -214,14 +229,23 @@
         
         .section-title h2 {
             font-size: 2.5rem;
-            color: var(--secondary);
+            color: var(--rust-light);
             margin-bottom: 1rem;
+            font-family: 'Orbitron', sans-serif;
+            position: relative;
+            display: inline-block;
         }
         
-        .section-title p {
-            color: var(--gray);
-            max-width: 600px;
-            margin: 0 auto;
+        .section-title h2::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 4px;
+            background: var(--rust-orange);
+            border-radius: 2px;
         }
         
         .features-grid {
@@ -231,284 +255,263 @@
         }
         
         .feature-card {
-            background: white;
-            border-radius: 10px;
-            padding: 2rem;
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            background: rgba(44, 30, 26, 0.7);
+            border: 1px solid rgba(230, 126, 34, 0.3);
+            border-radius: 8px;
+            padding: 2.5rem 2rem;
+            text-align: center;
             transition: transform 0.3s, box-shadow 0.3s;
-            border-left: 4px solid var(--primary);
+            backdrop-filter: blur(5px);
         }
         
         .feature-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+            transform: translateY(-10px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+            border-color: var(--rust-orange);
         }
         
         .feature-icon {
-            width: 50px;
-            height: 50px;
-            background: rgba(37, 99, 235, 0.1);
-            border-radius: 12px;
+            width: 70px;
+            height: 70px;
+            background: rgba(230, 126, 34, 0.1);
+            border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            margin-bottom: 1.5rem;
-            font-size: 1.5rem;
-            color: var(--primary);
+            margin: 0 auto 1.5rem;
+            font-size: 1.8rem;
+            color: var(--rust-orange);
         }
         
         .feature-card h3 {
             font-size: 1.5rem;
             margin-bottom: 1rem;
-            color: var(--secondary);
+            color: var(--rust-light);
         }
         
         .feature-card p {
-            color: var(--gray);
+            color: var(--rust-gray);
         }
         
-        /* Pricing */
-        .pricing {
-            background: var(--light);
+        /* How It Works */
+        .how-it-works {
             padding: 5rem 0;
-        }
-        
-        .pricing-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
-        }
-        
-        .pricing-card {
-            background: white;
-            border-radius: 15px;
-            padding: 3rem 2rem;
-            text-align: center;
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            background: rgba(0, 0, 0, 0.2);
             position: relative;
-            overflow: hidden;
-            transition: transform 0.3s;
         }
         
-        .pricing-card:hover {
-            transform: translateY(-10px);
-        }
-        
-        .free-badge {
+        .how-it-works::before {
+            content: '';
             position: absolute;
-            top: 20px;
-            right: -30px;
-            background: var(--success);
-            color: white;
-            padding: 0.3rem 2rem;
-            transform: rotate(45deg);
-            font-weight: 600;
-            font-size: 0.8rem;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><rect width="100" height="100" fill="%231a120f"/><path d="M0 0 L100 100" stroke="%232c1e1a" stroke-width="1"/><path d="M100 0 L0 100" stroke="%232c1e1a" stroke-width="1"/></svg>');
+            z-index: -1;
         }
         
-        .pricing-card h3 {
-            font-size: 1.8rem;
-            margin-bottom: 1rem;
-            color: var(--secondary);
-        }
-        
-        .price {
-            font-size: 3rem;
-            font-weight: 700;
-            margin-bottom: 1.5rem;
-            color: var(--primary);
-        }
-        
-        .price span {
-            font-size: 1rem;
-            color: var(--gray);
-        }
-        
-        .pricing-features {
-            list-style: none;
-            margin: 2rem 0;
-            text-align: left;
-        }
-        
-        .pricing-features li {
-            margin-bottom: 0.8rem;
+        .steps {
             display: flex;
-            align-items: center;
-        }
-        
-        .pricing-features li i {
-            color: var(--success);
-            margin-right: 10px;
-        }
-        
-        /* Alerts Demo */
-        .alerts-demo {
-            background: white;
-            padding: 5rem 0;
-        }
-        
-        .alert-container {
-            background: white;
-            border-radius: 15px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-            overflow: hidden;
-            max-width: 800px;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 2rem;
+            max-width: 1000px;
             margin: 0 auto;
         }
         
-        .alert-header {
-            background: var(--secondary);
-            color: white;
-            padding: 1.5rem;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-        }
-        
-        .alert-tabs {
-            display: flex;
-            background: #f1f5f9;
-            padding: 0.5rem;
+        .step {
+            flex: 1;
+            min-width: 250px;
+            max-width: 300px;
+            background: rgba(44, 30, 26, 0.8);
+            border: 1px solid var(--rust-metal);
             border-radius: 8px;
-        }
-        
-        .alert-tab {
-            padding: 0.5rem 1.5rem;
-            border-radius: 6px;
-            cursor: pointer;
-            transition: all 0.3s;
-        }
-        
-        .alert-tab.active {
-            background: white;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-        }
-        
-        .alert-content {
             padding: 2rem;
-            max-height: 400px;
-            overflow-y: auto;
+            text-align: center;
+            position: relative;
         }
         
-        .alert-item {
-            display: flex;
-            padding: 1.5rem 0;
-            border-bottom: 1px solid #e2e8f0;
-        }
-        
-        .alert-icon {
+        .step-number {
+            position: absolute;
+            top: -20px;
+            left: 50%;
+            transform: translateX(-50%);
             width: 40px;
             height: 40px;
+            background: var(--rust-orange);
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            margin-right: 1rem;
-            flex-shrink: 0;
+            font-weight: bold;
+            font-size: 1.2rem;
+            color: white;
         }
         
-        .critical .alert-icon {
-            background: rgba(239, 68, 68, 0.1);
-            color: var(--danger);
+        .step h3 {
+            font-size: 1.4rem;
+            margin-bottom: 1rem;
+            color: var(--rust-orange);
         }
         
-        .high .alert-icon {
-            background: rgba(245, 158, 11, 0.1);
-            color: var(--warning);
+        .step p {
+            color: var(--rust-light);
         }
         
-        .medium .alert-icon {
-            background: rgba(37, 99, 235, 0.1);
-            color: var(--primary);
+        /* Comparison */
+        .comparison {
+            padding: 5rem 0;
         }
         
-        .alert-details {
-            flex: 1;
+        .comparison-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            max-width: 1000px;
+            margin: 0 auto;
         }
         
-        .alert-details h4 {
-            font-size: 1.1rem;
-            margin-bottom: 0.5rem;
+        .comparison-card {
+            background: rgba(44, 30, 26, 0.7);
+            border-radius: 8px;
+            padding: 2.5rem;
+            text-align: center;
+            border: 1px solid rgba(230, 126, 34, 0.3);
         }
         
-        .alert-meta {
-            display: flex;
-            color: var(--gray);
-            font-size: 0.9rem;
-            margin-top: 0.5rem;
+        .comparison-card h3 {
+            font-size: 1.8rem;
+            margin-bottom: 1.5rem;
+            color: var(--rust-orange);
         }
         
-        .alert-meta span {
-            margin-right: 1rem;
+        .features-list {
+            list-style: none;
+            text-align: left;
+        }
+        
+        .features-list li {
+            margin-bottom: 1rem;
+            padding-left: 30px;
+            position: relative;
+        }
+        
+        .features-list li::before {
+            content: '✓';
+            position: absolute;
+            left: 0;
+            color: var(--rust-orange);
+            font-weight: bold;
+        }
+        
+        .features-list .missing::before {
+            content: '✗';
+            color: var(--rust-red);
+        }
+        
+        /* Testimonials */
+        .testimonials {
+            padding: 5rem 0;
+            background: rgba(0, 0, 0, 0.2);
+        }
+        
+        .testimonials-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .testimonial-card {
+            background: rgba(44, 30, 26, 0.7);
+            border-radius: 8px;
+            padding: 2rem;
+            position: relative;
+            border: 1px solid rgba(230, 126, 34, 0.3);
+        }
+        
+        .testimonial-card::before {
+            content: '"';
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            font-size: 4rem;
+            color: var(--rust-orange);
+            opacity: 0.2;
+            font-family: serif;
+        }
+        
+        .testimonial-content {
+            margin-bottom: 1.5rem;
+            font-style: italic;
+        }
+        
+        .testimonial-author {
             display: flex;
             align-items: center;
         }
         
-        .alert-meta i {
-            margin-right: 0.3rem;
+        .testimonial-avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: var(--rust-metal);
+            margin-right: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
         }
         
-        .severity {
-            padding: 0.3rem 0.8rem;
-            border-radius: 20px;
-            font-size: 0.8rem;
-            font-weight: 600;
+        .author-info h4 {
+            color: var(--rust-light);
+            margin-bottom: 0.2rem;
         }
         
-        .severity.critical {
-            background: rgba(239, 68, 68, 0.1);
-            color: var(--danger);
+        .author-info p {
+            color: var(--rust-orange);
+            font-size: 0.9rem;
         }
         
-        .severity.high {
-            background: rgba(245, 158, 11, 0.1);
-            color: var(--warning);
-        }
-        
-        .severity.medium {
-            background: rgba(37, 99, 235, 0.1);
-            color: var(--primary);
-        }
-        
-        /* CTA Section */
+        /* CTA */
         .cta {
             text-align: center;
-            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
-            color: white;
-            padding: 5rem 0;
-            border-radius: 30px 30px 0 0;
+            padding: 6rem 0;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .cta::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle, rgba(230, 126, 34, 0.15) 0%, transparent 70%);
+            z-index: -1;
         }
         
         .cta h2 {
-            font-size: 2.5rem;
+            font-size: 2.8rem;
             margin-bottom: 1.5rem;
+            font-family: 'Orbitron', sans-serif;
         }
         
         .cta p {
             max-width: 600px;
-            margin: 0 auto 2rem;
+            margin: 0 auto 2.5rem;
             font-size: 1.2rem;
-            opacity: 0.9;
-        }
-        
-        .cta .btn {
-            background: white;
-            color: var(--primary);
-            font-weight: 600;
-            padding: 1rem 2.5rem;
-            font-size: 1.1rem;
-        }
-        
-        .cta .btn:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+            color: var(--rust-light);
         }
         
         /* Footer */
         footer {
-            background: var(--secondary);
-            color: white;
+            background: rgba(0, 0, 0, 0.8);
             padding: 4rem 0 2rem;
+            border-top: 1px solid var(--rust-orange);
         }
         
         .footer-grid {
@@ -521,8 +524,10 @@
         .footer-col h3 {
             font-size: 1.5rem;
             margin-bottom: 1.5rem;
+            color: var(--rust-light);
             position: relative;
             padding-bottom: 10px;
+            font-family: 'Orbitron', sans-serif;
         }
         
         .footer-col h3::after {
@@ -532,7 +537,7 @@
             left: 0;
             width: 40px;
             height: 3px;
-            background: var(--primary);
+            background: var(--rust-orange);
         }
         
         .footer-col ul {
@@ -544,19 +549,19 @@
         }
         
         .footer-col ul li a {
-            color: var(--gray);
+            color: var(--rust-gray);
             text-decoration: none;
             transition: color 0.3s;
         }
         
         .footer-col ul li a:hover {
-            color: white;
+            color: var(--rust-orange);
         }
         
         .social-links {
             display: flex;
             gap: 1rem;
-            margin-top: 1rem;
+            margin-top: 1.5rem;
         }
         
         .social-links a {
@@ -567,63 +572,32 @@
             height: 40px;
             border-radius: 50%;
             background: rgba(255, 255, 255, 0.1);
-            color: white;
+            color: var(--rust-light);
             text-decoration: none;
-            transition: background 0.3s;
+            transition: all 0.3s;
         }
         
         .social-links a:hover {
-            background: var(--primary);
+            background: var(--rust-orange);
+            transform: translateY(-3px);
         }
         
         .copyright {
             text-align: center;
             padding-top: 2rem;
             border-top: 1px solid rgba(255, 255, 255, 0.1);
-            color: var(--gray);
+            color: var(--rust-gray);
             font-size: 0.9rem;
         }
         
         /* Responsive */
-        @media (max-width: 992px) {
-            .hero {
-                flex-direction: column;
-                text-align: center;
-            }
-            
-            .hero-btns {
-                justify-content: center;
-            }
-            
-            .hero-content {
-                margin-bottom: 3rem;
-            }
-            
-            .highlight {
-                position: relative;
-                margin: 1rem auto;
-                left: 0;
-                right: 0;
-            }
-            
-            .highlight-1, .highlight-2 {
-                position: relative;
-                top: 0;
-                bottom: 0;
-                left: 0;
-                right: 0;
-                margin: 1rem auto;
-                width: 100%;
-            }
-        }
-        
         @media (max-width: 768px) {
             .navbar {
                 flex-direction: column;
+                gap: 1.5rem;
             }
             
             .nav-links {
-                margin: 1.5rem 0;
                 flex-wrap: wrap;
                 justify-content: center;
             }
@@ -640,6 +614,21 @@
                 flex-direction: column;
                 gap: 1rem;
             }
+            
+            .section-title h2 {
+                font-size: 2rem;
+            }
+        }
+        
+        /* Animations */
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+        
+        .pulse {
+            animation: pulse 2s infinite;
         }
     </style>
 </head>
@@ -649,20 +638,16 @@
         <div class="container">
             <div class="navbar">
                 <a href="#" class="logo">
-                    <i class="fas fa-shield-alt"></i>
+                    <i class="fas fa-bell"></i>
                     GitAlert
                 </a>
                 <ul class="nav-links">
-                    <li><a href="#">Inicio</a></li>
                     <li><a href="#features">Características</a></li>
-                    <li><a href="#pricing">Precios</a></li>
-                    <li><a href="#demo">Demo</a></li>
-                    <li><a href="#">Documentación</a></li>
+                    <li><a href="#how-it-works">Cómo Funciona</a></li>
+                    <li><a href="#comparison">Comparación</a></li>
+                    <li><a href="#testimonials">Testimonios</a></li>
                 </ul>
-                <div class="buttons">
-                    <a href="#" class="btn btn-outline">Iniciar Sesión</a>
-                    <a href="#" class="btn btn-primary">Registrarse</a>
-                </div>
+                <a href="#cta" class="btn btn-outline">Descargar Ahora</a>
             </div>
         </div>
     </header>
@@ -671,217 +656,195 @@
     <section class="hero">
         <div class="container">
             <div class="hero-content">
-                <h1>Monitorea vulnerabilidades en GitHub gratis</h1>
-                <p>GitAlert escanea tus repositorios de GitHub en busca de dependencias vulnerables y te envía alertas en tiempo real para que puedas solucionarlas antes de que sea demasiado tarde.</p>
+                <h1>Protege tu base en <span>Rust</span> con alertas en tiempo real</h1>
+                <p>Recibe notificaciones instantáneas en tu móvil cuando tu base está siendo atacada. ¡No pierdas tus recursos nunca más!</p>
                 <div class="hero-btns">
-                    <a href="#" class="btn btn-primary">Registrarse con GitHub <i class="fab fa-github"></i></a>
-                    <a href="#" class="btn btn-outline">Ver Demo</a>
+                    <a href="#cta" class="btn btn-primary pulse">Descargar Gratis</a>
+                    <a href="#how-it-works" class="btn btn-outline">Ver Demo</a>
                 </div>
             </div>
             <div class="hero-image">
-                <div class="highlight highlight-1">
-                    <div class="highlight-icon">
-                        <i class="fas fa-exclamation-triangle"></i>
-                    </div>
-                    <div>
-                        <strong>12 vulnerabilidades</strong> detectadas en tus repos
-                    </div>
-                </div>
-                <img src="https://images.unsplash.com/photo-1555066931-4365d14bab8c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80" alt="GitAlert Dashboard">
-                <div class="highlight highlight-2">
-                    <div class="highlight-icon" style="background: rgba(16, 185, 129, 0.1); color: var(--success);">
-                        <i class="fas fa-check-circle"></i>
-                    </div>
-                    <div>
-                        <strong>98% de repositorios</strong> protegidos
-                    </div>
-                </div>
+                <img src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='800' height='400' viewBox='0 0 800 400'><rect width='800' height='400' fill='%232c1e1a'/><rect x='50' y='50' width='700' height='300' fill='%233a2925' rx='10'/><text x='400' y='100' font-family='Arial' font-size='24' fill='%23e67e22' text-anchor='middle'>ALERTA DE INCURSIÓN DETECTADA!</text><text x='400' y='150' font-family='Arial' font-size='18' fill='%23ecf0f1' text-anchor='middle'>Base: Torre Principal</text><text x='400' y='200' font-family='Arial' font-size='18' fill='%23ecf0f1' text-anchor='middle'>Ubicación: H12</text><text x='400' y='250' font-family='Arial' font-size='18' fill='%23ecf0f1' text-anchor='middle'>Tiempo: 02:45 AM</text><rect x='300' y='300' width='200' height='40' fill='%23e67e22' rx='5'/><text x='400' y='325' font-family='Arial' font-size='18' fill='white' text-anchor='middle'>VER DETALLES</text></svg>" alt="GitAlert en acción">
             </div>
         </div>
     </section>
 
     <!-- Features -->
-    <section id="features" class="section">
+    <section id="features" class="features">
         <div class="container">
             <div class="section-title">
-                <h2>Protege tu código con GitAlert</h2>
-                <p>Mantén tus proyectos seguros con nuestro servicio gratuito de monitoreo</p>
+                <h2>Características Principales</h2>
+                <p>Todo lo que necesitas para proteger tu base en Rust</p>
             </div>
             <div class="features-grid">
                 <div class="feature-card">
                     <div class="feature-icon">
-                        <i class="fas fa-bell"></i>
+                        <i class="fas fa-mobile-alt"></i>
                     </div>
-                    <h3>Alertas en tiempo real</h3>
-                    <p>Recibe notificaciones inmediatas cuando se detecten vulnerabilidades en tus dependencias.</p>
+                    <h3>Notificaciones Instantáneas</h3>
+                    <p>Recibe alertas en tu móvil en segundos cuando detectamos actividad sospechosa cerca de tu base.</p>
                 </div>
                 <div class="feature-card">
                     <div class="feature-icon">
-                        <i class="fas fa-sync-alt"></i>
+                        <i class="fas fa-bolt"></i>
                     </div>
-                    <h3>Escaneo continuo</h3>
-                    <p>Monitorea tus repositorios automáticamente con cada actualización o push.</p>
+                    <h3>Respuesta Rápida</h3>
+                    <p>Actúa inmediatamente con opciones para unirte al servidor directamente desde la notificación.</p>
                 </div>
                 <div class="feature-card">
                     <div class="feature-icon">
-                        <i class="fas fa-lock"></i>
+                        <i class="fas fa-shield-alt"></i>
                     </div>
-                    <h3>Seguridad garantizada</h3>
-                    <p>Utilizamos las últimas bases de datos de vulnerabilidades para protegerte.</p>
+                    <h3>Protección Completa</h3>
+                    <p>Monitorea todas tus bases, trampas y almacenes con un solo sistema.</p>
                 </div>
                 <div class="feature-card">
                     <div class="feature-icon">
-                        <i class="fas fa-envelope"></i>
+                        <i class="fas fa-plug"></i>
                     </div>
-                    <h3>Notificaciones por correo</h3>
-                    <p>Recibe alertas directamente en tu bandeja de entrada o mediante webhooks.</p>
+                    <h3>Compatible con Oxide/uMod</h3>
+                    <p>Fácil instalación en cualquier servidor con soporte para plugins Oxide/uMod.</p>
                 </div>
                 <div class="feature-card">
                     <div class="feature-icon">
-                        <i class="fas fa-code-branch"></i>
+                        <i class="fas fa-bell-slash"></i>
                     </div>
-                    <h3>Soporte para múltiples lenguajes</h3>
-                    <p>JavaScript, Python, Java, Ruby, Go, Rust y más. Cubrimos todos tus proyectos.</p>
+                    <h3>Modo Silencioso</h3>
+                    <p>Configura horarios en los que no quieres recibir notificaciones.</p>
                 </div>
                 <div class="feature-card">
                     <div class="feature-icon">
                         <i class="fas fa-dollar-sign"></i>
                     </div>
-                    <h3>Completamente gratis</h3>
-                    <p>Sin costos ocultos, sin límites en repositorios públicos. Protección total sin pagar.</p>
+                    <h3>Completamente Gratis</h3>
+                    <p>Todas las funciones disponibles sin costo. Sin suscripciones ni pagos ocultos.</p>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Pricing -->
-    <section id="pricing" class="pricing">
+    <!-- How It Works -->
+    <section id="how-it-works" class="how-it-works">
         <div class="container">
             <div class="section-title">
-                <h2>Nuestros Planes</h2>
-                <p>Todos los planes incluyen características avanzadas sin costo</p>
+                <h2>Cómo Funciona</h2>
+                <p>Configura GitAlert en 3 simples pasos</p>
             </div>
-            <div class="pricing-grid">
-                <div class="pricing-card">
-                    <div class="free-badge">GRATIS</div>
-                    <h3>Plan Básico</h3>
-                    <div class="price">$0 <span>/para siempre</span></div>
-                    <p>Perfecto para proyectos personales y open source</p>
-                    <ul class="pricing-features">
-                        <li><i class="fas fa-check"></i> Monitoreo ilimitado de repos públicos</li>
-                        <li><i class="fas fa-check"></i> Alertas en tiempo real</li>
-                        <li><i class="fas fa-check"></i> Soporte para todos los lenguajes</li>
-                        <li><i class="fas fa-check"></i> Notificaciones por correo</li>
-                        <li><i class="fas fa-check"></i> 3 repositorios privados</li>
-                    </ul>
-                    <button class="btn btn-primary">Empezar Gratis</button>
+            <div class="steps">
+                <div class="step">
+                    <div class="step-number">1</div>
+                    <h3>Instala el Plugin</h3>
+                    <p>Descarga el plugin GitAlert y colócalo en la carpeta de plugins de tu servidor Oxide/uMod.</p>
                 </div>
-                <div class="pricing-card">
-                    <div class="free-badge" style="background: var(--primary);">POPULAR</div>
-                    <h3>Plan Pro</h3>
-                    <div class="price">$0 <span>/para siempre</span></div>
-                    <p>Para equipos y proyectos profesionales</p>
-                    <ul class="pricing-features">
-                        <li><i class="fas fa-check"></i> Todo en el plan básico</li>
-                        <li><i class="fas fa-check"></i> Repositorios privados ilimitados</li>
-                        <li><i class="fas fa-check"></i> Integración con Slack y Teams</li>
-                        <li><i class="fas fa-check"></i> Reportes semanales</li>
-                        <li><i class="fas fa-check"></i> Prioridad en soporte</li>
-                    </ul>
-                    <button class="btn btn-primary">Obtener Pro Gratis</button>
+                <div class="step">
+                    <div class="step-number">2</div>
+                    <h3>Configura tu Base</h3>
+                    <p>Usa el comando /gitalert en el juego para definir las áreas que quieres proteger.</p>
                 </div>
-                <div class="pricing-card">
-                    <h3>Plan Empresa</h3>
-                    <div class="price">$0 <span>/para siempre</span></div>
-                    <p>Para organizaciones grandes</p>
-                    <ul class="pricing-features">
-                        <li><i class="fas fa-check"></i> Todo en el plan Pro</li>
-                        <li><i class="fas fa-check"></i> Gestión centralizada</li>
-                        <li><i class="fas fa-check"></i> SSO y SCIM</li>
-                        <li><i class="fas fa-check"></i> Auditorías de cumplimiento</li>
-                        <li><i class="fas fa-check"></i> Soporte 24/7</li>
-                    </ul>
-                    <button class="btn btn-primary">Contactar Ventas</button>
+                <div class="step">
+                    <div class="step-number">3</div>
+                    <h3>Recibe Alertas</h3>
+                    <p>¡Listo! Recibirás notificaciones en tu móvil cuando detectemos actividad sospechosa.</p>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Alerts Demo -->
-    <section id="demo" class="alerts-demo">
+    <!-- Comparison -->
+    <section id="comparison" class="comparison">
         <div class="container">
             <div class="section-title">
-                <h2>Alertas en Tiempo Real</h2>
-                <p>Así es como GitAlert te mantiene informado sobre vulnerabilidades</p>
+                <h2>Comparación con Alternativas</h2>
+                <p>GitAlert vs otras soluciones del mercado</p>
             </div>
-            <div class="alert-container">
-                <div class="alert-header">
-                    <div>
-                        <h3>Panel de Alertas</h3>
-                        <p>Vulnerabilidades detectadas en tus repositorios</p>
+            <div class="comparison-grid">
+                <div class="comparison-card">
+                    <h3>GitAlert</h3>
+                    <ul class="features-list">
+                        <li>Completamente gratuito</li>
+                        <li>Notificaciones instantáneas</li>
+                        <li>Soporte para múltiples bases</li>
+                        <li>Configuración fácil en juego</li>
+                        <li>Compatible con Oxide/uMod</li>
+                        <li>Sin límite de alertas</li>
+                        <li>Soporte 24/7 en Discord</li>
+                    </ul>
+                </div>
+                <div class="comparison-card">
+                    <h3>RustAlert</h3>
+                    <ul class="features-list">
+                        <li class="missing">Suscripción mensual requerida</li>
+                        <li>Notificaciones instantáneas</li>
+                        <li>Soporte para múltiples bases</li>
+                        <li>Configuración compleja</li>
+                        <li>Compatible con Oxide/uMod</li>
+                        <li class="missing">Límite de alertas diarias</li>
+                        <li class="missing">Soporte limitado</li>
+                    </ul>
+                </div>
+                <div class="comparison-card">
+                    <h3>Rust+</h3>
+                    <ul class="features-list">
+                        <li>Gratuito</li>
+                        <li class="missing">Solo alertas básicas</li>
+                        <li class="missing">No detecta incursiones</li>
+                        <li>Configuración fácil</li>
+                        <li>Oficial de Facepunch</li>
+                        <li class="missing">Funcionalidad limitada</li>
+                        <li>Soporte básico</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials -->
+    <section id="testimonials" class="testimonials">
+        <div class="container">
+            <div class="section-title">
+                <h2>Testimonios de Jugadores</h2>
+                <p>Lo que dicen los usuarios de GitAlert</p>
+            </div>
+            <div class="testimonials-grid">
+                <div class="testimonial-card">
+                    <div class="testimonial-content">
+                        <p>GitAlert salvó mi base durante una incursión mientras estaba en el trabajo. Recibí la alerta, me conecté rápidamente y pude defender mis recursos. ¡Increíble!</p>
                     </div>
-                    <div class="alert-tabs">
-                        <div class="alert-tab active">Todas</div>
-                        <div class="alert-tab">Críticas</div>
-                        <div class="alert-tab">Altas</div>
-                        <div class="alert-tab">Resueltas</div>
+                    <div class="testimonial-author">
+                        <div class="testimonial-avatar">
+                            <i class="fas fa-user"></i>
+                        </div>
+                        <div class="author-info">
+                            <h4>Alex "Raider" Johnson</h4>
+                            <p>Jugador de Rust desde 2018</p>
+                        </div>
                     </div>
                 </div>
-                <div class="alert-content">
-                    <div class="alert-item critical">
-                        <div class="alert-icon">
-                            <i class="fas fa-radiation"></i>
+                <div class="testimonial-card">
+                    <div class="testimonial-content">
+                        <p>Como administrador de servidor, recomiendo GitAlert a todos mis jugadores. Es fácil de instalar, no afecta el rendimiento y mantiene a la comunidad segura.</p>
+                    </div>
+                    <div class="testimonial-author">
+                        <div class="testimonial-avatar">
+                            <i class="fas fa-user"></i>
                         </div>
-                        <div class="alert-details">
-                            <h4>Vulnerabilidad crítica en lodash (CVE-2023-12345)</h4>
-                            <p>Se ha detectado una vulnerabilidad de inyección de prototipos en la versión 4.17.15 de lodash que afecta a tu repositorio "web-app"</p>
-                            <div class="alert-meta">
-                                <span><i class="fas fa-calendar"></i> Hoy, 09:45 AM</span>
-                                <span><i class="fas fa-tag"></i> JavaScript</span>
-                                <span class="severity critical">Crítica</span>
-                            </div>
+                        <div class="author-info">
+                            <h4>Sarah "Admin" Martinez</h4>
+                            <p>Administradora de servidores Rust</p>
                         </div>
                     </div>
-                    <div class="alert-item high">
-                        <div class="alert-icon">
-                            <i class="fas fa-exclamation-triangle"></i>
-                        </div>
-                        <div class="alert-details">
-                            <h4>Vulnerabilidad XSS en React 18.1.0</h4>
-                            <p>Cross-site scripting (XSS) en la implementación de createElement. Actualiza a React 18.2.0 para solucionarlo.</p>
-                            <div class="alert-meta">
-                                <span><i class="fas fa-calendar"></i> Ayer, 15:22 PM</span>
-                                <span><i class="fas fa-tag"></i> React</span>
-                                <span class="severity high">Alta</span>
-                            </div>
-                        </div>
+                </div>
+                <div class="testimonial-card">
+                    <div class="testimonial-content">
+                        <p>Probé varias soluciones pagas, pero GitAlert supera a todas siendo gratis. Las alertas llegan más rápido y la configuración es mucho más sencilla.</p>
                     </div>
-                    <div class="alert-item medium">
-                        <div class="alert-icon">
-                            <i class="fas fa-shield-alt"></i>
+                    <div class="testimonial-author">
+                        <div class="testimonial-avatar">
+                            <i class="fas fa-user"></i>
                         </div>
-                        <div class="alert-details">
-                            <h4>Desactualización en Spring Boot 2.7.5</h4>
-                            <p>La versión 2.7.5 de Spring Boot contiene vulnerabilidades conocidas. Se recomienda actualizar a 3.0.6.</p>
-                            <div class="alert-meta">
-                                <span><i class="fas fa-calendar"></i> 24 Jun, 11:30 AM</span>
-                                <span><i class="fas fa-tag"></i> Java</span>
-                                <span class="severity medium">Media</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="alert-item critical">
-                        <div class="alert-icon">
-                            <i class="fas fa-radiation"></i>
-                        </div>
-                        <div class="alert-details">
-                            <h4>RCE en Log4j 2.14.1 (CVE-2021-44228)</h4>
-                            <p>Ejecución remota de código en la biblioteca Log4j. Actualiza inmediatamente a Log4j 2.17.1.</p>
-                            <div class="alert-meta">
-                                <span><i class="fas fa-calendar"></i> 22 Jun, 14:15 PM</span>
-                                <span><i class="fas fa-tag"></i> Java, Logging</span>
-                                <span class="severity critical">Crítica</span>
-                            </div>
+                        <div class="author-info">
+                            <h4>Mike "Sniper" Thompson</h4>
+                            <p>Clan: The Rust Guardians</p>
                         </div>
                     </div>
                 </div>
@@ -889,12 +852,12 @@
         </div>
     </section>
 
-    <!-- CTA Section -->
-    <section class="cta">
+    <!-- CTA -->
+    <section id="cta" class="cta">
         <div class="container">
-            <h2>Protege tus repositorios ahora mismo</h2>
-            <p>Únete a miles de desarrolladores que mantienen su código seguro con GitAlert. Totalmente gratis, sin tarjetas de crédito.</p>
-            <a href="#" class="btn">Registrarse con GitHub <i class="fab fa-github"></i></a>
+            <h2>¡Protege tu base ahora mismo!</h2>
+            <p>Descarga GitAlert completamente gratis y recibe alertas instantáneas en tu móvil cuando tu base está en peligro.</p>
+            <a href="#" class="btn btn-primary pulse">Descargar Gratis</a>
         </div>
     </section>
 
@@ -904,67 +867,104 @@
             <div class="footer-grid">
                 <div class="footer-col">
                     <h3>GitAlert</h3>
-                    <p>Monitorea vulnerabilidades en tus repositorios de GitHub de forma gratuita y mantén tu código seguro.</p>
+                    <p>Sistema de alertas gratuito para Rust que protege tus bases de incursiones con notificaciones instantáneas.</p>
                     <div class="social-links">
-                        <a href="#"><i class="fab fa-twitter"></i></a>
-                        <a href="#"><i class="fab fa-github"></i></a>
-                        <a href="#"><i class="fab fa-linkedin"></i></a>
                         <a href="#"><i class="fab fa-discord"></i></a>
+                        <a href="#"><i class="fab fa-steam"></i></a>
+                        <a href="#"><i class="fab fa-github"></i></a>
+                        <a href="#"><i class="fab fa-youtube"></i></a>
                     </div>
                 </div>
                 <div class="footer-col">
-                    <h3>Producto</h3>
+                    <h3>Enlaces</h3>
                     <ul>
-                        <li><a href="#">Características</a></li>
-                        <li><a href="#">Planes y Precios</a></li>
-                        <li><a href="#">Integraciones</a></li>
+                        <li><a href="#">Descargar</a></li>
                         <li><a href="#">Documentación</a></li>
+                        <li><a href="#">Soporte</a></li>
+                        <li><a href="#">FAQ</a></li>
                     </ul>
                 </div>
                 <div class="footer-col">
-                    <h3>Compañía</h3>
+                    <h3>Comunidad</h3>
                     <ul>
-                        <li><a href="#">Sobre Nosotros</a></li>
-                        <li><a href="#">Blog</a></li>
-                        <li><a href="#">Carreras</a></li>
-                        <li><a href="#">Contacto</a></li>
+                        <li><a href="#">Foro</a></li>
+                        <li><a href="#">Discord</a></li>
+                        <li><a href="#">Servidores Recomendados</a></li>
+                        <li><a href="#">Contribuir</a></li>
                     </ul>
                 </div>
                 <div class="footer-col">
                     <h3>Legal</h3>
                     <ul>
-                        <li><a href="#">Términos de Servicio</a></li>
-                        <li><a href="#">Política de Privacidad</a></li>
-                        <li><a href="#">Seguridad</a></li>
-                        <li><a href="#">GDPR</a></li>
+                        <li><a href="#">Términos de Uso</a></li>
+                        <li><a href="#">Privacidad</a></li>
+                        <li><a href="#">Licencia</a></li>
+                        <li><a href="#">Aviso Legal</a></li>
                     </ul>
                 </div>
             </div>
             <div class="copyright">
-                <p>&copy; 2023 GitAlert. Todos los derechos reservados. Diseñado con ❤️ para la comunidad de GitHub.</p>
+                <p>© 2023 GitAlert. Este es un proyecto de fans no afiliado con Facepunch Studios. Rust es una marca registrada de Facepunch Studios.</p>
             </div>
         </div>
     </footer>
 
     <script>
-        // Cambiar pestañas en el panel de alertas
-        document.querySelectorAll('.alert-tab').forEach(tab => {
-            tab.addEventListener('click', function() {
-                document.querySelectorAll('.alert-tab').forEach(t => {
-                    t.classList.remove('active');
-                });
-                this.classList.add('active');
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    window.scrollTo({
+                        top: target.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                }
             });
         });
         
-        // Animación para botones
-        document.querySelectorAll('.btn').forEach(button => {
-            button.addEventListener('mouseenter', function() {
-                this.style.transform = 'translateY(-3px)';
+        // Animation for feature cards on scroll
+        const featureCards = document.querySelectorAll('.feature-card');
+        
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.transform = 'translateY(0)';
+                    entry.target.style.opacity = '1';
+                }
+            });
+        }, { threshold: 0.1 });
+        
+        featureCards.forEach(card => {
+            card.style.transform = 'translateY(50px)';
+            card.style.opacity = '0';
+            card.style.transition = 'transform 0.5s, opacity 0.5s';
+            observer.observe(card);
+        });
+        
+        // Highlight active navigation link
+        window.addEventListener('scroll', function() {
+            const sections = document.querySelectorAll('section');
+            const navLinks = document.querySelectorAll('.nav-links a');
+            
+            let current = '';
+            
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                const sectionHeight = section.clientHeight;
+                
+                if (pageYOffset >= (sectionTop - 100)) {
+                    current = section.getAttribute('id');
+                }
             });
             
-            button.addEventListener('mouseleave', function() {
-                this.style.transform = 'translateY(0)';
+            navLinks.forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href').includes(current)) {
+                    link.classList.add('active');
+                }
             });
         });
     </script>
