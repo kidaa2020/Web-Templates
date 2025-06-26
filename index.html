@@ -39,42 +39,53 @@
     </section>
   </main>
 
-  <script>
-    const url = "https://api.battlemetrics.com/servers?filter[game]=rust&filter[official]=true&page[size]=50";
-    const apiUrl = `https://api.allorigins.win/get?url=${encodeURIComponent(url)}`;
+<script>
+  const url = "https://api.battlemetrics.com/servers?filter[game]=rust&filter[official]=true&page[size]=50";
+  const apiUrl = `https://api.allorigins.win/get?url=${encodeURIComponent(url)}`;
 
-    fetch(apiUrl)
-      .then(response => {
-        if (response.ok) return response.json();
-        throw new Error("Network response was not ok.");
-      })
-      .then(data => {
-        const parsed = JSON.parse(data.contents);
-        const serverTable = document.getElementById("servers");
-        serverTable.innerHTML = "";
+  fetch(apiUrl)
+    .then(response => {
+      if (response.ok) return response.json();
+      throw new Error("Respuesta de red incorrecta.");
+    })
+    .then(data => {
+      let parsed;
+      try {
+        parsed = JSON.parse(data.contents);
+      } catch (e) {
+        throw new Error("No se pudo analizar el contenido como JSON.");
+      }
 
-        parsed.data.forEach(server => {
-          const name = server.attributes.name;
-          const players = `${server.attributes.players}/${server.attributes.maxPlayers}`;
-          const status = server.attributes.status === "online"
-            ? '<span class="text-green-400">Online</span>'
-            : '<span class="text-red-400">Offline</span>';
+      if (!parsed.data || !Array.isArray(parsed.data)) {
+        throw new Error("La propiedad 'data' no está presente en la respuesta.");
+      }
 
-          const row = document.createElement("tr");
-          row.innerHTML = `
-            <td class="py-1">${name}</td>
-            <td>${players}</td>
-            <td>${status}</td>
-          `;
-          serverTable.appendChild(row);
-        });
-      })
-      .catch(error => {
-        console.error("Error al obtener servidores:", error);
-        document.getElementById("servers").innerHTML = `
-          <tr><td colspan="3">Error al cargar los servidores</td></tr>
+      const serverTable = document.getElementById("servers");
+      serverTable.innerHTML = "";
+
+      parsed.data.forEach(server => {
+        const name = server.attributes.name;
+        const players = `${server.attributes.players}/${server.attributes.maxPlayers}`;
+        const status = server.attributes.status === "online"
+          ? '<span class="text-green-400">Online</span>'
+          : '<span class="text-red-400">Offline</span>';
+
+        const row = document.createElement("tr");
+        row.innerHTML = `
+          <td class="py-1">${name}</td>
+          <td>${players}</td>
+          <td>${status}</td>
         `;
+        serverTable.appendChild(row);
       });
-  </script>
+    })
+    .catch(error => {
+      console.error("Error al obtener servidores:", error);
+      document.getElementById("servers").innerHTML = `
+        <tr><td colspan="3">Error al cargar los servidores</td></tr>
+      `;
+    });
+</script>
+
 </body>
 </html>
