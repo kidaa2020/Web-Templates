@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>RustAlert - Alertas en tiempo real para tu base en Rust</title>
+    <title>RustAlert - Sistema de Alertas Funcional</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
     <style>
@@ -40,6 +40,124 @@
             padding: 0 20px;
         }
         
+        /* Auth Screens */
+        .auth-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 2rem;
+        }
+        
+        .auth-card {
+            background: rgba(44, 30, 26, 0.8);
+            border-radius: 10px;
+            padding: 3rem;
+            width: 100%;
+            max-width: 500px;
+            border: 1px solid var(--rust-orange);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+        }
+        
+        .auth-tabs {
+            display: flex;
+            margin-bottom: 2rem;
+            border-bottom: 2px solid var(--rust-orange);
+        }
+        
+        .auth-tab {
+            flex: 1;
+            text-align: center;
+            padding: 1rem;
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.3s;
+        }
+        
+        .auth-tab.active {
+            background: rgba(230, 126, 34, 0.2);
+            color: var(--rust-orange);
+        }
+        
+        .auth-form {
+            display: none;
+        }
+        
+        .auth-form.active {
+            display: block;
+        }
+        
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: var(--rust-light);
+        }
+        
+        .form-control {
+            width: 100%;
+            padding: 0.8rem 1rem;
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(230, 126, 34, 0.3);
+            border-radius: 4px;
+            color: var(--rust-light);
+            font-size: 1rem;
+        }
+        
+        .form-control:focus {
+            outline: none;
+            border-color: var(--rust-orange);
+            box-shadow: 0 0 0 3px rgba(230, 126, 34, 0.3);
+        }
+        
+        .btn {
+            display: inline-block;
+            padding: 0.8rem 1.8rem;
+            border-radius: 4px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-decoration: none;
+            text-align: center;
+            border: none;
+            font-size: 1rem;
+            font-family: 'Orbitron', sans-serif;
+            letter-spacing: 1px;
+        }
+        
+        .btn-block {
+            width: 100%;
+            display: block;
+        }
+        
+        .btn-primary {
+            background: var(--rust-orange);
+            color: white;
+            border: 2px solid var(--rust-orange);
+            box-shadow: 0 0 10px rgba(230, 126, 34, 0.3);
+        }
+        
+        .btn-primary:hover {
+            background: #d35400;
+            border-color: #d35400;
+            box-shadow: 0 0 20px rgba(230, 126, 34, 0.7);
+        }
+        
+        .btn-outline {
+            border: 2px solid var(--rust-orange);
+            color: var(--rust-orange);
+            background: transparent;
+        }
+        
+        .btn-outline:hover {
+            background: var(--rust-orange);
+            color: white;
+            box-shadow: 0 0 15px rgba(230, 126, 34, 0.5);
+        }
+        
         /* Header */
         header {
             background-color: rgba(0, 0, 0, 0.7);
@@ -48,6 +166,7 @@
             z-index: 100;
             backdrop-filter: blur(5px);
             border-bottom: 1px solid var(--rust-orange);
+            display: none;
         }
         
         .navbar {
@@ -125,61 +244,10 @@
             cursor: pointer;
         }
         
-        .btn {
-            display: inline-block;
-            padding: 0.8rem 1.8rem;
-            border-radius: 4px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s;
-            text-decoration: none;
-            text-align: center;
-            border: none;
-            font-size: 1rem;
-            font-family: 'Orbitron', sans-serif;
-            letter-spacing: 1px;
-        }
-        
-        .btn-outline {
-            border: 2px solid var(--rust-orange);
-            color: var(--rust-orange);
-            background: transparent;
-        }
-        
-        .btn-outline:hover {
-            background: var(--rust-orange);
-            color: white;
-            box-shadow: 0 0 15px rgba(230, 126, 34, 0.5);
-        }
-        
-        .btn-primary {
-            background: var(--rust-orange);
-            color: white;
-            border: 2px solid var(--rust-orange);
-            box-shadow: 0 0 10px rgba(230, 126, 34, 0.3);
-        }
-        
-        .btn-primary:hover {
-            background: #d35400;
-            border-color: #d35400;
-            box-shadow: 0 0 20px rgba(230, 126, 34, 0.7);
-        }
-        
-        .btn-secondary {
-            background: var(--rust-blue);
-            color: white;
-            border: 2px solid var(--rust-blue);
-        }
-        
-        .btn-secondary:hover {
-            background: #2980b9;
-            border-color: #2980b9;
-        }
-        
         /* Dashboard */
         .dashboard {
             padding: 3rem 0;
-            display: grid;
+            display: none;
             grid-template-columns: 250px 1fr;
             gap: 2rem;
         }
@@ -327,46 +395,7 @@
             border-bottom: 1px solid rgba(230, 126, 34, 0.3);
         }
         
-        .form-group {
-            margin-bottom: 1.5rem;
-        }
-        
-        .form-group label {
-            display: block;
-            margin-bottom: 0.5rem;
-            color: var(--rust-light);
-        }
-        
-        .form-control {
-            width: 100%;
-            padding: 0.8rem 1rem;
-            background: rgba(0, 0, 0, 0.3);
-            border: 1px solid rgba(230, 126, 34, 0.3);
-            border-radius: 4px;
-            color: var(--rust-light);
-            font-size: 1rem;
-        }
-        
-        .form-control:focus {
-            outline: none;
-            border-color: var(--rust-orange);
-            box-shadow: 0 0 0 3px rgba(230, 126, 34, 0.3);
-        }
-        
-        .checkbox-group {
-            display: flex;
-            align-items: center;
-            margin-bottom: 1rem;
-        }
-        
-        .checkbox-group input {
-            margin-right: 10px;
-        }
-        
-        .checkbox-group label {
-            margin-bottom: 0;
-        }
-        
+        /* Alert Types */
         .alert-types {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
@@ -379,6 +408,7 @@
             border-radius: 8px;
             padding: 1rem;
             border: 1px solid rgba(230, 126, 34, 0.3);
+            cursor: pointer;
         }
         
         .alert-type.active {
@@ -396,6 +426,7 @@
             font-size: 0.9rem;
         }
         
+        /* Notification Methods */
         .notification-methods {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
@@ -428,6 +459,7 @@
             color: var(--rust-light);
         }
         
+        /* Clan Members */
         .clan-members {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
@@ -477,6 +509,7 @@
             color: var(--rust-orange);
         }
         
+        /* Activity Log */
         .activity-log {
             background: rgba(0, 0, 0, 0.3);
             border-radius: 8px;
@@ -523,6 +556,7 @@
             margin-right: 1rem;
         }
         
+        /* Plans */
         .plans {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
@@ -585,6 +619,12 @@
             color: var(--rust-green);
         }
         
+        .plan-features li.missing::before {
+            content: '✗';
+            color: var(--rust-red);
+        }
+        
+        /* Mobile Integration */
         .mobile-integration {
             display: flex;
             align-items: center;
@@ -622,6 +662,7 @@
             padding: 2rem 0;
             border-top: 1px solid var(--rust-orange);
             margin-top: 3rem;
+            display: none;
         }
         
         .footer-content {
@@ -648,6 +689,35 @@
         .copyright {
             color: var(--rust-gray);
             font-size: 0.9rem;
+        }
+        
+        /* Toast Notifications */
+        .toast {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 15px 20px;
+            background: var(--rust-dark);
+            color: white;
+            border-radius: 4px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+            border-left: 4px solid var(--rust-orange);
+            transform: translateX(110%);
+            transition: transform 0.3s ease-in-out;
+            z-index: 1000;
+            max-width: 350px;
+        }
+        
+        .toast.show {
+            transform: translateX(0);
+        }
+        
+        .toast.success {
+            border-left-color: var(--rust-green);
+        }
+        
+        .toast.error {
+            border-left-color: var(--rust-red);
         }
         
         /* Responsive */
@@ -684,6 +754,10 @@
             
             .user-menu {
                 margin-left: auto;
+            }
+            
+            .auth-card {
+                padding: 2rem;
             }
         }
         
@@ -734,11 +808,130 @@
         .tab-content.active {
             display: block;
         }
+        
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.7);
+            z-index: 2000;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .modal.show {
+            display: flex;
+        }
+        
+        .modal-content {
+            background: var(--rust-dark);
+            border-radius: 8px;
+            width: 90%;
+            max-width: 500px;
+            border: 1px solid var(--rust-orange);
+            overflow: hidden;
+        }
+        
+        .modal-header {
+            padding: 1.5rem;
+            background: rgba(230, 126, 34, 0.1);
+            border-bottom: 1px solid var(--rust-orange);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .modal-header h3 {
+            color: var(--rust-light);
+        }
+        
+        .modal-close {
+            background: none;
+            border: none;
+            color: var(--rust-light);
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+        
+        .modal-body {
+            padding: 1.5rem;
+        }
+        
+        .modal-footer {
+            padding: 1rem 1.5rem;
+            background: rgba(0,0,0,0.3);
+            display: flex;
+            justify-content: flex-end;
+            gap: 1rem;
+        }
     </style>
 </head>
 <body>
+    <!-- Auth Screen -->
+    <div class="auth-container" id="authContainer">
+        <div class="auth-card">
+            <div class="auth-tabs">
+                <div class="auth-tab active" id="loginTab">Iniciar Sesión</div>
+                <div class="auth-tab" id="registerTab">Registrarse</div>
+            </div>
+            
+            <form class="auth-form active" id="loginForm">
+                <div class="form-group">
+                    <label for="loginEmail">Correo Electrónico</label>
+                    <input type="email" id="loginEmail" class="form-control" placeholder="tu@email.com" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="loginPassword">Contraseña</label>
+                    <input type="password" id="loginPassword" class="form-control" placeholder="••••••••" required>
+                </div>
+                
+                <div class="form-group">
+                    <button type="submit" class="btn btn-primary btn-block">Iniciar Sesión</button>
+                </div>
+                
+                <div class="form-group text-center">
+                    <a href="#" id="forgotPassword">¿Olvidaste tu contraseña?</a>
+                </div>
+            </form>
+            
+            <form class="auth-form" id="registerForm">
+                <div class="form-group">
+                    <label for="registerUsername">Nombre de Usuario</label>
+                    <input type="text" id="registerUsername" class="form-control" placeholder="TuNickEnRust" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="registerEmail">Correo Electrónico</label>
+                    <input type="email" id="registerEmail" class="form-control" placeholder="tu@email.com" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="registerPassword">Contraseña</label>
+                    <input type="password" id="registerPassword" class="form-control" placeholder="••••••••" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="registerConfirmPassword">Confirmar Contraseña</label>
+                    <input type="password" id="registerConfirmPassword" class="form-control" placeholder="••••••••" required>
+                </div>
+                
+                <div class="form-group">
+                    <button type="submit" class="btn btn-primary btn-block">Crear Cuenta</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Toast Notification -->
+    <div class="toast" id="toast"></div>
+
     <!-- Header -->
-    <header>
+    <header id="mainHeader">
         <div class="container">
             <div class="navbar">
                 <a href="#" class="logo">
@@ -746,16 +939,16 @@
                     RustAlert
                 </a>
                 <ul class="nav-links">
-                    <li><a href="#dashboard" class="active">Dashboard</a></li>
-                    <li><a href="#alerts">Alertas</a></li>
-                    <li><a href="#clan">Clan</a></li>
-                    <li><a href="#logs">Registros</a></li>
-                    <li><a href="#subscription">Suscripción</a></li>
-                    <li><a href="#mobile">Móvil</a></li>
+                    <li><a href="#" data-section="dashboard" class="active">Dashboard</a></li>
+                    <li><a href="#" data-section="alerts">Alertas</a></li>
+                    <li><a href="#" data-section="clan">Clan</a></li>
+                    <li><a href="#" data-section="logs">Registros</a></li>
+                    <li><a href="#" data-section="subscription">Suscripción</a></li>
+                    <li><a href="#" data-section="mobile">Móvil</a></li>
                 </ul>
                 <div class="user-menu">
-                    <a href="#" class="btn btn-outline">Premium</a>
-                    <div class="user-avatar">
+                    <button class="btn btn-outline" id="premiumBtn">Premium</button>
+                    <div class="user-avatar" id="userAvatar">
                         <i class="fas fa-user"></i>
                     </div>
                 </div>
@@ -764,450 +957,29 @@
     </header>
 
     <!-- Dashboard -->
-    <section id="dashboard" class="dashboard">
+    <section class="dashboard" id="dashboardSection">
         <div class="sidebar">
             <h3 class="sidebar-title">Menú</h3>
             <ul class="sidebar-menu">
-                <li><a href="#overview" class="active"><i class="fas fa-home"></i> Resumen</a></li>
-                <li><a href="#link-server"><i class="fas fa-link"></i> Vincular Servidor</a></li>
-                <li><a href="#alert-settings"><i class="fas fa-cog"></i> Configurar Alertas</a></li>
-                <li><a href="#notification-methods"><i class="fas fa-bell"></i> Métodos de Notificación</a></li>
-                <li><a href="#clan-settings"><i class="fas fa-users"></i> Gestión de Clan</a></li>
-                <li><a href="#activity-logs"><i class="fas fa-history"></i> Registros de Actividad</a></li>
-                <li><a href="#subscription"><i class="fas fa-crown"></i> Suscripción Premium</a></li>
-                <li><a href="#mobile-app"><i class="fas fa-mobile-alt"></i> App Móvil</a></li>
-                <li><a href="#settings"><i class="fas fa-user-cog"></i> Configuración de Cuenta</a></li>
+                <li><a href="#" data-section="dashboard" class="active"><i class="fas fa-home"></i> Resumen</a></li>
+                <li><a href="#" data-section="link-server"><i class="fas fa-link"></i> Vincular Servidor</a></li>
+                <li><a href="#" data-section="alerts"><i class="fas fa-cog"></i> Configurar Alertas</a></li>
+                <li><a href="#" data-section="notification"><i class="fas fa-bell"></i> Métodos de Notificación</a></li>
+                <li><a href="#" data-section="clan"><i class="fas fa-users"></i> Gestión de Clan</a></li>
+                <li><a href="#" data-section="logs"><i class="fas fa-history"></i> Registros de Actividad</a></li>
+                <li><a href="#" data-section="subscription"><i class="fas fa-crown"></i> Suscripción Premium</a></li>
+                <li><a href="#" data-section="mobile"><i class="fas fa-mobile-alt"></i> App Móvil</a></li>
+                <li><a href="#" id="logoutBtn"><i class="fas fa-sign-out-alt"></i> Cerrar Sesión</a></li>
             </ul>
         </div>
 
-        <div class="dashboard-content">
-            <!-- Vista de Resumen -->
-            <div id="overview" class="tab-content active">
-                <div class="content-header">
-                    <h2>Resumen de tu Base</h2>
-                    <div class="server-status">
-                        <span class="status-indicator"></span>
-                        <span>Servidor: Online</span>
-                    </div>
-                </div>
-                
-                <div class="alert-status">
-                    <div class="status-indicator"></div>
-                    <div class="status-text">
-                        <h3>Estado: Todo seguro</h3>
-                        <p>No se han detectado actividades sospechosas en las últimas 24 horas</p>
-                    </div>
-                    <button class="btn btn-outline">Ver detalles</button>
-                </div>
-                
-                <div class="stats-grid">
-                    <div class="stat-card">
-                        <div class="stat-icon">
-                            <i class="fas fa-shield-alt"></i>
-                        </div>
-                        <div class="stat-value">12</div>
-                        <div class="stat-label">Días protegidos</div>
-                    </div>
-                    <div class="stat-card">
-                        <div class="stat-icon">
-                            <i class="fas fa-bell"></i>
-                        </div>
-                        <div class="stat-value">3</div>
-                        <div class="stat-label">Alertas este mes</div>
-                    </div>
-                    <div class="stat-card">
-                        <div class="stat-icon">
-                            <i class="fas fa-users"></i>
-                        </div>
-                        <div class="stat-value">5</div>
-                        <div class="stat-label">Miembros del clan</div>
-                    </div>
-                    <div class="stat-card">
-                        <div class="stat-icon">
-                            <i class="fas fa-calendar"></i>
-                        </div>
-                        <div class="stat-value">23</div>
-                        <div class="stat-label">Días de suscripción</div>
-                    </div>
-                </div>
-                
-                <div class="section">
-                    <h3 class="section-title">Tus Bases Vinculadas</h3>
-                    <div class="bases-list">
-                        <div class="alert-type active">
-                            <h4>Base Principal (H12)</h4>
-                            <p>Última actividad: Hoy 14:23</p>
-                            <p>Estado: Segura</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            
-            <!-- Vincular Servidor -->
-            <div id="link-server" class="tab-content">
-                <div class="content-header">
-                    <h2>Vincular con Servidor Rust</h2>
-                </div>
-                
-                <div class="section">
-                    <h3 class="section-title">Instrucciones para Vincular</h3>
-                    <ol style="margin-left: 1.5rem; margin-bottom: 1.5rem; color: var(--rust-light);">
-                        <li style="margin-bottom: 0.8rem;">Abre Rust y únete a un servidor con RustAlert instalado</li>
-                        <li style="margin-bottom: 0.8rem;">Ejecuta el comando: <code style="background: rgba(0,0,0,0.3); padding: 0.2rem 0.5rem; border-radius: 4px;">/rustalert link</code></li>
-                        <li style="margin-bottom: 0.8rem;">Copia el código de 8 dígitos que aparece en pantalla</li>
-                        <li style="margin-bottom: 0.8rem;">Pega el código en el campo a continuación</li>
-                    </ol>
-                    
-                    <div class="form-group">
-                        <label for="link-code">Código de Vinculación</label>
-                        <input type="text" id="link-code" class="form-control" placeholder="Ej: A1B2C3D4">
-                    </div>
-                    
-                    <button class="btn btn-primary">Vincular Servidor</button>
-                </div>
-            </div>
-            
-            <!-- Configurar Alertas -->
-            <div id="alert-settings" class="tab-content">
-                <div class="content-header">
-                    <h2>Configuración de Alertas</h2>
-                </div>
-                
-                <div class="section">
-                    <h3 class="section-title">Tipos de Alertas</h3>
-                    <p style="margin-bottom: 1.5rem; color: var(--rust-light);">Selecciona qué eventos quieres que te notifiquemos</p>
-                    
-                    <div class="alert-types">
-                        <div class="alert-type active">
-                            <h4>Daño a Estructuras</h4>
-                            <p>Cuando paredes, puertas o ventanas reciben daño</p>
-                        </div>
-                        <div class="alert-type active">
-                            <h4>Daño al TC</h4>
-                            <p>Cuando el Tool Cupboard está siendo atacado</p>
-                        </div>
-                        <div class="alert-type">
-                            <h4>Decaimiento de Base</h4>
-                            <p>Cuando tus estructuras están decayendo</p>
-                        </div>
-                        <div class="alert-type active">
-                            <h4>Activación de Trampas</h4>
-                            <p>Cuando tus trampas o turrets son activadas</p>
-                        </div>
-                        <div class="alert-type">
-                            <h4>Ataques Offline</h4>
-                            <p>Cuando tu base es atacada mientras no estás conectado</p>
-                        </div>
-                        <div class="alert-type">
-                            <h4>Intrusos Detectados</h4>
-                            <p>Cuando jugadores enemigos entran en tu territorio</p>
-                        </div>
-                    </div>
-                    
-                    <div class="form-group">
-                        <div class="checkbox-group">
-                            <input type="checkbox" id="alert-all" checked>
-                            <label for="alert-all">Recibir todas las alertas críticas</label>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="section">
-                    <h3 class="section-title">Sensibilidad de Alertas</h3>
-                    <div class="form-group">
-                        <label for="sensitivity">Nivel de Sensibilidad</label>
-                        <select id="sensitivity" class="form-control">
-                            <option value="low">Baja (solo ataques graves)</option>
-                            <option value="medium" selected>Media (recomendado)</option>
-                            <option value="high">Alta (cualquier actividad)</option>
-                        </select>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="quiet-hours">Horas Silenciosas</label>
-                        <input type="text" id="quiet-hours" class="form-control" placeholder="Ej: 00:00 - 08:00">
-                        <p style="margin-top: 0.5rem; color: var(--rust-gray); font-size: 0.9rem;">Durante estas horas no recibirás notificaciones, excepto alertas críticas</p>
-                    </div>
-                </div>
-                
-                <button class="btn btn-primary">Guardar Configuración</button>
-            </div>
-            
-            <!-- Métodos de Notificación -->
-            <div id="notification-methods" class="tab-content">
-                <div class="content-header">
-                    <h2>Métodos de Notificación</h2>
-                </div>
-                
-                <div class="section">
-                    <h3 class="section-title">Selecciona cómo quieres recibir alertas</h3>
-                    
-                    <div class="notification-methods">
-                        <div class="notification-method active">
-                            <i class="fas fa-mobile-alt"></i>
-                            <h4>Notificación Push</h4>
-                        </div>
-                        <div class="notification-method">
-                            <i class="fas fa-phone"></i>
-                            <h4>Llamada Telefónica</h4>
-                        </div>
-                        <div class="notification-method">
-                            <i class="fab fa-discord"></i>
-                            <h4>Discord Webhook</h4>
-                        </div>
-                        <div class="notification-method">
-                            <i class="fas fa-envelope"></i>
-                            <h4>Correo Electrónico</h4>
-                        </div>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="phone-number">Número de Teléfono (para llamadas)</label>
-                        <input type="tel" id="phone-number" class="form-control" placeholder="+34 600 123 456">
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="discord-webhook">Webhook de Discord</label>
-                        <input type="text" id="discord-webhook" class="form-control" placeholder="https://discord.com/api/webhooks/...">
-                    </div>
-                    
-                    <button class="btn btn-primary">Guardar Configuración</button>
-                </div>
-            </div>
-            
-            <!-- Gestión de Clan -->
-            <div id="clan-settings" class="tab-content">
-                <div class="content-header">
-                    <h2>Gestión de Clan</h2>
-                    <button class="btn btn-secondary">Añadir Miembro</button>
-                </div>
-                
-                <div class="section">
-                    <h3 class="section-title">Miembros del Clan</h3>
-                    
-                    <div class="clan-members">
-                        <div class="clan-member">
-                            <div class="member-avatar">
-                                <i class="fas fa-user"></i>
-                            </div>
-                            <div class="member-info">
-                                <h4>Alex "Raider" Johnson</h4>
-                                <p>En línea - Base Principal</p>
-                            </div>
-                            <div class="member-role">Admin</div>
-                        </div>
-                        <div class="clan-member">
-                            <div class="member-avatar">
-                                <i class="fas fa-user"></i>
-                            </div>
-                            <div class="member-info">
-                                <h4>Sarah "Sniper" Martinez</h4>
-                                <p>Desconectado hace 2 horas</p>
-                            </div>
-                            <div class="member-role">Miembro</div>
-                        </div>
-                        <div class="clan-member">
-                            <div class="member-avatar">
-                                <i class="fas fa-user"></i>
-                            </div>
-                            <div class="member-info">
-                                <h4>Mike "Builder" Thompson</h4>
-                                <p>Desconectado hace 5 horas</p>
-                            </div>
-                            <div class="member-role">Miembro</div>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="section">
-                    <h3 class="section-title">Permisos de Alertas</h3>
-                    
-                    <div class="form-group">
-                        <div class="checkbox-group">
-                            <input type="checkbox" id="permission-all" checked>
-                            <label for="permission-all">Todos los miembros reciben alertas</label>
-                        </div>
-                    </div>
-                    
-                    <div class="form-group">
-                        <div class="checkbox-group">
-                            <input type="checkbox" id="permission-admin" checked>
-                            <label for="permission-admin">Solo admins pueden modificar configuraciones</label>
-                        </div>
-                    </div>
-                    
-                    <button class="btn btn-primary">Guardar Configuración</button>
-                </div>
-            </div>
-            
-            <!-- Registros de Actividad -->
-            <div id="activity-logs" class="tab-content">
-                <div class="content-header">
-                    <h2>Registros de Actividad</h2>
-                    <button class="btn btn-outline">Exportar Registros</button>
-                </div>
-                
-                <div class="section">
-                    <h3 class="section-title">Historial de Eventos</h3>
-                    
-                    <div class="activity-log">
-                        <div class="log-item">
-                            <div class="log-icon">
-                                <i class="fas fa-exclamation-triangle"></i>
-                            </div>
-                            <div class="log-content">
-                                <h4>Intruso detectado en Base Principal</h4>
-                                <p>Jugador desconocido detectado cerca del TC</p>
-                                <div class="log-meta">
-                                    <span><i class="fas fa-clock"></i> Hoy, 14:23</span>
-                                    <span><i class="fas fa-map-marker-alt"></i> H12</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="log-item">
-                            <div class="log-icon">
-                                <i class="fas fa-shield-alt"></i>
-                            </div>
-                            <div class="log-content">
-                                <h4>Base asegurada</h4>
-                                <p>Todas las puertas y contenedores están seguros</p>
-                                <div class="log-meta">
-                                    <span><i class="fas fa-clock"></i> Ayer, 22:45</span>
-                                    <span><i class="fas fa-map-marker-alt"></i> Base Principal</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="log-item">
-                            <div class="log-icon">
-                                <i class="fas fa-radiation"></i>
-                            </div>
-                            <div class="log-content">
-                                <h4>Ataque a puerta detectado</h4>
-                                <p>Puerta sur está recibiendo daño de explosivos</p>
-                                <div class="log-meta">
-                                    <span><i class="fas fa-clock"></i> Ayer, 15:12</span>
-                                    <span><i class="fas fa-map-marker-alt"></i> H12</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="log-item">
-                            <div class="log-icon">
-                                <i class="fas fa-tools"></i>
-                            </div>
-                            <div class="log-content">
-                                <h4>Configuración modificada</h4>
-                                <p>Alex "Raider" Johnson cambió la sensibilidad de alertas</p>
-                                <div class="log-meta">
-                                    <span><i class="fas fa-clock"></i> 24 Jun, 11:30</span>
-                                    <span><i class="fas fa-user"></i> Alex Johnson</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            
-            <!-- Suscripción Premium -->
-            <div id="subscription" class="tab-content">
-                <div class="content-header">
-                    <h2>Suscripción Premium</h2>
-                </div>
-                
-                <div class="section">
-                    <h3 class="section-title">Elige tu Plan</h3>
-                    
-                    <div class="plans">
-                        <div class="plan-card">
-                            <h3>Básico</h3>
-                            <div class="plan-price">Gratis</div>
-                            <ul class="plan-features">
-                                <li>Alertas Push básicas</li>
-                                <li>1 base vinculada</li>
-                                <li>3 miembros en clan</li>
-                                <li>Alertas cada 30 min</li>
-                                <li class="missing">Llamadas telefónicas</li>
-                                <li class="missing">Alertas en tiempo real</li>
-                                <li class="missing">Soporte prioritario</li>
-                            </ul>
-                            <button class="btn btn-outline">Plan Actual</button>
-                        </div>
-                        <div class="plan-card recommended">
-                            <h3>Premium</h3>
-                            <div class="plan-price">$4.99 <span>/mes</span></div>
-                            <ul class="plan-features">
-                                <li>Alertas Push ilimitadas</li>
-                                <li>3 bases vinculadas</li>
-                                <li>10 miembros en clan</li>
-                                <li>Alertas en tiempo real</li>
-                                <li>Llamadas telefónicas</li>
-                                <li>Integración con Discord</li>
-                                <li>Soporte prioritario 24/7</li>
-                            </ul>
-                            <button class="btn btn-primary">Actualizar a Premium</button>
-                        </div>
-                        <div class="plan-card">
-                            <h3>Clan</h3>
-                            <div class="plan-price">$9.99 <span>/mes</span></div>
-                            <ul class="plan-features">
-                                <li>Todas las ventajas Premium</li>
-                                <li>Bases ilimitadas</li>
-                                <li>Miembros ilimitados</li>
-                                <li>Alertas personalizadas</li>
-                                <li>Roles avanzados</li>
-                                <li>Estadísticas detalladas</li>
-                                <li>Soporte dedicado</li>
-                            </ul>
-                            <button class="btn btn-outline">Seleccionar Plan</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            
-            <!-- Integración Móvil -->
-            <div id="mobile-app" class="tab-content">
-                <div class="content-header">
-                    <h2>App Móvil</h2>
-                </div>
-                
-                <div class="section">
-                    <h3 class="section-title">Conecta tu dispositivo móvil</h3>
-                    
-                    <div class="mobile-integration">
-                        <div class="mobile-info">
-                            <p style="margin-bottom: 1.5rem; color: var(--rust-light);">
-                                Descarga la app RustAlert para recibir notificaciones push directamente en tu dispositivo móvil. Disponible para iOS y Android.
-                            </p>
-                            
-                            <div class="form-group">
-                                <label for="device-name">Nombre del Dispositivo</label>
-                                <input type="text" id="device-name" class="form-control" placeholder="Ej: iPhone de Alex">
-                            </div>
-                            
-                            <div class="notification-methods" style="margin-top: 2rem;">
-                                <a href="#" class="notification-method">
-                                    <i class="fab fa-apple"></i>
-                                    <h4>App Store</h4>
-                                </a>
-                                <a href="#" class="notification-method">
-                                    <i class="fab fa-google-play"></i>
-                                    <h4>Play Store</h4>
-                                </a>
-                            </div>
-                        </div>
-                        <div class="mobile-qr">
-                            <img src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='150' height='150' viewBox='0 0 36 36'><rect width='36' height='36' fill='white'/><path d='M0 0h8v8H0zm10 0h8v8h-8zm10 0h8v8h-8zM0 10h8v8H0zm10 0h8v8h-8zm10 0h8v8h-8zM0 20h8v8H0zm10 0h8v8h-8zm10 0h8v8h-8z' fill='black'/></svg>" alt="QR Code">
-                            <p>Escanear para vincular</p>
-                        </div>
-                    </div>
-                    
-                    <button class="btn btn-primary">Vincular Dispositivo</button>
-                </div>
-            </div>
+        <div class="dashboard-content" id="dashboardContent">
+            <!-- Content will be dynamically loaded here -->
         </div>
     </section>
 
     <!-- Footer -->
-    <footer>
+    <footer id="mainFooter">
         <div class="container">
             <div class="footer-content">
                 <div class="copyright">
@@ -1223,111 +995,856 @@
         </div>
     </footer>
 
+    <!-- Modals -->
+    <div class="modal" id="linkServerModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Vincular Servidor</h3>
+                <button class="modal-close">&times;</button>
+            </div>
+            <div class="modal-body">
+                <p>Para vincular tu servidor Rust:</p>
+                <ol>
+                    <li>Únete al servidor donde tienes RustAlert instalado</li>
+                    <li>Ejecuta el comando: <code>/rustalert link</code></li>
+                    <li>Ingresa el código de 8 dígitos que aparecerá</li>
+                </ol>
+                
+                <div class="form-group">
+                    <label for="linkCode">Código de Vinculación</label>
+                    <input type="text" id="linkCode" class="form-control" placeholder="Ej: A1B2C3D4" maxlength="8">
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-outline modal-close">Cancelar</button>
+                <button class="btn btn-primary" id="confirmLink">Vincular</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal" id="addMemberModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Añadir Miembro al Clan</h3>
+                <button class="modal-close">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label for="memberUsername">Nombre de Usuario</label>
+                    <input type="text" id="memberUsername" class="form-control" placeholder="Nombre del jugador en Rust">
+                </div>
+                
+                <div class="form-group">
+                    <label for="memberRole">Rol</label>
+                    <select id="memberRole" class="form-control">
+                        <option value="member">Miembro</option>
+                        <option value="admin">Admin</option>
+                    </select>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-outline modal-close">Cancelar</button>
+                <button class="btn btn-primary" id="confirmAddMember">Añadir</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal" id="notificationTestModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Probar Notificación</h3>
+                <button class="modal-close">&times;</button>
+            </div>
+            <div class="modal-body">
+                <p>Se enviará una notificación de prueba usando el método seleccionado.</p>
+                <div class="form-group">
+                    <label for="testMessage">Mensaje de Prueba</label>
+                    <input type="text" id="testMessage" class="form-control" value="⚠️ ¡Esta es una alerta de prueba de RustAlert!" placeholder="Mensaje de prueba">
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-outline modal-close">Cancelar</button>
+                <button class="btn btn-primary" id="sendTestNotification">Enviar Prueba</button>
+            </div>
+        </div>
+    </div>
+
     <script>
-        // Tabs functionality
-        document.querySelectorAll('.tab').forEach(tab => {
-            tab.addEventListener('click', function() {
-                // Remove active class from all tabs
-                document.querySelectorAll('.tab').forEach(t => {
-                    t.classList.remove('active');
-                });
-                
-                // Add active class to clicked tab
-                this.classList.add('active');
-                
-                // Hide all tab content
-                document.querySelectorAll('.tab-content').forEach(content => {
-                    content.classList.remove('active');
-                });
-                
-                // Show corresponding tab content
-                const targetId = this.getAttribute('data-target');
-                document.getElementById(targetId).classList.add('active');
-            });
-        });
-        
-        // Navigation functionality
-        document.querySelectorAll('.nav-links a').forEach(link => {
-            link.addEventListener('click', function(e) {
-                e.preventDefault();
-                
-                // Remove active class from all nav links
-                document.querySelectorAll('.nav-links a').forEach(l => {
-                    l.classList.remove('active');
-                });
-                
-                // Add active class to clicked link
-                this.classList.add('active');
-                
-                // Hide all tab content
-                document.querySelectorAll('.tab-content').forEach(content => {
-                    content.classList.remove('active');
-                });
-                
-                // Show corresponding tab content
-                const targetId = this.getAttribute('href').substring(1);
-                document.getElementById(targetId).classList.add('active');
-            });
-        });
-        
-        // Sidebar menu functionality
-        document.querySelectorAll('.sidebar-menu a').forEach(link => {
-            link.addEventListener('click', function(e) {
-                e.preventDefault();
-                
-                // Remove active class from all menu items
-                document.querySelectorAll('.sidebar-menu a').forEach(item => {
-                    item.classList.remove('active');
-                });
-                
-                // Add active class to clicked item
-                this.classList.add('active');
-                
-                // Hide all tab content
-                document.querySelectorAll('.tab-content').forEach(content => {
-                    content.classList.remove('active');
-                });
-                
-                // Show corresponding tab content
-                const targetId = this.getAttribute('href').substring(1);
-                document.getElementById(targetId).classList.add('active');
-            });
-        });
-        
-        // Alert type selection
-        document.querySelectorAll('.alert-type').forEach(type => {
-            type.addEventListener('click', function() {
-                this.classList.toggle('active');
-            });
-        });
-        
-        // Notification method selection
-        document.querySelectorAll('.notification-method').forEach(method => {
-            method.addEventListener('click', function() {
-                this.classList.toggle('active');
-            });
-        });
-        
-        // Simulate server status changes
-        setInterval(() => {
-            const statusIndicator = document.querySelector('.status-indicator');
-            const statusText = document.querySelector('.status-text h3');
-            const statusDesc = document.querySelector('.status-text p');
+        // State Management
+        const state = {
+            currentUser: null,
+            currentSection: 'dashboard',
+            alertSettings: {
+                structureDamage: true,
+                tcDamage: true,
+                decay: false,
+                traps: true,
+                offlineRaids: false,
+                intruders: false,
+                sensitivity: 'medium',
+                quietHours: ''
+            },
+            notificationMethods: {
+                push: true,
+                call: false,
+                discord: false,
+                email: false
+            },
+            clanMembers: [
+                { id: 'm1', name: 'Alex "Raider" Johnson', role: 'admin', status: 'online' },
+                { id: 'm2', name: 'Sarah "Sniper" Martinez', role: 'member', status: 'offline' },
+                { id: 'm3', name: 'Mike "Builder" Thompson', role: 'member', status: 'offline' }
+            ],
+            activityLogs: [
+                { type: 'warning', title: 'Intruso detectado en Base Principal', description: 'Jugador desconocido detectado cerca del TC', date: 'Hoy, 14:23', location: 'H12' },
+                { type: 'security', title: 'Base asegurada', description: 'Todas las puertas y contenedores están seguros', date: 'Ayer, 22:45', location: 'Base Principal' },
+                { type: 'critical', title: 'Ataque a puerta detectado', description: 'Puerta sur está recibiendo daño de explosivos', date: 'Ayer, 15:12', location: 'H12' },
+                { type: 'info', title: 'Configuración modificada', description: 'Alex "Raider" Johnson cambió la sensibilidad de alertas', date: '24 Jun, 11:30', user: 'Alex Johnson' }
+            ],
+            subscriptionPlan: 'free',
+            linkedDevices: []
+        };
+
+        // DOM Elements
+        const elements = {
+            authContainer: document.getElementById('authContainer'),
+            mainHeader: document.getElementById('mainHeader'),
+            dashboardSection: document.getElementById('dashboardSection'),
+            mainFooter: document.getElementById('mainFooter'),
+            dashboardContent: document.getElementById('dashboardContent'),
+            toast: document.getElementById('toast')
+        };
+
+        // Initialize Application
+        function initApp() {
+            // Check if user is logged in
+            const savedUser = localStorage.getItem('rustalert_user');
+            if (savedUser) {
+                state.currentUser = JSON.parse(savedUser);
+                showDashboard();
+            } else {
+                showAuth();
+            }
             
-            // Random status changes for demo
+            setupEventListeners();
+        }
+
+        // Show Authentication Screen
+        function showAuth() {
+            elements.authContainer.style.display = 'flex';
+            elements.mainHeader.style.display = 'none';
+            elements.dashboardSection.style.display = 'none';
+            elements.mainFooter.style.display = 'none';
+        }
+
+        // Show Dashboard
+        function showDashboard() {
+            elements.authContainer.style.display = 'none';
+            elements.mainHeader.style.display = 'block';
+            elements.dashboardSection.style.display = 'grid';
+            elements.mainFooter.style.display = 'block';
+            
+            loadSection('dashboard');
+        }
+
+        // Load Section Content
+        function loadSection(section) {
+            state.currentSection = section;
+            
+            // Update active nav items
+            document.querySelectorAll('.nav-links a, .sidebar-menu a').forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('data-section') === section) {
+                    link.classList.add('active');
+                }
+            });
+            
+            // Load section content
+            switch(section) {
+                case 'dashboard':
+                    loadDashboard();
+                    break;
+                case 'alerts':
+                    loadAlertSettings();
+                    break;
+                case 'notification':
+                    loadNotificationSettings();
+                    break;
+                case 'clan':
+                    loadClanManagement();
+                    break;
+                case 'logs':
+                    loadActivityLogs();
+                    break;
+                case 'subscription':
+                    loadSubscription();
+                    break;
+                case 'mobile':
+                    loadMobileIntegration();
+                    break;
+                case 'link-server':
+                    showLinkServerModal();
+                    break;
+                default:
+                    loadDashboard();
+            }
+        }
+
+        // Dashboard Content
+        function loadDashboard() {
+            const daysProtected = Math.floor(Math.random() * 30) + 1;
+            const alertsThisMonth = Math.floor(Math.random() * 10);
+            const clanMembers = state.clanMembers.length;
+            const subscriptionDays = state.subscriptionPlan === 'free' ? 'Gratis' : Math.floor(Math.random() * 100) + 1;
+            
             const statuses = [
-                {status: "Todo seguro", desc: "No se han detectado actividades sospechosas", color: "#2ecc71"},
-                {status: "Actividad sospechosa", desc: "Movimiento detectado cerca de la base", color: "#f39c12"},
-                {status: "ALERTA: Ataque detectado", desc: "Estructuras recibiendo daño", color: "#e74c3c"}
+                { status: "Todo seguro", desc: "No se han detectado actividades sospechosas", color: "#2ecc71" },
+                { status: "Actividad sospechosa", desc: "Movimiento detectado cerca de la base", color: "#f39c12" },
+                { status: "ALERTA: Ataque detectado", desc: "Estructuras recibiendo daño", color: "#e74c3c" }
             ];
             
             const randomStatus = statuses[Math.floor(Math.random() * statuses.length)];
             
-            statusIndicator.style.background = randomStatus.color;
-            statusIndicator.style.boxShadow = `0 0 10px ${randomStatus.color}`;
-            statusText.textContent = `Estado: ${randomStatus.status}`;
-            statusDesc.textContent = randomStatus.desc;
-        }, 10000);
+            elements.dashboardContent.innerHTML = `
+                <div id="overview" class="tab-content active">
+                    <div class="content-header">
+                        <h2>Resumen de tu Base</h2>
+                        <div class="server-status">
+                            <span class="status-indicator" style="background: ${randomStatus.color}; box-shadow: 0 0 10px ${randomStatus.color}"></span>
+                            <span>Servidor: Online</span>
+                        </div>
+                    </div>
+                    
+                    <div class="alert-status">
+                        <div class="status-indicator" style="background: ${randomStatus.color}; box-shadow: 0 0 10px ${randomStatus.color}"></div>
+                        <div class="status-text">
+                            <h3>Estado: ${randomStatus.status}</h3>
+                            <p>${randomStatus.desc}</p>
+                        </div>
+                        <button class="btn btn-outline">Ver detalles</button>
+                    </div>
+                    
+                    <div class="stats-grid">
+                        <div class="stat-card">
+                            <div class="stat-icon">
+                                <i class="fas fa-shield-alt"></i>
+                            </div>
+                            <div class="stat-value">${daysProtected}</div>
+                            <div class="stat-label">Días protegidos</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-icon">
+                                <i class="fas fa-bell"></i>
+                            </div>
+                            <div class="stat-value">${alertsThisMonth}</div>
+                            <div class="stat-label">Alertas este mes</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-icon">
+                                <i class="fas fa-users"></i>
+                            </div>
+                            <div class="stat-value">${clanMembers}</div>
+                            <div class="stat-label">Miembros del clan</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-icon">
+                                <i class="fas fa-crown"></i>
+                            </div>
+                            <div class="stat-value">${subscriptionDays}</div>
+                            <div class="stat-label">${state.subscriptionPlan === 'free' ? 'Plan Gratis' : 'Días Premium'}</div>
+                        </div>
+                    </div>
+                    
+                    <div class="section">
+                        <h3 class="section-title">Tus Bases Vinculadas</h3>
+                        <div class="bases-list">
+                            <div class="alert-type active">
+                                <h4>Base Principal (H12)</h4>
+                                <p>Última actividad: Hoy ${new Date().getHours()}:${new Date().getMinutes().toString().padStart(2, '0')}</p>
+                                <p>Estado: ${randomStatus.status.includes('ALERTA') ? 'En peligro' : 'Segura'}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        // Alert Settings
+        function loadAlertSettings() {
+            let alertTypesHTML = '';
+            
+            const alertTypes = [
+                { id: 'structureDamage', title: 'Daño a Estructuras', desc: 'Cuando paredes, puertas o ventanas reciben daño', active: state.alertSettings.structureDamage },
+                { id: 'tcDamage', title: 'Daño al TC', desc: 'Cuando el Tool Cupboard está siendo atacado', active: state.alertSettings.tcDamage },
+                { id: 'decay', title: 'Decaimiento de Base', desc: 'Cuando tus estructuras están decayendo', active: state.alertSettings.decay },
+                { id: 'traps', title: 'Activación de Trampas', desc: 'Cuando tus trampas o turrets son activadas', active: state.alertSettings.traps },
+                { id: 'offlineRaids', title: 'Ataques Offline', desc: 'Cuando tu base es atacada mientras no estás conectado', active: state.alertSettings.offlineRaids },
+                { id: 'intruders', title: 'Intrusos Detectados', desc: 'Cuando jugadores enemigos entran en tu territorio', active: state.alertSettings.intruders }
+            ];
+            
+            alertTypes.forEach(type => {
+                alertTypesHTML += `
+                    <div class="alert-type ${type.active ? 'active' : ''}" data-type="${type.id}">
+                        <h4>${type.title}</h4>
+                        <p>${type.desc}</p>
+                    </div>
+                `;
+            });
+            
+            elements.dashboardContent.innerHTML = `
+                <div id="alert-settings">
+                    <div class="content-header">
+                        <h2>Configuración de Alertas</h2>
+                    </div>
+                    
+                    <div class="section">
+                        <h3 class="section-title">Tipos de Alertas</h3>
+                        <p style="margin-bottom: 1.5rem; color: var(--rust-light);">Selecciona qué eventos quieres que te notifiquemos</p>
+                        
+                        <div class="alert-types">
+                            ${alertTypesHTML}
+                        </div>
+                        
+                        <div class="form-group">
+                            <div class="checkbox-group">
+                                <input type="checkbox" id="alert-all" ${Object.values(state.alertSettings).every(v => v) ? 'checked' : ''}>
+                                <label for="alert-all">Recibir todas las alertas críticas</label>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="section">
+                        <h3 class="section-title">Sensibilidad de Alertas</h3>
+                        <div class="form-group">
+                            <label for="sensitivity">Nivel de Sensibilidad</label>
+                            <select id="sensitivity" class="form-control">
+                                <option value="low" ${state.alertSettings.sensitivity === 'low' ? 'selected' : ''}>Baja (solo ataques graves)</option>
+                                <option value="medium" ${state.alertSettings.sensitivity === 'medium' ? 'selected' : ''}>Media (recomendado)</option>
+                                <option value="high" ${state.alertSettings.sensitivity === 'high' ? 'selected' : ''}>Alta (cualquier actividad)</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="quiet-hours">Horas Silenciosas</label>
+                            <input type="text" id="quiet-hours" class="form-control" value="${state.alertSettings.quietHours}" placeholder="Ej: 00:00 - 08:00">
+                            <p style="margin-top: 0.5rem; color: var(--rust-gray); font-size: 0.9rem;">Durante estas horas no recibirás notificaciones, excepto alertas críticas</p>
+                        </div>
+                    </div>
+                    
+                    <button class="btn btn-primary" id="saveAlertSettings">Guardar Configuración</button>
+                </div>
+            `;
+            
+            // Add event listeners to alert types
+            document.querySelectorAll('.alert-type').forEach(type => {
+                type.addEventListener('click', () => {
+                    type.classList.toggle('active');
+                });
+            });
+            
+            // Add event listener to save button
+            document.getElementById('saveAlertSettings').addEventListener('click', saveAlertSettings);
+        }
+
+        // Save Alert Settings
+        function saveAlertSettings() {
+            const alertTypes = document.querySelectorAll('.alert-type');
+            
+            alertTypes.forEach(type => {
+                const typeId = type.getAttribute('data-type');
+                state.alertSettings[typeId] = type.classList.contains('active');
+            });
+            
+            state.alertSettings.sensitivity = document.getElementById('sensitivity').value;
+            state.alertSettings.quietHours = document.getElementById('quiet-hours').value;
+            
+            showToast('Configuración de alertas guardada con éxito', 'success');
+        }
+
+        // Notification Settings
+        function loadNotificationSettings() {
+            const methods = [
+                { id: 'push', icon: 'fas fa-mobile-alt', title: 'Notificación Push', active: state.notificationMethods.push },
+                { id: 'call', icon: 'fas fa-phone', title: 'Llamada Telefónica', active: state.notificationMethods.call },
+                { id: 'discord', icon: 'fab fa-discord', title: 'Discord Webhook', active: state.notificationMethods.discord },
+                { id: 'email', icon: 'fas fa-envelope', title: 'Correo Electrónico', active: state.notificationMethods.email }
+            ];
+            
+            let methodsHTML = '';
+            methods.forEach(method => {
+                methodsHTML += `
+                    <div class="notification-method ${method.active ? 'active' : ''}" data-method="${method.id}">
+                        <i class="${method.icon}"></i>
+                        <h4>${method.title}</h4>
+                    </div>
+                `;
+            });
+            
+            elements.dashboardContent.innerHTML = `
+                <div id="notification-methods">
+                    <div class="content-header">
+                        <h2>Métodos de Notificación</h2>
+                    </div>
+                    
+                    <div class="section">
+                        <h3 class="section-title">Selecciona cómo quieres recibir alertas</h3>
+                        
+                        <div class="notification-methods">
+                            ${methodsHTML}
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="phone-number">Número de Teléfono (para llamadas)</label>
+                            <input type="tel" id="phone-number" class="form-control" placeholder="+34 600 123 456" ${state.notificationMethods.call ? '' : 'disabled'}>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="discord-webhook">Webhook de Discord</label>
+                            <input type="text" id="discord-webhook" class="form-control" placeholder="https://discord.com/api/webhooks/..." ${state.notificationMethods.discord ? '' : 'disabled'}>
+                        </div>
+                        
+                        <button class="btn btn-primary" id="saveNotificationSettings">Guardar Configuración</button>
+                        <button class="btn btn-outline" id="testNotification">Probar Notificación</button>
+                    </div>
+                </div>
+            `;
+            
+            // Add event listeners to notification methods
+            document.querySelectorAll('.notification-method').forEach(method => {
+                method.addEventListener('click', () => {
+                    method.classList.toggle('active');
+                    const methodId = method.getAttribute('data-method');
+                    
+                    // Enable/disable related input
+                    if (methodId === 'call') {
+                        document.getElementById('phone-number').disabled = !method.classList.contains('active');
+                    } else if (methodId === 'discord') {
+                        document.getElementById('discord-webhook').disabled = !method.classList.contains('active');
+                    }
+                });
+            });
+            
+            // Add event listener to save button
+            document.getElementById('saveNotificationSettings').addEventListener('click', saveNotificationSettings);
+            
+            // Add event listener to test button
+            document.getElementById('testNotification').addEventListener('click', () => {
+                document.getElementById('notificationTestModal').classList.add('show');
+            });
+        }
+
+        // Save Notification Settings
+        function saveNotificationSettings() {
+            const methods = document.querySelectorAll('.notification-method');
+            
+            methods.forEach(method => {
+                const methodId = method.getAttribute('data-method');
+                state.notificationMethods[methodId] = method.classList.contains('active');
+            });
+            
+            showToast('Configuración de notificaciones guardada', 'success');
+        }
+
+        // Clan Management
+        function loadClanManagement() {
+            let membersHTML = '';
+            
+            state.clanMembers.forEach(member => {
+                membersHTML += `
+                    <div class="clan-member">
+                        <div class="member-avatar">
+                            <i class="fas fa-user"></i>
+                        </div>
+                        <div class="member-info">
+                            <h4>${member.name}</h4>
+                            <p>${member.status === 'online' ? 'En línea - Base Principal' : 'Desconectado'}</p>
+                        </div>
+                        <div class="member-role">${member.role === 'admin' ? 'Admin' : 'Miembro'}</div>
+                    </div>
+                `;
+            });
+            
+            elements.dashboardContent.innerHTML = `
+                <div id="clan-settings">
+                    <div class="content-header">
+                        <h2>Gestión de Clan</h2>
+                        <button class="btn btn-secondary" id="addMemberBtn">Añadir Miembro</button>
+                    </div>
+                    
+                    <div class="section">
+                        <h3 class="section-title">Miembros del Clan</h3>
+                        
+                        <div class="clan-members">
+                            ${membersHTML}
+                        </div>
+                    </div>
+                    
+                    <div class="section">
+                        <h3 class="section-title">Permisos de Alertas</h3>
+                        
+                        <div class="form-group">
+                            <div class="checkbox-group">
+                                <input type="checkbox" id="permission-all" checked>
+                                <label for="permission-all">Todos los miembros reciben alertas</label>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <div class="checkbox-group">
+                                <input type="checkbox" id="permission-admin" checked>
+                                <label for="permission-admin">Solo admins pueden modificar configuraciones</label>
+                            </div>
+                        </div>
+                        
+                        <button class="btn btn-primary" id="saveClanSettings">Guardar Configuración</button>
+                    </div>
+                </div>
+            `;
+            
+            // Add event listener to add member button
+            document.getElementById('addMemberBtn').addEventListener('click', () => {
+                document.getElementById('addMemberModal').classList.add('show');
+            });
+        }
+
+        // Activity Logs
+        function loadActivityLogs() {
+            let logsHTML = '';
+            
+            state.activityLogs.forEach(log => {
+                let icon = 'fas fa-exclamation-triangle';
+                let iconColor = 'var(--rust-orange)';
+                
+                if (log.type === 'critical') {
+                    icon = 'fas fa-radiation';
+                    iconColor = 'var(--rust-red)';
+                } else if (log.type === 'security') {
+                    icon = 'fas fa-shield-alt';
+                    iconColor = 'var(--rust-green)';
+                } else if (log.type === 'info') {
+                    icon = 'fas fa-tools';
+                    iconColor = 'var(--rust-blue)';
+                }
+                
+                logsHTML += `
+                    <div class="log-item">
+                        <div class="log-icon" style="background: rgba(${iconColor.replace(')', ', 0.1)').replace('var(', '')}; color: ${iconColor}">
+                            <i class="${icon}"></i>
+                        </div>
+                        <div class="log-content">
+                            <h4>${log.title}</h4>
+                            <p>${log.description}</p>
+                            <div class="log-meta">
+                                <span><i class="fas fa-clock"></i> ${log.date}</span>
+                                ${log.location ? `<span><i class="fas fa-map-marker-alt"></i> ${log.location}</span>` : ''}
+                                ${log.user ? `<span><i class="fas fa-user"></i> ${log.user}</span>` : ''}
+                            </div>
+                        </div>
+                    </div>
+                `;
+            });
+            
+            elements.dashboardContent.innerHTML = `
+                <div id="activity-logs">
+                    <div class="content-header">
+                        <h2>Registros de Actividad</h2>
+                        <button class="btn btn-outline" id="exportLogs">Exportar Registros</button>
+                    </div>
+                    
+                    <div class="section">
+                        <h3 class="section-title">Historial de Eventos</h3>
+                        
+                        <div class="activity-log">
+                            ${logsHTML}
+                        </div>
+                    </div>
+                </div>
+            `;
+            
+            // Add event listener to export button
+            document.getElementById('exportLogs').addEventListener('click', () => {
+                showToast('Registros exportados con éxito', 'success');
+                // In a real app, this would trigger a file download
+            });
+        }
+
+        // Subscription
+        function loadSubscription() {
+            elements.dashboardContent.innerHTML = `
+                <div id="subscription">
+                    <div class="content-header">
+                        <h2>Suscripción Premium</h2>
+                    </div>
+                    
+                    <div class="section">
+                        <h3 class="section-title">Elige tu Plan</h3>
+                        
+                        <div class="plans">
+                            <div class="plan-card ${state.subscriptionPlan === 'free' ? 'active' : ''}">
+                                <h3>Básico</h3>
+                                <div class="plan-price">Gratis</div>
+                                <ul class="plan-features">
+                                    <li>Alertas Push básicas</li>
+                                    <li>1 base vinculada</li>
+                                    <li>3 miembros en clan</li>
+                                    <li>Alertas cada 30 min</li>
+                                    <li class="missing">Llamadas telefónicas</li>
+                                    <li class="missing">Alertas en tiempo real</li>
+                                    <li class="missing">Soporte prioritario</li>
+                                </ul>
+                                <button class="btn ${state.subscriptionPlan === 'free' ? 'btn-outline' : 'btn-primary'}" data-plan="free">${state.subscriptionPlan === 'free' ? 'Plan Actual' : 'Seleccionar'}</button>
+                            </div>
+                            <div class="plan-card recommended ${state.subscriptionPlan === 'premium' ? 'active' : ''}">
+                                <h3>Premium</h3>
+                                <div class="plan-price">$4.99 <span>/mes</span></div>
+                                <ul class="plan-features">
+                                    <li>Alertas Push ilimitadas</li>
+                                    <li>3 bases vinculadas</li>
+                                    <li>10 miembros en clan</li>
+                                    <li>Alertas en tiempo real</li>
+                                    <li>Llamadas telefónicas</li>
+                                    <li>Integración con Discord</li>
+                                    <li>Soporte prioritario 24/7</li>
+                                </ul>
+                                <button class="btn ${state.subscriptionPlan === 'premium' ? 'btn-outline' : 'btn-primary'}" data-plan="premium">${state.subscriptionPlan === 'premium' ? 'Plan Actual' : 'Actualizar'}</button>
+                            </div>
+                            <div class="plan-card ${state.subscriptionPlan === 'clan' ? 'active' : ''}">
+                                <h3>Clan</h3>
+                                <div class="plan-price">$9.99 <span>/mes</span></div>
+                                <ul class="plan-features">
+                                    <li>Todas las ventajas Premium</li>
+                                    <li>Bases ilimitadas</li>
+                                    <li>Miembros ilimitados</li>
+                                    <li>Alertas personalizadas</li>
+                                    <li>Roles avanzados</li>
+                                    <li>Estadísticas detalladas</li>
+                                    <li>Soporte dedicado</li>
+                                </ul>
+                                <button class="btn ${state.subscriptionPlan === 'clan' ? 'btn-outline' : 'btn-primary'}" data-plan="clan">${state.subscriptionPlan === 'clan' ? 'Plan Actual' : 'Seleccionar'}</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+            
+            // Add event listeners to plan buttons
+            document.querySelectorAll('.plan-card .btn').forEach(button => {
+                button.addEventListener('click', () => {
+                    const plan = button.getAttribute('data-plan');
+                    state.subscriptionPlan = plan;
+                    showToast(`Plan ${plan} activado con éxito`, 'success');
+                    loadSubscription(); // Refresh the view
+                });
+            });
+        }
+
+        // Mobile Integration
+        function loadMobileIntegration() {
+            elements.dashboardContent.innerHTML = `
+                <div id="mobile-app">
+                    <div class="content-header">
+                        <h2>App Móvil</h2>
+                    </div>
+                    
+                    <div class="section">
+                        <h3 class="section-title">Conecta tu dispositivo móvil</h3>
+                        
+                        <div class="mobile-integration">
+                            <div class="mobile-info">
+                                <p style="margin-bottom: 1.5rem; color: var(--rust-light);">
+                                    Descarga la app RustAlert para recibir notificaciones push directamente en tu dispositivo móvil. Disponible para iOS y Android.
+                                </p>
+                                
+                                <div class="form-group">
+                                    <label for="device-name">Nombre del Dispositivo</label>
+                                    <input type="text" id="device-name" class="form-control" placeholder="Ej: iPhone de Alex">
+                                </div>
+                                
+                                <div class="notification-methods" style="margin-top: 2rem;">
+                                    <a href="#" class="notification-method">
+                                        <i class="fab fa-apple"></i>
+                                        <h4>App Store</h4>
+                                    </a>
+                                    <a href="#" class="notification-method">
+                                        <i class="fab fa-google-play"></i>
+                                        <h4>Play Store</h4>
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="mobile-qr">
+                                <img src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='150' height='150' viewBox='0 0 36 36'><rect width='36' height='36' fill='white'/><path d='M0 0h8v8H0zm10 0h8v8h-8zm10 0h8v8h-8zM0 10h8v8H0zm10 0h8v8h-8zm10 0h8v8h-8zM0 20h8v8H0zm10 0h8v8h-8zm10 0h8v8h-8z' fill='black'/></svg>" alt="QR Code">
+                                <p>Escanear para vincular</p>
+                            </div>
+                        </div>
+                        
+                        <button class="btn btn-primary" id="linkDeviceBtn">Vincular Dispositivo</button>
+                    </div>
+                </div>
+            `;
+            
+            // Add event listener to link device button
+            document.getElementById('linkDeviceBtn').addEventListener('click', () => {
+                const deviceName = document.getElementById('device-name').value || 'Dispositivo Móvil';
+                state.linkedDevices.push({
+                    id: `d${Date.now()}`,
+                    name: deviceName,
+                    date: new Date().toLocaleDateString()
+                });
+                
+                showToast(`${deviceName} vinculado con éxito`, 'success');
+            });
+        }
+
+        // Show Link Server Modal
+        function showLinkServerModal() {
+            document.getElementById('linkServerModal').classList.add('show');
+        }
+
+        // Setup Event Listeners
+        function setupEventListeners() {
+            // Auth tabs
+            document.getElementById('loginTab').addEventListener('click', () => {
+                document.getElementById('loginTab').classList.add('active');
+                document.getElementById('registerTab').classList.remove('active');
+                document.getElementById('loginForm').classList.add('active');
+                document.getElementById('registerForm').classList.remove('active');
+            });
+            
+            document.getElementById('registerTab').addEventListener('click', () => {
+                document.getElementById('registerTab').classList.add('active');
+                document.getElementById('loginTab').classList.remove('active');
+                document.getElementById('registerForm').classList.add('active');
+                document.getElementById('loginForm').classList.remove('active');
+            });
+            
+            // Login form
+            document.getElementById('loginForm').addEventListener('submit', (e) => {
+                e.preventDefault();
+                const email = document.getElementById('loginEmail').value;
+                const password = document.getElementById('loginPassword').value;
+                
+                // In a real app, this would be an API call
+                state.currentUser = {
+                    id: 'u1',
+                    username: email.split('@')[0],
+                    email: email,
+                    plan: 'free'
+                };
+                
+                localStorage.setItem('rustalert_user', JSON.stringify(state.currentUser));
+                showDashboard();
+                showToast('Sesión iniciada con éxito', 'success');
+            });
+            
+            // Register form
+            document.getElementById('registerForm').addEventListener('submit', (e) => {
+                e.preventDefault();
+                const username = document.getElementById('registerUsername').value;
+                const email = document.getElementById('registerEmail').value;
+                const password = document.getElementById('registerPassword').value;
+                const confirmPassword = document.getElementById('registerConfirmPassword').value;
+                
+                if (password !== confirmPassword) {
+                    showToast('Las contraseñas no coinciden', 'error');
+                    return;
+                }
+                
+                // In a real app, this would be an API call
+                state.currentUser = {
+                    id: `u${Date.now()}`,
+                    username: username,
+                    email: email,
+                    plan: 'free'
+                };
+                
+                localStorage.setItem('rustalert_user', JSON.stringify(state.currentUser));
+                showDashboard();
+                showToast('Cuenta creada con éxito', 'success');
+            });
+            
+            // Navigation
+            document.querySelectorAll('.nav-links a, .sidebar-menu a').forEach(link => {
+                link.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    if (link.id === 'logoutBtn') {
+                        localStorage.removeItem('rustalert_user');
+                        state.currentUser = null;
+                        showAuth();
+                        showToast('Sesión cerrada con éxito', 'success');
+                    } else {
+                        const section = link.getAttribute('data-section');
+                        loadSection(section);
+                    }
+                });
+            });
+            
+            // Premium button
+            document.getElementById('premiumBtn').addEventListener('click', () => {
+                loadSection('subscription');
+            });
+            
+            // Modal close buttons
+            document.querySelectorAll('.modal-close').forEach(button => {
+                button.addEventListener('click', () => {
+                    document.querySelectorAll('.modal').forEach(modal => {
+                        modal.classList.remove('show');
+                    });
+                });
+            });
+            
+            // Link server confirmation
+            document.getElementById('confirmLink').addEventListener('click', () => {
+                const code = document.getElementById('linkCode').value;
+                if (code && code.length === 8) {
+                    document.getElementById('linkServerModal').classList.remove('show');
+                    showToast('Servidor vinculado con éxito', 'success');
+                } else {
+                    showToast('Código inválido. Debe tener 8 caracteres', 'error');
+                }
+            });
+            
+            // Add member confirmation
+            document.getElementById('confirmAddMember').addEventListener('click', () => {
+                const username = document.getElementById('memberUsername').value;
+                const role = document.getElementById('memberRole').value;
+                
+                if (username) {
+                    state.clanMembers.push({
+                        id: `m${Date.now()}`,
+                        name: username,
+                        role: role,
+                        status: 'offline'
+                    });
+                    
+                    document.getElementById('addMemberModal').classList.remove('show');
+                    loadSection('clan');
+                    showToast(`${username} añadido al clan`, 'success');
+                } else {
+                    showToast('Ingresa un nombre de usuario', 'error');
+                }
+            });
+            
+            // Test notification
+            document.getElementById('sendTestNotification').addEventListener('click', () => {
+                const message = document.getElementById('testMessage').value;
+                document.getElementById('notificationTestModal').classList.remove('show');
+                showToast(`Notificación de prueba enviada: "${message}"`, 'success');
+            });
+        }
+
+        // Show Toast Notification
+        function showToast(message, type = 'info') {
+            elements.toast.textContent = message;
+            elements.toast.className = 'toast show';
+            elements.toast.classList.add(type);
+            
+            setTimeout(() => {
+                elements.toast.classList.remove('show');
+            }, 3000);
+        }
+
+        // Initialize the application
+        window.addEventListener('DOMContentLoaded', initApp);
     </script>
 </body>
 </html>
