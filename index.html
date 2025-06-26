@@ -3,84 +3,1027 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CyberShield AI - Ciberseguridad sin Censura</title>
-    <link rel="stylesheet" href="style.css">
-    <link rel="icon" href="assets/logo.svg">
+    <title>WebTemplates - Plantillas HTML/CSS Premium</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Variables CSS para colores y estilos */
+        :root {
+            --primary: #2563eb;
+            --secondary: #0f172a;
+            --accent: #7c3aed;
+            --light: #f8fafc;
+            --gray: #64748b;
+            --success: #10b981;
+        }
+        
+        /* Reset y estilos base */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--secondary);
+            background-color: #f1f5f9;
+        }
+        
+        a {
+            text-decoration: none;
+            color: var(--primary);
+            transition: all 0.3s ease;
+        }
+        
+        img {
+            max-width: 100%;
+        }
+        
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 15px;
+        }
+        
+        .btn {
+            display: inline-block;
+            padding: 12px 30px;
+            background: var(--primary);
+            color: white;
+            border-radius: 5px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        
+        .btn:hover {
+            background: #1d4ed8;
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+        
+        .btn-accent {
+            background: var(--accent);
+        }
+        
+        .btn-accent:hover {
+            background: #6d28d9;
+        }
+        
+        .section {
+            padding: 80px 0;
+        }
+        
+        .section-title {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+        
+        .section-title h2 {
+            font-size: 36px;
+            color: var(--secondary);
+            margin-bottom: 15px;
+        }
+        
+        .section-title p {
+            font-size: 18px;
+            color: var(--gray);
+            max-width: 700px;
+            margin: 0 auto;
+        }
+        
+        /* Header */
+        header {
+            background: white;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+        }
+        
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 0;
+        }
+        
+        .logo {
+            font-size: 28px;
+            font-weight: 700;
+            color: var(--secondary);
+        }
+        
+        .logo span {
+            color: var(--primary);
+        }
+        
+        .nav-links {
+            display: flex;
+            list-style: none;
+        }
+        
+        .nav-links li {
+            margin-left: 30px;
+        }
+        
+        .nav-links a {
+            color: var(--secondary);
+            font-weight: 500;
+        }
+        
+        .nav-links a:hover {
+            color: var(--primary);
+        }
+        
+        /* Hero Section */
+        .hero {
+            padding: 180px 0 100px;
+            background: linear-gradient(135deg, #2563eb 0%, #7c3aed 100%);
+            color: white;
+            text-align: center;
+        }
+        
+        .hero-content {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .hero h1 {
+            font-size: 48px;
+            margin-bottom: 20px;
+            line-height: 1.2;
+        }
+        
+        .hero p {
+            font-size: 20px;
+            margin-bottom: 30px;
+            opacity: 0.9;
+        }
+        
+        .hero-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 30px;
+        }
+        
+        /* Features */
+        .features {
+            background: white;
+        }
+        
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+        
+        .feature-card {
+            background: white;
+            border-radius: 10px;
+            padding: 30px;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s ease;
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+        }
+        
+        .feature-icon {
+            width: 80px;
+            height: 80px;
+            background: rgba(37, 99, 235, 0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+            font-size: 30px;
+            color: var(--primary);
+        }
+        
+        .feature-card h3 {
+            font-size: 22px;
+            margin-bottom: 15px;
+        }
+        
+        /* Templates */
+        .templates-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 30px;
+        }
+        
+        .template-card {
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s ease;
+        }
+        
+        .template-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+        }
+        
+        .template-img {
+            height: 250px;
+            background: linear-gradient(135deg, #2563eb 0%, #7c3aed 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 24px;
+            font-weight: bold;
+        }
+        
+        .template-info {
+            padding: 25px;
+        }
+        
+        .template-info h3 {
+            font-size: 22px;
+            margin-bottom: 10px;
+        }
+        
+        .template-info p {
+            color: var(--gray);
+            margin-bottom: 20px;
+        }
+        
+        .template-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+        
+        .tag {
+            background: #e2e8f0;
+            color: var(--secondary);
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 14px;
+        }
+        
+        .template-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .price {
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--secondary);
+        }
+        
+        /* Pricing */
+        .pricing {
+            background: white;
+        }
+        
+        .pricing-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+        
+        .pricing-card {
+            background: white;
+            border-radius: 10px;
+            padding: 40px 30px;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            position: relative;
+            transition: all 0.3s ease;
+        }
+        
+        .pricing-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+        }
+        
+        .popular-tag {
+            position: absolute;
+            top: 0;
+            right: 30px;
+            background: var(--accent);
+            color: white;
+            padding: 5px 15px;
+            border-radius: 0 0 5px 5px;
+            font-weight: 600;
+            font-size: 14px;
+        }
+        
+        .pricing-icon {
+            font-size: 50px;
+            color: var(--primary);
+            margin-bottom: 20px;
+        }
+        
+        .pricing-title {
+            font-size: 24px;
+            margin-bottom: 15px;
+        }
+        
+        .pricing-price {
+            font-size: 40px;
+            font-weight: 700;
+            margin-bottom: 25px;
+            color: var(--secondary);
+        }
+        
+        .pricing-price span {
+            font-size: 16px;
+            color: var(--gray);
+        }
+        
+        .pricing-features {
+            list-style: none;
+            margin-bottom: 30px;
+            text-align: left;
+        }
+        
+        .pricing-features li {
+            padding: 10px 0;
+            border-bottom: 1px solid #e2e8f0;
+            display: flex;
+            align-items: center;
+        }
+        
+        .pricing-features li:last-child {
+            border-bottom: none;
+        }
+        
+        .pricing-features li i {
+            color: var(--success);
+            margin-right: 10px;
+        }
+        
+        /* Testimonials */
+        .testimonials {
+            background: linear-gradient(135deg, #2563eb 0%, #7c3aed 100%);
+            color: white;
+        }
+        
+        .testimonials .section-title h2,
+        .testimonials .section-title p {
+            color: white;
+        }
+        
+        .testimonials-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 30px;
+        }
+        
+        .testimonial-card {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            padding: 30px;
+            backdrop-filter: blur(10px);
+        }
+        
+        .testimonial-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        
+        .testimonial-avatar {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: #e2e8f0;
+            margin-right: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            color: var(--primary);
+        }
+        
+        .testimonial-name h4 {
+            font-size: 18px;
+        }
+        
+        .testimonial-name p {
+            opacity: 0.8;
+        }
+        
+        .testimonial-rating {
+            color: #ffc107;
+            margin: 10px 0;
+        }
+        
+        /* FAQ */
+        .faq-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 20px;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .faq-item {
+            background: white;
+            border-radius: 10px;
+            padding: 25px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        }
+        
+        .faq-question {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+        }
+        
+        .faq-question h3 {
+            font-size: 20px;
+        }
+        
+        .faq-question i {
+            font-size: 20px;
+            transition: all 0.3s ease;
+        }
+        
+        .faq-answer {
+            max-height: 0;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            color: var(--gray);
+        }
+        
+        .faq-item.active .faq-answer {
+            max-height: 500px;
+            margin-top: 20px;
+        }
+        
+        .faq-item.active .faq-question i {
+            transform: rotate(180deg);
+        }
+        
+        /* CTA */
+        .cta {
+            background: linear-gradient(135deg, #2563eb 0%, #7c3aed 100%);
+            color: white;
+            text-align: center;
+            padding: 100px 0;
+        }
+        
+        .cta h2 {
+            font-size: 36px;
+            margin-bottom: 20px;
+        }
+        
+        .cta p {
+            max-width: 700px;
+            margin: 0 auto 30px;
+            font-size: 18px;
+            opacity: 0.9;
+        }
+        
+        /* Footer */
+        footer {
+            background: var(--secondary);
+            color: white;
+            padding: 70px 0 30px;
+        }
+        
+        .footer-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+            margin-bottom: 50px;
+        }
+        
+        .footer-col h3 {
+            font-size: 20px;
+            margin-bottom: 20px;
+            position: relative;
+        }
+        
+        .footer-col h3::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: -10px;
+            width: 50px;
+            height: 2px;
+            background: var(--primary);
+        }
+        
+        .footer-links {
+            list-style: none;
+        }
+        
+        .footer-links li {
+            margin-bottom: 12px;
+        }
+        
+        .footer-links a {
+            color: #cbd5e1;
+            transition: all 0.3s ease;
+        }
+        
+        .footer-links a:hover {
+            color: white;
+            padding-left: 5px;
+        }
+        
+        .footer-social {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+        }
+        
+        .social-link {
+            width: 40px;
+            height: 40px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+        
+        .social-link:hover {
+            background: var(--primary);
+            transform: translateY(-5px);
+        }
+        
+        .copyright {
+            text-align: center;
+            padding-top: 30px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: #94a3b8;
+            font-size: 14px;
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero {
+                padding: 150px 0 80px;
+            }
+            
+            .hero h1 {
+                font-size: 36px;
+            }
+            
+            .hero-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .section {
+                padding: 60px 0;
+            }
+            
+            .section-title h2 {
+                font-size: 30px;
+            }
+            
+            .nav-links {
+                display: none;
+            }
+        }
+    </style>
 </head>
 <body>
-    <!-- Barra de navegación -->
-    <nav>
-        <div class="logo">
-            <img src="assets/logo.svg" alt="CyberShield AI">
-            <span>CYBERSHIELD</span>
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <nav class="navbar">
+                <a href="#" class="logo">Web<span>Templates</span></a>
+                <ul class="nav-links">
+                    <li><a href="#features">Características</a></li>
+                    <li><a href="#templates">Plantillas</a></li>
+                    <li><a href="#pricing">Precios</a></li>
+                    <li><a href="#faq">FAQ</a></li>
+                    <li><a href="#contact">Contacto</a></li>
+                </ul>
+            </nav>
         </div>
-        <ul>
-            <li><a href="#inicio">Inicio</a></li>
-            <li><a href="#tecnologia">Tecnología</a></li>
-            <li><a href="#demostracion">Demostración</a></li>
-            <li><a href="#github">GitHub</a></li>
-        </ul>
-    </nav>
+    </header>
 
-    <!-- Sección Hero -->
-    <section id="inicio" class="hero">
-        <div class="content">
-            <h1>INTELIGENCIA ARTIFICIAL DE CIBERSEGURIDAD SIN CENSURA</h1>
-            <p>Detección de amenazas en tiempo real con análisis sin restricciones</p>
-            <button id="threat-simulator">Simular Ataque</button>
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <h1>Plantillas HTML/CSS Premium para tu próximo proyecto</h1>
+                <p>Impulsa tu presencia online con nuestras plantillas profesionales, completamente responsivas y fáciles de personalizar.</p>
+                <div class="hero-buttons">
+                    <a href="#templates" class="btn">Ver Plantillas</a>
+                    <a href="#pricing" class="btn btn-accent">Comprar Ahora</a>
+                </div>
+            </div>
         </div>
     </section>
 
-    <!-- Tecnología -->
-    <section id="tecnologia" class="tech">
-        <h2>TECNOLOGÍA NO CENSURADA</h2>
-        <div class="features">
-            <div class="card">
-                <h3>Análisis de Vulnerabilidades</h3>
-                <p>Escaneo profundo de sistemas sin limitaciones artificiales</p>
+    <!-- Features -->
+    <section id="features" class="section features">
+        <div class="container">
+            <div class="section-title">
+                <h2>¿Por qué elegir nuestras plantillas?</h2>
+                <p>Diseñadas para ofrecer la mejor experiencia de desarrollo y usuario</p>
             </div>
-            <div class="card">
-                <h3>Hacking Ético</h3>
-                <p>Simulación de ataques realistas sin restricciones</p>
-            </div>
-            <div class="card">
-                <h3>Dark Web Monitoring</h3>
-                <p>Rastreo sin filtros en foros y mercados ocultos</p>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-mobile-alt"></i>
+                    </div>
+                    <h3>Completamente Responsive</h3>
+                    <p>Se adaptan perfectamente a cualquier dispositivo: móviles, tablets y escritorio.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-code"></i>
+                    </div>
+                    <h3>Código Limpio</h3>
+                    <p>HTML y CSS bien estructurado, comentado y fácil de modificar.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-bolt"></i>
+                    </div>
+                    <h3>Rápidas y Optimizadas</h3>
+                    <p>Diseño optimizado para máxima velocidad de carga y rendimiento.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-palette"></i>
+                    </div>
+                    <h3>Personalizables</h3>
+                    <p>Cambia colores, fuentes y diseños con solo modificar algunas variables.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-file-alt"></i>
+                    </div>
+                    <h3>Documentación Completa</h3>
+                    <p>Guías paso a paso para personalizar e implementar tu plantilla.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-headset"></i>
+                    </div>
+                    <h3>Soporte 24/7</h3>
+                    <p>Nuestro equipo está disponible para ayudarte con cualquier consulta.</p>
+                </div>
             </div>
         </div>
-        <img src="assets/threat-model.png" alt="Modelo de amenazas">
     </section>
 
-    <!-- Demostración -->
-    <section id="demostracion" class="demo">
-        <h2>DEMOSTRACIÓN EN VIVO</h2>
-        <div class="terminal">
-            <div class="terminal-header">Terminal CyberShield</div>
-            <div id="output" class="terminal-body">
-                > Iniciando escaneo sin censura...<br>
-                > Bypassing security protocols...<br>
-                [Esperando comando]
+    <!-- Templates -->
+    <section id="templates" class="section templates">
+        <div class="container">
+            <div class="section-title">
+                <h2>Nuestras Plantillas Populares</h2>
+                <p>Diseños modernos y profesionales para diferentes necesidades</p>
             </div>
-            <input type="text" id="command-input" placeholder="Ingresa comando (ej: scan network)">
+            <div class="templates-grid">
+                <div class="template-card">
+                    <div class="template-img">E-Commerce Template</div>
+                    <div class="template-info">
+                        <h3>Tienda Online Premium</h3>
+                        <p>Plantilla completa para tienda online con carrito de compras, filtros de productos y diseño moderno.</p>
+                        <div class="template-tags">
+                            <span class="tag">E-Commerce</span>
+                            <span class="tag">Responsive</span>
+                            <span class="tag">Carrito</span>
+                        </div>
+                        <div class="template-footer">
+                            <div class="price">$29</div>
+                            <a href="#" class="btn">Comprar</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="template-card">
+                    <div class="template-img">Portfolio Template</div>
+                    <div class="template-info">
+                        <h3>Portfolio Creativo</h3>
+                        <p>Elegante plantilla para mostrar tu trabajo, habilidades y experiencia profesional.</p>
+                        <div class="template-tags">
+                            <span class="tag">Portfolio</span>
+                            <span class="tag">Minimalista</span>
+                            <span class="tag">Animaciones</span>
+                        </div>
+                        <div class="template-footer">
+                            <div class="price">$24</div>
+                            <a href="#" class="btn">Comprar</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="template-card">
+                    <div class="template-img">Blog Template</div>
+                    <div class="template-info">
+                        <h3>Plantilla para Blog</h3>
+                        <p>Diseño moderno para blog con categorías, búsqueda, comentarios y diseño de artículos.</p>
+                        <div class="template-tags">
+                            <span class="tag">Blog</span>
+                            <span class="tag">Lectura</span>
+                            <span class="tag">SEO</span>
+                        </div>
+                        <div class="template-footer">
+                            <div class="price">$22</div>
+                            <a href="#" class="btn">Comprar</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </section>
 
-    <!-- GitHub -->
-    <section id="github" class="github-section">
-        <h2>CÓDIGO ABIERTO EN GITHUB</h2>
-        <p>Contribuye a nuestro proyecto sin restricciones:</p>
-        <a href="https://github.com/tuusuario/cybershield-ai" target="_blank" class="github-btn">
-            Ver Repositorio
-        </a>
-        <div class="disclaimer">
-            <p>⚠️ Este proyecto opera bajo ética de hackers blancos. Su mal uso es responsabilidad del usuario.</p>
+    <!-- Pricing -->
+    <section id="pricing" class="section pricing">
+        <div class="container">
+            <div class="section-title">
+                <h2>Planes de Precios</h2>
+                <p>Elige el plan que mejor se adapte a tus necesidades</p>
+            </div>
+            <div class="pricing-grid">
+                <div class="pricing-card">
+                    <div class="pricing-icon">
+                        <i class="fas fa-rocket"></i>
+                    </div>
+                    <h3 class="pricing-title">Básico</h3>
+                    <div class="pricing-price">$19 <span>/ plantilla</span></div>
+                    <ul class="pricing-features">
+                        <li><i class="fas fa-check"></i> 1 Plantilla Premium</li>
+                        <li><i class="fas fa-check"></i> Documentación Completa</li>
+                        <li><i class="fas fa-check"></i> Soporte por Email</li>
+                        <li><i class="fas fa-times"></i> Actualizaciones Gratuitas</li>
+                        <li><i class="fas fa-times"></i> Licencia Extendida</li>
+                    </ul>
+                    <a href="#" class="btn">Seleccionar</a>
+                </div>
+                <div class="pricing-card">
+                    <div class="popular-tag">POPULAR</div>
+                    <div class="pricing-icon">
+                        <i class="fas fa-crown"></i>
+                    </div>
+                    <h3 class="pricing-title">Profesional</h3>
+                    <div class="pricing-price">$49 <span>/ 3 plantillas</span></div>
+                    <ul class="pricing-features">
+                        <li><i class="fas fa-check"></i> 3 Plantillas Premium</li>
+                        <li><i class="fas fa-check"></i> Documentación Completa</li>
+                        <li><i class="fas fa-check"></i> Soporte Prioritario</li>
+                        <li><i class="fas fa-check"></i> Actualizaciones Gratuitas (1 año)</li>
+                        <li><i class="fas fa-times"></i> Licencia Extendida</li>
+                    </ul>
+                    <a href="#" class="btn btn-accent">Seleccionar</a>
+                </div>
+                <div class="pricing-card">
+                    <div class="pricing-icon">
+                        <i class="fas fa-gem"></i>
+                    </div>
+                    <h3 class="pricing-title">Empresa</h3>
+                    <div class="pricing-price">$99 <span>/ 10 plantillas</span></div>
+                    <ul class="pricing-features">
+                        <li><i class="fas fa-check"></i> 10 Plantillas Premium</li>
+                        <li><i class="fas fa-check"></i> Documentación Completa</li>
+                        <li><i class="fas fa-check"></i> Soporte 24/7</li>
+                        <li><i class="fas fa-check"></i> Actualizaciones Gratuitas</li>
+                        <li><i class="fas fa-check"></i> Licencia Extendida</li>
+                    </ul>
+                    <a href="#" class="btn">Seleccionar</a>
+                </div>
+            </div>
         </div>
     </section>
 
-    <footer>
-        <p>CyberShield AI - 2023 | Ciberseguridad sin fronteras</p>
+    <!-- Testimonials -->
+    <section class="section testimonials">
+        <div class="container">
+            <div class="section-title">
+                <h2>Lo que dicen nuestros clientes</h2>
+                <p>Más de 1,000 desarrolladores han usado nuestras plantillas</p>
+            </div>
+            <div class="testimonials-grid">
+                <div class="testimonial-card">
+                    <div class="testimonial-header">
+                        <div class="testimonial-avatar">
+                            <i class="fas fa-user"></i>
+                        </div>
+                        <div class="testimonial-name">
+                            <h4>María López</h4>
+                            <p>Desarrolladora Frontend</p>
+                        </div>
+                    </div>
+                    <div class="testimonial-rating">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                    </div>
+                    <p>"La plantilla de e-commerce me ahorró semanas de trabajo. El código es limpio y bien documentado, lo que me permitió personalizarla fácilmente para mi cliente."</p>
+                </div>
+                <div class="testimonial-card">
+                    <div class="testimonial-header">
+                        <div class="testimonial-avatar">
+                            <i class="fas fa-user"></i>
+                        </div>
+                        <div class="testimonial-name">
+                            <h4>Carlos Rodríguez</h4>
+                            <p>Diseñador Freelance</p>
+                        </div>
+                    </div>
+                    <div class="testimonial-rating">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star-half-alt"></i>
+                    </div>
+                    <p>"Increíble calidad por el precio. La plantilla de portfolio es exactamente lo que necesitaba para mostrar mi trabajo. La respuesta del soporte fue rápida cuando tuve una duda."</p>
+                </div>
+                <div class="testimonial-card">
+                    <div class="testimonial-header">
+                        <div class="testimonial-avatar">
+                            <i class="fas fa-user"></i>
+                        </div>
+                        <div class="testimonial-name">
+                            <h4>Ana Martínez</h4>
+                            <p>Emprendedora</p>
+                        </div>
+                    </div>
+                    <div class="testimonial-rating">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                    </div>
+                    <p>"Lanzar mi blog fue mucho más fácil con esta plantilla. El diseño responsivo funciona perfectamente en todos los dispositivos y el SEO está bien implementado."</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ -->
+    <section id="faq" class="section faq">
+        <div class="container">
+            <div class="section-title">
+                <h2>Preguntas Frecuentes</h2>
+                <p>Aquí respondemos las dudas más comunes</p>
+            </div>
+            <div class="faq-grid">
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <h3>¿Qué incluye cada plantilla?</h3>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Cada plantilla incluye todos los archivos HTML, CSS, JavaScript y assets necesarios. También recibirás documentación completa con instrucciones de instalación, personalización y solución de problemas.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <h3>¿Puedo usar las plantillas para clientes?</h3>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Sí, nuestras licencias te permiten usar las plantillas para proyectos de clientes. La licencia estándar cubre un proyecto por cliente. Si necesitas usar la plantilla para múltiples proyectos, contáctanos para una licencia extendida.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <h3>¿Cómo recibo las actualizaciones?</h3>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Si tienes un plan Profesional o Empresa, recibirás notificaciones por email cuando haya actualizaciones disponibles. Podrás descargar las nuevas versiones desde tu área de cliente.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <h3>¿Qué métodos de pago aceptan?</h3>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Aceptamos tarjetas de crédito/débito (Visa, MasterCard, American Express), PayPal y transferencias bancarias. Todos los pagos se procesan de forma segura a través de nuestra pasarela de pago.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question">
+                        <h3>¿Ofrecen soporte personalizado?</h3>
+                        <i class="fas fa-chevron-down"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Sí, todos nuestros planes incluyen soporte. El plan Básico incluye soporte por email con respuesta en 24 horas. Los planes superiores incluyen soporte prioritario y acceso a chat en vivo durante horario comercial.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="cta">
+        <div class="container">
+            <h2>Impulsa tus proyectos con nuestras plantillas</h2>
+            <p>Ahorra tiempo y dinero con nuestras plantillas profesionales. Ideal para freelancers, agencias y emprendedores.</p>
+            <a href="#pricing" class="btn btn-accent">Ver Planes de Precios</a>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer id="contact">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <h3>WebTemplates</h3>
+                    <p>Plantillas HTML/CSS premium para desarrolladores y diseñadores que buscan calidad y ahorro de tiempo.</p>
+                    <div class="footer-social">
+                        <a href="#" class="social-link"><i class="fab fa-github"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-instagram"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-linkedin"></i></a>
+                    </div>
+                </div>
+                <div class="footer-col">
+                    <h3>Enlaces</h3>
+                    <ul class="footer-links">
+                        <li><a href="#features">Características</a></li>
+                        <li><a href="#templates">Plantillas</a></li>
+                        <li><a href="#pricing">Precios</a></li>
+                        <li><a href="#faq">FAQ</a></li>
+                        <li><a href="#">Blog</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h3>Plantillas</h3>
+                    <ul class="footer-links">
+                        <li><a href="#">E-Commerce</a></li>
+                        <li><a href="#">Portfolio</a></li>
+                        <li><a href="#">Blog</a></li>
+                        <li><a href="#">Landing Page</a></li>
+                        <li><a href="#">Dashboard</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h3>Contacto</h3>
+                    <ul class="footer-links">
+                        <li><i class="fas fa-envelope"></i> info@webtemplates.com</li>
+                        <li><i class="fas fa-phone"></i> +1 (555) 123-4567</li>
+                        <li><i class="fas fa-map-marker-alt"></i> Madrid, España</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="copyright">
+                <p>&copy; 2023 WebTemplates. Todos los derechos reservados.</p>
+            </div>
+        </div>
     </footer>
 
-    <script src="script.js"></script>
+    <script>
+        // Funcionalidad para FAQ
+        document.querySelectorAll('.faq-question').forEach(question => {
+            question.addEventListener('click', () => {
+                const item = question.parentNode;
+                item.classList.toggle('active');
+            });
+        });
+
+        // Smooth scrolling para enlaces del menú
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    window.scrollTo({
+                        top: target.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+
+        // Cambiar header al hacer scroll
+        window.addEventListener('scroll', () => {
+            const header = document.querySelector('header');
+            if (window.scrollY > 50) {
+                header.style.boxShadow = '0 5px 20px rgba(0, 0, 0, 0.1)';
+            } else {
+                header.style.boxShadow = '0 2px 10px rgba(0, 0, 0, 0.1)';
+            }
+        });
+    </script>
 </body>
 </html>
