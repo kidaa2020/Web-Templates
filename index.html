@@ -3,129 +3,52 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>WebTemplates - Plantillas HTML/CSS Premium</title>
+    <title>Rust Tracker - Servidores Oficiales</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css">
     <style>
-        /* Variables CSS */
         :root {
-            --primary: #2563eb;
-            --primary-dark: #1d4ed8;
-            --secondary: #0f172a;
-            --accent: #7c3aed;
-            --accent-dark: #6d28d9;
-            --light: #f8fafc;
-            --gray: #64748b;
-            --light-gray: #e2e8f0;
-            --success: #10b981;
-            --white: #ffffff;
-            --shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-            --transition: all 0.3s ease;
+            --rust-primary: #e06c1f;
+            --rust-secondary: #a3470a;
+            --rust-dark: #1a1a1a;
+            --rust-darker: #121212;
+            --rust-gray: #333333;
+            --rust-light: #f0f0f0;
+            --rust-blue: #3a6ea5;
+            --rust-red: #d9534f;
+            --rust-green: #5cb85c;
         }
-
-        /* Reset y estilos base */
+        
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
         
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            line-height: 1.6;
-            color: var(--secondary);
-            background-color: #f1f5f9;
+            background: var(--rust-darker);
+            color: var(--rust-light);
+            background-image: 
+                radial-gradient(circle at 10% 20%, rgba(224, 108, 31, 0.1) 0%, transparent 20%),
+                radial-gradient(circle at 90% 80%, rgba(163, 71, 10, 0.1) 0%, transparent 20%);
+            min-height: 100vh;
             overflow-x: hidden;
-        }
-        
-        a {
-            text-decoration: none;
-            color: var(--primary);
-            transition: var(--transition);
-        }
-        
-        img {
-            max-width: 100%;
         }
         
         .container {
             width: 90%;
-            max-width: 1200px;
+            max-width: 1400px;
             margin: 0 auto;
             padding: 0 15px;
         }
         
-        .btn {
-            display: inline-block;
-            padding: 12px 30px;
-            background: var(--primary);
-            color: white;
-            border-radius: 5px;
-            font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            transition: var(--transition);
-            border: none;
-            cursor: pointer;
-            font-size: 16px;
-            box-shadow: var(--shadow);
-        }
-        
-        .btn:hover {
-            background: var(--primary-dark);
-            transform: translateY(-3px);
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
-        }
-        
-        .btn-accent {
-            background: var(--accent);
-        }
-        
-        .btn-accent:hover {
-            background: var(--accent-dark);
-        }
-        
-        .section {
-            padding: 80px 0;
-        }
-        
-        .section-title {
-            text-align: center;
-            margin-bottom: 60px;
-        }
-        
-        .section-title h2 {
-            font-size: 36px;
-            color: var(--secondary);
-            margin-bottom: 15px;
-            position: relative;
-            display: inline-block;
-        }
-        
-        .section-title h2::after {
-            content: '';
-            position: absolute;
-            bottom: -10px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 70px;
-            height: 4px;
-            background: var(--primary);
-            border-radius: 2px;
-        }
-        
-        .section-title p {
-            font-size: 18px;
-            color: var(--gray);
-            max-width: 700px;
-            margin: 20px auto 0;
-        }
-        
         /* Header */
         header {
-            background: var(--white);
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-            position: fixed;
-            width: 100%;
+            background: rgba(26, 26, 26, 0.9);
+            border-bottom: 2px solid var(--rust-primary);
+            backdrop-filter: blur(10px);
+            position: sticky;
             top: 0;
             z-index: 1000;
         }
@@ -134,668 +57,407 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 20px 0;
+            padding: 15px 0;
         }
         
         .logo {
-            font-size: 28px;
-            font-weight: 700;
-            color: var(--secondary);
             display: flex;
             align-items: center;
+            gap: 10px;
         }
         
-        .logo span {
-            color: var(--primary);
+        .logo img {
+            height: 40px;
         }
         
-        .logo i {
-            margin-right: 10px;
-            color: var(--accent);
+        .logo-text {
+            font-size: 24px;
+            font-weight: 700;
+            background: linear-gradient(to right, var(--rust-primary), #f0a64b);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
         }
         
         .nav-links {
             display: flex;
             list-style: none;
-        }
-        
-        .nav-links li {
-            margin-left: 30px;
+            gap: 25px;
         }
         
         .nav-links a {
-            color: var(--secondary);
+            color: var(--rust-light);
+            text-decoration: none;
             font-weight: 500;
+            padding: 5px 10px;
+            border-radius: 4px;
+            transition: all 0.3s ease;
             position: relative;
-            padding: 5px 0;
         }
         
-        .nav-links a::after {
+        .nav-links a:hover {
+            color: var(--rust-primary);
+        }
+        
+        .nav-links a.active {
+            color: var(--rust-primary);
+        }
+        
+        .nav-links a.active::after {
             content: '';
             position: absolute;
-            bottom: 0;
+            bottom: -8px;
             left: 0;
-            width: 0;
-            height: 2px;
-            background: var(--primary);
-            transition: var(--transition);
-        }
-        
-        .nav-links a:hover::after {
             width: 100%;
+            height: 3px;
+            background: var(--rust-primary);
+            border-radius: 3px;
         }
         
         /* Hero Section */
         .hero {
-            padding: 180px 0 100px;
-            background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
-            color: white;
+            padding: 60px 0 40px;
             text-align: center;
-            position: relative;
-            overflow: hidden;
-        }
-        
-        .hero::before {
-            content: '';
-            position: absolute;
-            top: -100px;
-            right: -100px;
-            width: 300px;
-            height: 300px;
-            border-radius: 50%;
-            background: rgba(255, 255, 255, 0.1);
-        }
-        
-        .hero::after {
-            content: '';
-            position: absolute;
-            bottom: -150px;
-            left: -150px;
-            width: 400px;
-            height: 400px;
-            border-radius: 50%;
-            background: rgba(255, 255, 255, 0.05);
-        }
-        
-        .hero-content {
-            max-width: 800px;
-            margin: 0 auto;
-            position: relative;
-            z-index: 2;
         }
         
         .hero h1 {
-            font-size: 48px;
-            margin-bottom: 20px;
-            line-height: 1.2;
-            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+            font-size: 42px;
+            margin-bottom: 15px;
+            background: linear-gradient(to right, #fff, var(--rust-primary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
         }
         
         .hero p {
-            font-size: 20px;
-            margin-bottom: 30px;
-            opacity: 0.9;
+            font-size: 18px;
             max-width: 700px;
-            margin-left: auto;
-            margin-right: auto;
+            margin: 0 auto 30px;
+            color: #aaa;
         }
         
-        .hero-buttons {
+        .stats {
             display: flex;
             justify-content: center;
-            gap: 15px;
+            gap: 30px;
+            flex-wrap: wrap;
             margin-top: 30px;
         }
         
-        /* Features */
-        .features {
-            background: var(--white);
-        }
-        
-        .features-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 30px;
-        }
-        
-        .feature-card {
-            background: var(--white);
+        .stat-card {
+            background: rgba(40, 40, 40, 0.7);
             border-radius: 10px;
-            padding: 30px;
-            text-align: center;
-            box-shadow: var(--shadow);
-            transition: var(--transition);
-            border: 1px solid var(--light-gray);
+            padding: 20px;
+            min-width: 200px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(224, 108, 31, 0.3);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
         }
         
-        .feature-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
-            border-color: var(--primary);
+        .stat-card .number {
+            font-size: 32px;
+            font-weight: 700;
+            color: var(--rust-primary);
+            margin-bottom: 5px;
         }
         
-        .feature-icon {
-            width: 80px;
-            height: 80px;
-            background: rgba(37, 99, 235, 0.1);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin: 0 auto 20px;
-            font-size: 30px;
-            color: var(--primary);
-            transition: var(--transition);
+        .stat-card .label {
+            font-size: 16px;
+            color: #aaa;
         }
         
-        .feature-card:hover .feature-icon {
-            background: var(--primary);
-            color: var(--white);
-        }
-        
-        .feature-card h3 {
-            font-size: 22px;
-            margin-bottom: 15px;
-        }
-        
-        /* Templates */
-        .templates {
-            background: var(--light);
-        }
-        
-        .templates-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-            gap: 30px;
-        }
-        
-        .template-card {
-            background: var(--white);
+        /* Filters */
+        .filters {
+            background: rgba(30, 30, 30, 0.8);
             border-radius: 10px;
-            overflow: hidden;
-            box-shadow: var(--shadow);
-            transition: var(--transition);
-            position: relative;
+            padding: 20px;
+            margin: 30px 0;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(224, 108, 31, 0.3);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
         }
         
-        .template-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
-        }
-        
-        .template-img {
-            height: 250px;
-            position: relative;
-            overflow: hidden;
-        }
-        
-        .template-img img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            transition: var(--transition);
-        }
-        
-        .template-card:hover .template-img img {
-            transform: scale(1.05);
-        }
-        
-        .template-overlay {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(37, 99, 235, 0.8);
+        .filter-row {
             display: flex;
-            align-items: center;
-            justify-content: center;
-            opacity: 0;
-            transition: var(--transition);
-        }
-        
-        .template-card:hover .template-overlay {
-            opacity: 1;
-        }
-        
-        .template-overlay .btn {
-            background: var(--white);
-            color: var(--primary);
-        }
-        
-        .template-overlay .btn:hover {
-            background: var(--secondary);
-            color: var(--white);
-        }
-        
-        .template-info {
-            padding: 25px;
-        }
-        
-        .template-info h3 {
-            font-size: 22px;
-            margin-bottom: 10px;
-        }
-        
-        .template-info p {
-            color: var(--gray);
-            margin-bottom: 20px;
-        }
-        
-        .template-tags {
-            display: flex;
+            gap: 15px;
             flex-wrap: wrap;
-            gap: 10px;
-            margin-bottom: 20px;
         }
         
-        .tag {
-            background: var(--light-gray);
-            color: var(--secondary);
-            padding: 5px 12px;
-            border-radius: 20px;
-            font-size: 14px;
+        .filter-group {
+            flex: 1;
+            min-width: 200px;
         }
         
-        .template-footer {
+        .filter-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: #aaa;
+        }
+        
+        .filter-group select, 
+        .filter-group input {
+            width: 100%;
+            padding: 10px 15px;
+            background: rgba(20, 20, 20, 0.8);
+            border: 1px solid var(--rust-gray);
+            border-radius: 5px;
+            color: var(--rust-light);
+            font-size: 16px;
+        }
+        
+        .filter-group select:focus, 
+        .filter-group input:focus {
+            outline: none;
+            border-color: var(--rust-primary);
+        }
+        
+        .search-box {
+            position: relative;
+            flex: 2;
+        }
+        
+        .search-box i {
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #777;
+        }
+        
+        .search-box input {
+            padding-left: 45px;
+        }
+        
+        /* Servers List */
+        .servers-section {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 25px;
+            margin-bottom: 50px;
+        }
+        
+        @media (max-width: 992px) {
+            .servers-section {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        .servers-list {
+            background: rgba(30, 30, 30, 0.8);
+            border-radius: 10px;
+            overflow: hidden;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(224, 108, 31, 0.3);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            max-height: 800px;
+            overflow-y: auto;
+        }
+        
+        .servers-list-header {
+            padding: 15px 20px;
+            background: rgba(40, 40, 40, 0.9);
+            border-bottom: 1px solid var(--rust-gray);
             display: flex;
             justify-content: space-between;
             align-items: center;
         }
         
-        .price {
-            font-size: 24px;
-            font-weight: 700;
-            color: var(--secondary);
+        .servers-list-header h2 {
+            font-size: 22px;
+            color: var(--rust-primary);
         }
         
-        /* Preview Section */
-        .preview-section {
-            background: var(--white);
-            padding: 100px 0;
-        }
-        
-        .preview-container {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 40px;
-        }
-        
-        .preview-selector {
-            display: flex;
-            gap: 20px;
-            flex-wrap: wrap;
-            justify-content: center;
-        }
-        
-        .preview-btn {
-            padding: 12px 25px;
-            background: var(--light);
-            border: 2px solid var(--light-gray);
-            border-radius: 30px;
-            font-weight: 600;
+        .server-item {
+            padding: 15px 20px;
+            border-bottom: 1px solid var(--rust-gray);
             cursor: pointer;
-            transition: var(--transition);
+            transition: all 0.3s ease;
         }
         
-        .preview-btn.active, .preview-btn:hover {
-            background: var(--primary);
-            color: var(--white);
-            border-color: var(--primary);
+        .server-item:hover {
+            background: rgba(224, 108, 31, 0.1);
         }
         
-        .preview-display {
-            width: 100%;
-            max-width: 1000px;
-            height: 500px;
-            background: var(--light);
+        .server-item.active {
+            background: rgba(224, 108, 31, 0.2);
+            border-left: 3px solid var(--rust-primary);
+        }
+        
+        .server-name {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 5px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .server-name i {
+            color: var(--rust-green);
+        }
+        
+        .server-details {
+            display: flex;
+            justify-content: space-between;
+            color: #aaa;
+            font-size: 14px;
+        }
+        
+        .server-players {
+            color: var(--rust-primary);
+            font-weight: 600;
+        }
+        
+        /* Map Section */
+        .map-section {
+            background: rgba(30, 30, 30, 0.8);
             border-radius: 10px;
             overflow: hidden;
-            box-shadow: 0 15px 50px rgba(0, 0, 0, 0.2);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(224, 108, 31, 0.3);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            height: 800px;
             position: relative;
         }
         
-        .preview-header {
-            height: 40px;
-            background: var(--secondary);
-            display: flex;
-            align-items: center;
-            padding: 0 15px;
+        #server-map {
+            width: 100%;
+            height: 100%;
+            border-radius: 10px;
         }
         
-        .preview-dots {
+        .map-overlay {
+            position: absolute;
+            bottom: 20px;
+            left: 20px;
+            right: 20px;
+            background: rgba(26, 26, 26, 0.9);
+            border-radius: 10px;
+            padding: 20px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+        
+        .server-info h3 {
+            color: var(--rust-primary);
+            margin-bottom: 15px;
+            font-size: 20px;
+        }
+        
+        .info-grid {
+            display: grid;
+            grid-template-columns: auto auto;
+            gap: 10px 20px;
+        }
+        
+        .info-label {
+            color: #aaa;
+        }
+        
+        .info-value {
+            color: var(--rust-light);
+            font-weight: 500;
+        }
+        
+        .server-status {
             display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .status-online {
+            display: inline-block;
+            width: 12px;
+            height: 12px;
+            background: var(--rust-green);
+            border-radius: 50%;
+        }
+        
+        .server-controls {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+        
+        .btn {
+            padding: 12px 20px;
+            background: var(--rust-primary);
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
             gap: 8px;
         }
         
-        .preview-dot {
-            width: 12px;
-            height: 12px;
-            border-radius: 50%;
+        .btn:hover {
+            background: var(--rust-secondary);
+            transform: translateY(-2px);
         }
         
-        .preview-dot:nth-child(1) {
-            background: #ff5f56;
+        .btn-outline {
+            background: transparent;
+            border: 2px solid var(--rust-primary);
+            color: var(--rust-primary);
         }
         
-        .preview-dot:nth-child(2) {
-            background: #ffbd2e;
+        .btn-outline:hover {
+            background: rgba(224, 108, 31, 0.2);
         }
         
-        .preview-dot:nth-child(3) {
-            background: #27c93f;
-        }
-        
-        .preview-content {
-            height: calc(100% - 40px);
-            overflow-y: auto;
-            padding: 20px;
-            display: none;
-        }
-        
-        .preview-content.active {
-            display: block;
-        }
-        
-        /* Pricing */
-        .pricing {
-            background: var(--light);
-        }
-        
-        .pricing-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 30px;
-        }
-        
-        .pricing-card {
-            background: var(--white);
-            border-radius: 10px;
-            padding: 40px 30px;
-            text-align: center;
-            box-shadow: var(--shadow);
-            position: relative;
-            transition: var(--transition);
-            border: 1px solid var(--light-gray);
-        }
-        
-        .pricing-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
-            border-color: var(--primary);
-        }
-        
-        .popular-tag {
+        .map-legend {
             position: absolute;
-            top: 0;
-            right: 30px;
-            background: var(--accent);
-            color: white;
-            padding: 5px 15px;
-            border-radius: 0 0 5px 5px;
+            top: 20px;
+            right: 20px;
+            background: rgba(26, 26, 26, 0.9);
+            border-radius: 10px;
+            padding: 15px;
+        }
+        
+        .legend-title {
+            color: var(--rust-primary);
+            margin-bottom: 10px;
             font-weight: 600;
+        }
+        
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 8px;
+        }
+        
+        .legend-color {
+            width: 20px;
+            height: 20px;
+            border-radius: 4px;
+        }
+        
+        .legend-label {
             font-size: 14px;
-        }
-        
-        .pricing-icon {
-            font-size: 50px;
-            color: var(--primary);
-            margin-bottom: 20px;
-        }
-        
-        .pricing-title {
-            font-size: 24px;
-            margin-bottom: 15px;
-        }
-        
-        .pricing-price {
-            font-size: 40px;
-            font-weight: 700;
-            margin-bottom: 25px;
-            color: var(--secondary);
-        }
-        
-        .pricing-price span {
-            font-size: 16px;
-            color: var(--gray);
-        }
-        
-        .pricing-features {
-            list-style: none;
-            margin-bottom: 30px;
-            text-align: left;
-        }
-        
-        .pricing-features li {
-            padding: 10px 0;
-            border-bottom: 1px solid var(--light-gray);
-            display: flex;
-            align-items: center;
-        }
-        
-        .pricing-features li:last-child {
-            border-bottom: none;
-        }
-        
-        .pricing-features li i {
-            color: var(--success);
-            margin-right: 10px;
-        }
-        
-        /* Testimonials */
-        .testimonials {
-            background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
-            color: white;
-            position: relative;
-            overflow: hidden;
-        }
-        
-        .testimonials::before {
-            content: '';
-            position: absolute;
-            top: -100px;
-            right: -100px;
-            width: 300px;
-            height: 300px;
-            border-radius: 50%;
-            background: rgba(255, 255, 255, 0.1);
-        }
-        
-        .testimonials::after {
-            content: '';
-            position: absolute;
-            bottom: -150px;
-            left: -150px;
-            width: 400px;
-            height: 400px;
-            border-radius: 50%;
-            background: rgba(255, 255, 255, 0.05);
-        }
-        
-        .testimonials .section-title h2,
-        .testimonials .section-title p {
-            color: white;
-        }
-        
-        .testimonials-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-            gap: 30px;
-            position: relative;
-            z-index: 2;
-        }
-        
-        .testimonial-card {
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 10px;
-            padding: 30px;
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-        }
-        
-        .testimonial-header {
-            display: flex;
-            align-items: center;
-            margin-bottom: 20px;
-        }
-        
-        .testimonial-avatar {
-            width: 60px;
-            height: 60px;
-            border-radius: 50%;
-            background: var(--white);
-            margin-right: 15px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 24px;
-            color: var(--primary);
-        }
-        
-        .testimonial-name h4 {
-            font-size: 18px;
-        }
-        
-        .testimonial-name p {
-            opacity: 0.8;
-        }
-        
-        .testimonial-rating {
-            color: #ffc107;
-            margin: 10px 0;
-        }
-        
-        /* FAQ */
-        .faq {
-            background: var(--white);
-        }
-        
-        .faq-grid {
-            display: grid;
-            grid-template-columns: 1fr;
-            gap: 20px;
-            max-width: 800px;
-            margin: 0 auto;
-        }
-        
-        .faq-item {
-            background: var(--white);
-            border-radius: 10px;
-            padding: 25px;
-            box-shadow: var(--shadow);
-            border: 1px solid var(--light-gray);
-        }
-        
-        .faq-question {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            cursor: pointer;
-        }
-        
-        .faq-question h3 {
-            font-size: 20px;
-        }
-        
-        .faq-question i {
-            font-size: 20px;
-            transition: var(--transition);
-        }
-        
-        .faq-answer {
-            max-height: 0;
-            overflow: hidden;
-            transition: var(--transition);
-            color: var(--gray);
-        }
-        
-        .faq-item.active .faq-answer {
-            max-height: 500px;
-            margin-top: 20px;
-        }
-        
-        .faq-item.active .faq-question i {
-            transform: rotate(180deg);
-        }
-        
-        /* CTA */
-        .cta {
-            background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
-            color: white;
-            text-align: center;
-            padding: 100px 0;
-            position: relative;
-            overflow: hidden;
-        }
-        
-        .cta::before {
-            content: '';
-            position: absolute;
-            top: -100px;
-            right: -100px;
-            width: 300px;
-            height: 300px;
-            border-radius: 50%;
-            background: rgba(255, 255, 255, 0.1);
-        }
-        
-        .cta::after {
-            content: '';
-            position: absolute;
-            bottom: -150px;
-            left: -150px;
-            width: 400px;
-            height: 400px;
-            border-radius: 50%;
-            background: rgba(255, 255, 255, 0.05);
-        }
-        
-        .cta-content {
-            position: relative;
-            z-index: 2;
-        }
-        
-        .cta h2 {
-            font-size: 36px;
-            margin-bottom: 20px;
-        }
-        
-        .cta p {
-            max-width: 700px;
-            margin: 0 auto 30px;
-            font-size: 18px;
-            opacity: 0.9;
         }
         
         /* Footer */
         footer {
-            background: var(--secondary);
-            color: white;
-            padding: 70px 0 30px;
+            background: rgba(18, 18, 18, 0.9);
+            border-top: 1px solid var(--rust-gray);
+            padding: 40px 0;
+            margin-top: 50px;
         }
         
-        .footer-grid {
+        .footer-content {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 40px;
-            margin-bottom: 50px;
+            gap: 30px;
         }
         
         .footer-col h3 {
-            font-size: 20px;
+            color: var(--rust-primary);
             margin-bottom: 20px;
-            position: relative;
-        }
-        
-        .footer-col h3::after {
-            content: '';
-            position: absolute;
-            left: 0;
-            bottom: -10px;
-            width: 50px;
-            height: 2px;
-            background: var(--primary);
+            font-size: 20px;
         }
         
         .footer-links {
@@ -803,91 +465,66 @@
         }
         
         .footer-links li {
-            margin-bottom: 12px;
+            margin-bottom: 10px;
         }
         
         .footer-links a {
-            color: #cbd5e1;
-            transition: var(--transition);
+            color: #aaa;
+            text-decoration: none;
+            transition: all 0.3s ease;
         }
         
         .footer-links a:hover {
-            color: var(--white);
+            color: var(--rust-primary);
             padding-left: 5px;
         }
         
-        .footer-social {
-            display: flex;
-            gap: 15px;
-            margin-top: 20px;
-        }
-        
-        .social-link {
-            width: 40px;
-            height: 40px;
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: var(--transition);
-        }
-        
-        .social-link:hover {
-            background: var(--primary);
-            transform: translateY(-5px);
-        }
-        
-        .copyright {
+        .footer-bottom {
             text-align: center;
             padding-top: 30px;
-            border-top: 1px solid rgba(255, 255, 255, 0.1);
-            color: #94a3b8;
+            margin-top: 30px;
+            border-top: 1px solid var(--rust-gray);
+            color: #777;
             font-size: 14px;
         }
         
         /* Responsive */
-        @media (max-width: 992px) {
-            .preview-display {
-                height: 400px;
-            }
-        }
-        
         @media (max-width: 768px) {
-            .hero {
-                padding: 150px 0 80px;
-            }
-            
-            .hero h1 {
-                font-size: 36px;
-            }
-            
-            .hero-buttons {
+            .navbar {
                 flex-direction: column;
-                align-items: center;
-            }
-            
-            .section {
-                padding: 60px 0;
-            }
-            
-            .section-title h2 {
-                font-size: 30px;
+                gap: 15px;
             }
             
             .nav-links {
-                display: none;
+                flex-wrap: wrap;
+                justify-content: center;
             }
             
-            .preview-display {
-                height: 350px;
+            .map-overlay {
+                grid-template-columns: 1fr;
+            }
+            
+            .hero h1 {
+                font-size: 32px;
             }
         }
         
-        @media (max-width: 576px) {
-            .preview-display {
-                height: 300px;
-            }
+        /* Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        
+        ::-webkit-scrollbar-track {
+            background: var(--rust-dark);
+        }
+        
+        ::-webkit-scrollbar-thumb {
+            background: var(--rust-gray);
+            border-radius: 4px;
+        }
+        
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--rust-primary);
         }
     </style>
 </head>
@@ -896,13 +533,16 @@
     <header>
         <div class="container">
             <nav class="navbar">
-                <a href="#" class="logo"><i class="fas fa-code"></i>Web<span>Templates</span></a>
+                <div class="logo">
+                    <i class="fas fa-fire" style="color: var(--rust-primary); font-size: 28px;"></i>
+                    <div class="logo-text">Rust Tracker</div>
+                </div>
                 <ul class="nav-links">
-                    <li><a href="#features">Características</a></li>
-                    <li><a href="#templates">Plantillas</a></li>
-                    <li><a href="#preview">Ejemplos</a></li>
-                    <li><a href="#pricing">Precios</a></li>
-                    <li><a href="#faq">FAQ</a></li>
+                    <li><a href="#" class="active">Servidores</a></li>
+                    <li><a href="#">Mapas</a></li>
+                    <li><a href="#">Estadísticas</a></li>
+                    <li><a href="#">Comunidad</a></li>
+                    <li><a href="#">Soporte</a></li>
                 </ul>
             </nav>
         </div>
@@ -911,589 +551,432 @@
     <!-- Hero Section -->
     <section class="hero">
         <div class="container">
-            <div class="hero-content">
-                <h1>Plantillas HTML/CSS Premium para tu próximo proyecto</h1>
-                <p>Impulsa tu presencia online con nuestras plantillas profesionales, completamente responsivas y fáciles de personalizar.</p>
-                <div class="hero-buttons">
-                    <a href="#templates" class="btn">Ver Plantillas</a>
-                    <a href="#pricing" class="btn btn-accent">Comprar Ahora</a>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Features -->
-    <section id="features" class="section features">
-        <div class="container">
-            <div class="section-title">
-                <h2>¿Por qué elegir nuestras plantillas?</h2>
-                <p>Diseñadas para ofrecer la mejor experiencia de desarrollo y usuario</p>
-            </div>
-            <div class="features-grid">
-                <div class="feature-card">
-                    <div class="feature-icon">
-                        <i class="fas fa-mobile-alt"></i>
-                    </div>
-                    <h3>Completamente Responsive</h3>
-                    <p>Se adaptan perfectamente a cualquier dispositivo: móviles, tablets y escritorio.</p>
-                </div>
-                <div class="feature-card">
-                    <div class="feature-icon">
-                        <i class="fas fa-code"></i>
-                    </div>
-                    <h3>Código Limpio</h3>
-                    <p>HTML y CSS bien estructurado, comentado y fácil de modificar.</p>
-                </div>
-                <div class="feature-card">
-                    <div class="feature-icon">
-                        <i class="fas fa-bolt"></i>
-                    </div>
-                    <h3>Rápidas y Optimizadas</h3>
-                    <p>Diseño optimizado para máxima velocidad de carga y rendimiento.</p>
-                </div>
-                <div class="feature-card">
-                    <div class="feature-icon">
-                        <i class="fas fa-palette"></i>
-                    </div>
-                    <h3>Personalizables</h3>
-                    <p>Cambia colores, fuentes y diseños con solo modificar algunas variables.</p>
-                </div>
-                <div class="feature-card">
-                    <div class="feature-icon">
-                        <i class="fas fa-file-alt"></i>
-                    </div>
-                    <h3>Documentación Completa</h3>
-                    <p>Guías paso a paso para personalizar e implementar tu plantilla.</p>
-                </div>
-                <div class="feature-card">
-                    <div class="feature-icon">
-                        <i class="fas fa-headset"></i>
-                    </div>
-                    <h3>Soporte 24/7</h3>
-                    <p>Nuestro equipo está disponible para ayudarte con cualquier consulta.</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Templates -->
-    <section id="templates" class="section templates">
-        <div class="container">
-            <div class="section-title">
-                <h2>Nuestras Plantillas Populares</h2>
-                <p>Diseños modernos y profesionales para diferentes necesidades</p>
-            </div>
-            <div class="templates-grid">
-                <div class="template-card">
-                    <div class="template-img">
-                        <img src="https://images.unsplash.com/photo-1551434678-e076c223a692?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="E-Commerce Template">
-                        <div class="template-overlay">
-                            <a href="#" class="btn">Ver Demo</a>
-                        </div>
-                    </div>
-                    <div class="template-info">
-                        <h3>Tienda Online Premium</h3>
-                        <p>Plantilla completa para tienda online con carrito de compras, filtros de productos y diseño moderno.</p>
-                        <div class="template-tags">
-                            <span class="tag">E-Commerce</span>
-                            <span class="tag">Responsive</span>
-                            <span class="tag">Carrito</span>
-                        </div>
-                        <div class="template-footer">
-                            <div class="price">$29</div>
-                            <a href="#" class="btn">Comprar</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="template-card">
-                    <div class="template-img">
-                        <img src="https://images.unsplash.com/photo-1467232004584-a241de8bcf5d?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Portfolio Template">
-                        <div class="template-overlay">
-                            <a href="#" class="btn">Ver Demo</a>
-                        </div>
-                    </div>
-                    <div class="template-info">
-                        <h3>Portfolio Creativo</h3>
-                        <p>Elegante plantilla para mostrar tu trabajo, habilidades y experiencia profesional.</p>
-                        <div class="template-tags">
-                            <span class="tag">Portfolio</span>
-                            <span class="tag">Minimalista</span>
-                            <span class="tag">Animaciones</span>
-                        </div>
-                        <div class="template-footer">
-                            <div class="price">$24</div>
-                            <a href="#" class="btn">Comprar</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="template-card">
-                    <div class="template-img">
-                        <img src="https://images.unsplash.com/photo-1499750310107-5fef28a66643?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Blog Template">
-                        <div class="template-overlay">
-                            <a href="#" class="btn">Ver Demo</a>
-                        </div>
-                    </div>
-                    <div class="template-info">
-                        <h3>Plantilla para Blog</h3>
-                        <p>Diseño moderno para blog con categorías, búsqueda, comentarios y diseño de artículos.</p>
-                        <div class="template-tags">
-                            <span class="tag">Blog</span>
-                            <span class="tag">Lectura</span>
-                            <span class="tag">SEO</span>
-                        </div>
-                        <div class="template-footer">
-                            <div class="price">$22</div>
-                            <a href="#" class="btn">Comprar</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Preview Section -->
-    <section id="preview" class="section preview-section">
-        <div class="container">
-            <div class="section-title">
-                <h2>Ejemplos de Nuestras Plantillas</h2>
-                <p>Explora cómo se verían las páginas creadas con nuestras plantillas</p>
-            </div>
+            <h1>Servidores Oficiales de Rust</h1>
+            <p>Monitorea en tiempo real todos los servidores oficiales, revisa sus mapas, población y estado actual</p>
             
-            <div class="preview-container">
-                <div class="preview-selector">
-                    <div class="preview-btn active" data-preview="home">Página Principal</div>
-                    <div class="preview-btn" data-preview="services">Página de Servicios</div>
-                    <div class="preview-btn" data-preview="portfolio">Página de Portfolio</div>
-                    <div class="preview-btn" data-preview="contact">Página de Contacto</div>
+            <div class="stats">
+                <div class="stat-card">
+                    <div class="number">128</div>
+                    <div class="label">Servidores en línea</div>
+                </div>
+                <div class="stat-card">
+                    <div class="number">24,582</div>
+                    <div class="label">Jugadores activos</div>
+                </div>
+                <div class="stat-card">
+                    <div class="number">92%</div>
+                    <div class="label">Tasa de actividad</div>
+                </div>
+                <div class="stat-card">
+                    <div class="number">38</div>
+                    <div class="label">Mapas únicos</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Filters -->
+    <div class="container">
+        <div class="filters">
+            <div class="filter-row">
+                <div class="filter-group">
+                    <label>Región</label>
+                    <select>
+                        <option>Todas las regiones</option>
+                        <option>América del Norte</option>
+                        <option>América del Sur</option>
+                        <option>Europa</option>
+                        <option>Asia</option>
+                        <option>Oceanía</option>
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <label>Tamaño</label>
+                    <select>
+                        <option>Todos los tamaños</option>
+                        <option>Pequeño (50-100 jugadores)</option>
+                        <option>Mediano (100-200 jugadores)</option>
+                        <option>Grande (200-300 jugadores)</option>
+                        <option>Muy grande (300+ jugadores)</option>
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <label>Estado del Wipe</label>
+                    <select>
+                        <option>Cualquier estado</option>
+                        <option>Recién limpiado (&lt; 24h)</option>
+                        <option>Medio (&lt; 1 semana)</option>
+                        <option>Avanzado (&gt; 1 semana)</option>
+                    </select>
+                </div>
+                <div class="search-box filter-group">
+                    <label>Buscar servidor</label>
+                    <i class="fas fa-search"></i>
+                    <input type="text" placeholder="Nombre del servidor...">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="container">
+        <div class="servers-section">
+            <!-- Servers List -->
+            <div class="servers-list">
+                <div class="servers-list-header">
+                    <h2><i class="fas fa-server"></i> Servidores Oficiales</h2>
+                    <div>Actualizado: <span id="update-time">Hace 2 minutos</span></div>
                 </div>
                 
-                <div class="preview-display">
-                    <div class="preview-header">
-                        <div class="preview-dots">
-                            <div class="preview-dot"></div>
-                            <div class="preview-dot"></div>
-                            <div class="preview-dot"></div>
-                        </div>
+                <div class="server-item active">
+                    <div class="server-name">
+                        <i class="fas fa-signal"></i> Rustafied EU Main
                     </div>
-                    
-                    <div class="preview-content active" id="home-preview">
-                        <div style="background: linear-gradient(to right, #2563eb, #7c3aed); padding: 60px 20px; text-align: center; color: white;">
-                            <h2 style="font-size: 36px; margin-bottom: 20px;">Impulsa tu Negocio Online</h2>
-                            <p style="max-width: 600px; margin: 0 auto 30px; font-size: 18px;">Diseño profesional que convierte visitantes en clientes</p>
-                            <button style="background: white; color: #2563eb; border: none; padding: 12px 30px; border-radius: 30px; font-weight: bold; cursor: pointer;">Ver Demostración</button>
-                        </div>
-                        
-                        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; padding: 60px 20px;">
-                            <div style="text-align: center; padding: 30px; background: #f8fafc; border-radius: 10px;">
-                                <i style="font-size: 40px; color: #2563eb; margin-bottom: 20px;" class="fas fa-rocket"></i>
-                                <h3 style="margin-bottom: 15px;">Diseño Moderno</h3>
-                                <p>Interfaz limpia y profesional que destaca tu contenido</p>
-                            </div>
-                            <div style="text-align: center; padding: 30px; background: #f8fafc; border-radius: 10px;">
-                                <i style="font-size: 40px; color: #2563eb; margin-bottom: 20px;" class="fas fa-mobile-alt"></i>
-                                <h3 style="margin-bottom: 15px;">Completamente Responsive</h3>
-                                <p>Se adapta perfectamente a cualquier dispositivo</p>
-                            </div>
-                            <div style="text-align: center; padding: 30px; background: #f8fafc; border-radius: 10px;">
-                                <i style="font-size: 40px; color: #2563eb; margin-bottom: 20px;" class="fas fa-bolt"></i>
-                                <h3 style="margin-bottom: 15px;">Rendimiento Óptimo</h3>
-                                <p>Código optimizado para máxima velocidad</p>
-                            </div>
-                        </div>
+                    <div class="server-details">
+                        <div>Europa | 3500 tamaño</div>
+                        <div class="server-players">247/300</div>
                     </div>
-                    
-                    <div class="preview-content" id="services-preview">
-                        <div style="padding: 40px 20px; text-align: center;">
-                            <h2 style="font-size: 36px; margin-bottom: 20px;">Nuestros Servicios</h2>
-                            <p style="max-width: 700px; margin: 0 auto 40px; color: #64748b;">Soluciones profesionales para hacer crecer tu negocio</p>
+                </div>
+                
+                <div class="server-item">
+                    <div class="server-name">
+                        <i class="fas fa-signal"></i> Rustoria US Long
+                    </div>
+                    <div class="server-details">
+                        <div>América | 4250 tamaño</div>
+                        <div class="server-players">298/300</div>
+                    </div>
+                </div>
+                
+                <div class="server-item">
+                    <div class="server-name">
+                        <i class="fas fa-signal"></i> Moose Monthly EU
+                    </div>
+                    <div class="server-details">
+                        <div>Europa | 4000 tamaño</div>
+                        <div class="server-players">284/300</div>
+                    </div>
+                </div>
+                
+                <div class="server-item">
+                    <div class="server-name">
+                        <i class="fas fa-signal"></i> Rusty Moose AU Medium
+                    </div>
+                    <div class="server-details">
+                        <div>Oceanía | 3500 tamaño</div>
+                        <div class="server-players">187/250</div>
+                    </div>
+                </div>
+                
+                <div class="server-item">
+                    <div class="server-name">
+                        <i class="fas fa-signal"></i> Official HapisIsland US
+                    </div>
+                    <div class="server-details">
+                        <div>América | Hapis Island</div>
+                        <div class="server-players">156/200</div>
+                    </div>
+                </div>
+                
+                <div class="server-item">
+                    <div class="server-name">
+                        <i class="fas fa-signal"></i> Facepunch Singapore
+                    </div>
+                    <div class="server-details">
+                        <div>Asia | 3500 tamaño</div>
+                        <div class="server-players">221/300</div>
+                    </div>
+                </div>
+                
+                <div class="server-item">
+                    <div class="server-name">
+                        <i class="fas fa-signal"></i> Rustafied Odd US
+                    </div>
+                    <div class="server-details">
+                        <div>América | 3500 tamaño</div>
+                        <div class="server-players">274/300</div>
+                    </div>
+                </div>
+                
+                <div class="server-item">
+                    <div class="server-name">
+                        <i class="fas fa-signal"></i> Official Europe 1
+                    </div>
+                    <div class="server-details">
+                        <div>Europa | 4000 tamaño</div>
+                        <div class="server-players">298/300</div>
+                    </div>
+                </div>
+                
+                <div class="server-item">
+                    <div class="server-name">
+                        <i class="fas fa-signal"></i> Rusty Moose US Main
+                    </div>
+                    <div class="server-details">
+                        <div>América | 4250 tamaño</div>
+                        <div class="server-players">300/300</div>
+                    </div>
+                </div>
+                
+                <div class="server-item">
+                    <div class="server-name">
+                        <i class="fas fa-signal"></i> Facepunch London
+                    </div>
+                    <div class="server-details">
+                        <div>Europa | 3500 tamaño</div>
+                        <div class="server-players">247/300</div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Map Section -->
+            <div class="map-section">
+                <div id="server-map"></div>
+                
+                <div class="map-overlay">
+                    <div class="server-info">
+                        <h3>Rustafied EU Main</h3>
+                        <div class="info-grid">
+                            <div class="info-label">Estado:</div>
+                            <div class="info-value"><span class="server-status"><span class="status-online"></span> En línea</span></div>
                             
-                            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 30px;">
-                                <div style="background: #f8fafc; padding: 30px; border-radius: 10px;">
-                                    <i style="font-size: 40px; color: #2563eb; margin-bottom: 20px;" class="fas fa-laptop-code"></i>
-                                    <h3 style="margin-bottom: 15px;">Desarrollo Web</h3>
-                                    <p>Sitios web a medida con las últimas tecnologías</p>
-                                </div>
-                                <div style="background: #f8fafc; padding: 30px; border-radius: 10px;">
-                                    <i style="font-size: 40px; color: #2563eb; margin-bottom: 20px;" class="fas fa-shopping-cart"></i>
-                                    <h3 style="margin-bottom: 15px;">E-Commerce</h3>
-                                    <p>Tiendas online que convierten visitantes en clientes</p>
-                                </div>
-                                <div style="background: #f8fafc; padding: 30px; border-radius: 10px;">
-                                    <i style="font-size: 40px; color: #2563eb; margin-bottom: 20px;" class="fas fa-search"></i>
-                                    <h3 style="margin-bottom: 15px;">SEO</h3>
-                                    <p>Optimización para motores de búsqueda</p>
-                                </div>
-                                <div style="background: #f8fafc; padding: 30px; border-radius: 10px;">
-                                    <i style="font-size: 40px; color: #2563eb; margin-bottom: 20px;" class="fas fa-paint-brush"></i>
-                                    <h3 style="margin-bottom: 15px;">Diseño UI/UX</h3>
-                                    <p>Experiencias de usuario intuitivas y atractivas</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div class="preview-content" id="portfolio-preview">
-                        <div style="padding: 40px 20px;">
-                            <h2 style="text-align: center; font-size: 36px; margin-bottom: 40px;">Nuestro Portfolio</h2>
+                            <div class="info-label">IP:</div>
+                            <div class="info-value">eu.rustafied.com:28015</div>
                             
-                            <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 30px;">
-                                <div style="background: #f8fafc; border-radius: 10px; overflow: hidden;">
-                                    <div style="height: 200px; background: linear-gradient(to right, #2563eb, #7c3aed);"></div>
-                                    <div style="padding: 20px;">
-                                        <h3 style="margin-bottom: 10px;">Diseño Corporativo</h3>
-                                        <p style="color: #64748b;">Sitio web para empresa de tecnología</p>
-                                    </div>
-                                </div>
-                                <div style="background: #f8fafc; border-radius: 10px; overflow: hidden;">
-                                    <div style="height: 200px; background: linear-gradient(to right, #10b981, #3b82f6);"></div>
-                                    <div style="padding: 20px;">
-                                        <h3 style="margin-bottom: 10px;">Tienda Online</h3>
-                                        <p style="color: #64748b;">E-commerce para productos artesanales</p>
-                                    </div>
-                                </div>
-                                <div style="background: #f8fafc; border-radius: 10px; overflow: hidden;">
-                                    <div style="height: 200px; background: linear-gradient(to right, #8b5cf6, #ec4899);"></div>
-                                    <div style="padding: 20px;">
-                                        <h3 style="margin-bottom: 10px;">Blog Personal</h3>
-                                        <p style="color: #64748b;">Plataforma para creador de contenido</p>
-                                    </div>
-                                </div>
-                            </div>
+                            <div class="info-label">Ubicación:</div>
+                            <div class="info-value">Frankfurt, Alemania</div>
+                            
+                            <div class="info-label">Tamaño del mapa:</div>
+                            <div class="info-value">3500</div>
+                            
+                            <div class="info-label">Semilla:</div>
+                            <div class="info-value">238749</div>
+                            
+                            <div class="info-label">Último wipe:</div>
+                            <div class="info-value">Hace 3 días</div>
+                            
+                            <div class="info-label">Próximo wipe:</div>
+                            <div class="info-value">En 4 días</div>
+                            
+                            <div class="info-label">Promedio jugadores:</div>
+                            <div class="info-value">275/300</div>
                         </div>
                     </div>
                     
-                    <div class="preview-content" id="contact-preview">
-                        <div style="display: flex; height: 100%;">
-                            <div style="flex: 1; padding: 40px; background: linear-gradient(to bottom right, #2563eb, #7c3aed); color: white;">
-                                <h2 style="font-size: 30px; margin-bottom: 30px;">Contáctanos</h2>
-                                <div style="margin-bottom: 30px;">
-                                    <h3 style="margin-bottom: 15px; display: flex; align-items: center;"><i class="fas fa-map-marker-alt" style="margin-right: 10px;"></i> Dirección</h3>
-                                    <p>Av. Principal 123, Madrid, España</p>
-                                </div>
-                                <div style="margin-bottom: 30px;">
-                                    <h3 style="margin-bottom: 15px; display: flex; align-items: center;"><i class="fas fa-phone" style="margin-right: 10px;"></i> Teléfono</h3>
-                                    <p>+34 912 345 678</p>
-                                </div>
-                                <div>
-                                    <h3 style="margin-bottom: 15px; display: flex; align-items: center;"><i class="fas fa-envelope" style="margin-right: 10px;"></i> Email</h3>
-                                    <p>info@webtemplates.com</p>
-                                </div>
-                            </div>
-                            <div style="flex: 1; padding: 40px; background: white;">
-                                <h2 style="font-size: 30px; margin-bottom: 30px;">Envíanos un mensaje</h2>
-                                <form style="display: grid; gap: 20px;">
-                                    <input type="text" placeholder="Nombre" style="padding: 12px; border: 1px solid #e2e8f0; border-radius: 5px;">
-                                    <input type="email" placeholder="Email" style="padding: 12px; border: 1px solid #e2e8f0; border-radius: 5px;">
-                                    <input type="text" placeholder="Asunto" style="padding: 12px; border: 1px solid #e2e8f0; border-radius: 5px;">
-                                    <textarea placeholder="Mensaje" style="padding: 12px; border: 1px solid #e2e8f0; border-radius: 5px; height: 120px;"></textarea>
-                                    <button type="submit" style="background: #2563eb; color: white; border: none; padding: 12px; border-radius: 5px; font-weight: bold; cursor: pointer;">Enviar Mensaje</button>
-                                </form>
-                            </div>
-                        </div>
+                    <div class="server-controls">
+                        <button class="btn"><i class="fas fa-sync-alt"></i> Actualizar datos</button>
+                        <button class="btn btn-outline"><i class="fas fa-copy"></i> Copiar IP</button>
+                        <button class="btn btn-outline"><i class="fas fa-map-marked-alt"></i> Ver mapa completo</button>
+                        <button class="btn btn-outline"><i class="fas fa-history"></i> Historial de wipes</button>
+                    </div>
+                </div>
+                
+                <div class="map-legend">
+                    <div class="legend-title">Leyenda del mapa</div>
+                    <div class="legend-item">
+                        <div class="legend-color" style="background: #e06c1f;"></div>
+                        <div class="legend-label">Monumentos</div>
+                    </div>
+                    <div class="legend-item">
+                        <div class="legend-color" style="background: #3a6ea5;"></div>
+                        <div class="legend-label">Costas</div>
+                    </div>
+                    <div class="legend-item">
+                        <div class="legend-color" style="background: #5cb85c;"></div>
+                        <div class="legend-label">Bosques</div>
+                    </div>
+                    <div class="legend-item">
+                        <div class="legend-color" style="background: #d9534f;"></div>
+                        <div class="legend-label">Zonas radiactivas</div>
+                    </div>
+                    <div class="legend-item">
+                        <div class="legend-color" style="background: #f0a64b;"></div>
+                        <div class="legend-label">Desiertos</div>
                     </div>
                 </div>
             </div>
         </div>
-    </section>
-
-    <!-- Pricing -->
-    <section id="pricing" class="section pricing">
-        <div class="container">
-            <div class="section-title">
-                <h2>Planes de Precios</h2>
-                <p>Elige el plan que mejor se adapte a tus necesidades</p>
-            </div>
-            <div class="pricing-grid">
-                <div class="pricing-card">
-                    <div class="pricing-icon">
-                        <i class="fas fa-rocket"></i>
-                    </div>
-                    <h3 class="pricing-title">Básico</h3>
-                    <div class="pricing-price">$19 <span>/ plantilla</span></div>
-                    <ul class="pricing-features">
-                        <li><i class="fas fa-check"></i> 1 Plantilla Premium</li>
-                        <li><i class="fas fa-check"></i> Documentación Completa</li>
-                        <li><i class="fas fa-check"></i> Soporte por Email</li>
-                        <li><i class="fas fa-times"></i> Actualizaciones Gratuitas</li>
-                        <li><i class="fas fa-times"></i> Licencia Extendida</li>
-                    </ul>
-                    <a href="#" class="btn">Seleccionar</a>
-                </div>
-                <div class="pricing-card">
-                    <div class="popular-tag">POPULAR</div>
-                    <div class="pricing-icon">
-                        <i class="fas fa-crown"></i>
-                    </div>
-                    <h3 class="pricing-title">Profesional</h3>
-                    <div class="pricing-price">$49 <span>/ 3 plantillas</span></div>
-                    <ul class="pricing-features">
-                        <li><i class="fas fa-check"></i> 3 Plantillas Premium</li>
-                        <li><i class="fas fa-check"></i> Documentación Completa</li>
-                        <li><i class="fas fa-check"></i> Soporte Prioritario</li>
-                        <li><i class="fas fa-check"></i> Actualizaciones Gratuitas (1 año)</li>
-                        <li><i class="fas fa-times"></i> Licencia Extendida</li>
-                    </ul>
-                    <a href="#" class="btn btn-accent">Seleccionar</a>
-                </div>
-                <div class="pricing-card">
-                    <div class="pricing-icon">
-                        <i class="fas fa-gem"></i>
-                    </div>
-                    <h3 class="pricing-title">Empresa</h3>
-                    <div class="pricing-price">$99 <span>/ 10 plantillas</span></div>
-                    <ul class="pricing-features">
-                        <li><i class="fas fa-check"></i> 10 Plantillas Premium</li>
-                        <li><i class="fas fa-check"></i> Documentación Completa</li>
-                        <li><i class="fas fa-check"></i> Soporte 24/7</li>
-                        <li><i class="fas fa-check"></i> Actualizaciones Gratuitas</li>
-                        <li><i class="fas fa-check"></i> Licencia Extendida</li>
-                    </ul>
-                    <a href="#" class="btn">Seleccionar</a>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Testimonials -->
-    <section class="section testimonials">
-        <div class="container">
-            <div class="section-title">
-                <h2>Lo que dicen nuestros clientes</h2>
-                <p>Más de 1,000 desarrolladores han usado nuestras plantillas</p>
-            </div>
-            <div class="testimonials-grid">
-                <div class="testimonial-card">
-                    <div class="testimonial-header">
-                        <div class="testimonial-avatar">
-                            <i class="fas fa-user"></i>
-                        </div>
-                        <div class="testimonial-name">
-                            <h4>María López</h4>
-                            <p>Desarrolladora Frontend</p>
-                        </div>
-                    </div>
-                    <div class="testimonial-rating">
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                    </div>
-                    <p>"La plantilla de e-commerce me ahorró semanas de trabajo. El código es limpio y bien documentado, lo que me permitió personalizarla fácilmente para mi cliente."</p>
-                </div>
-                <div class="testimonial-card">
-                    <div class="testimonial-header">
-                        <div class="testimonial-avatar">
-                            <i class="fas fa-user"></i>
-                        </div>
-                        <div class="testimonial-name">
-                            <h4>Carlos Rodríguez</h4>
-                            <p>Diseñador Freelance</p>
-                        </div>
-                    </div>
-                    <div class="testimonial-rating">
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star-half-alt"></i>
-                    </div>
-                    <p>"Increíble calidad por el precio. La plantilla de portfolio es exactamente lo que necesitaba para mostrar mi trabajo. La respuesta del soporte fue rápida cuando tuve una duda."</p>
-                </div>
-                <div class="testimonial-card">
-                    <div class="testimonial-header">
-                        <div class="testimonial-avatar">
-                            <i class="fas fa-user"></i>
-                        </div>
-                        <div class="testimonial-name">
-                            <h4>Ana Martínez</h4>
-                            <p>Emprendedora</p>
-                        </div>
-                    </div>
-                    <div class="testimonial-rating">
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                    </div>
-                    <p>"Lanzar mi blog fue mucho más fácil con esta plantilla. El diseño responsivo funciona perfectamente en todos los dispositivos y el SEO está bien implementado."</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- FAQ -->
-    <section id="faq" class="section faq">
-        <div class="container">
-            <div class="section-title">
-                <h2>Preguntas Frecuentes</h2>
-                <p>Aquí respondemos las dudas más comunes</p>
-            </div>
-            <div class="faq-grid">
-                <div class="faq-item">
-                    <div class="faq-question">
-                        <h3>¿Qué incluye cada plantilla?</h3>
-                        <i class="fas fa-chevron-down"></i>
-                    </div>
-                    <div class="faq-answer">
-                        <p>Cada plantilla incluye todos los archivos HTML, CSS, JavaScript y assets necesarios. También recibirás documentación completa con instrucciones de instalación, personalización y solución de problemas.</p>
-                    </div>
-                </div>
-                <div class="faq-item">
-                    <div class="faq-question">
-                        <h3>¿Puedo usar las plantillas para clientes?</h3>
-                        <i class="fas fa-chevron-down"></i>
-                    </div>
-                    <div class="faq-answer">
-                        <p>Sí, nuestras licencias te permiten usar las plantillas para proyectos de clientes. La licencia estándar cubre un proyecto por cliente. Si necesitas usar la plantilla para múltiples proyectos, contáctanos para una licencia extendida.</p>
-                    </div>
-                </div>
-                <div class="faq-item">
-                    <div class="faq-question">
-                        <h3>¿Cómo recibo las actualizaciones?</h3>
-                        <i class="fas fa-chevron-down"></i>
-                    </div>
-                    <div class="faq-answer">
-                        <p>Si tienes un plan Profesional o Empresa, recibirás notificaciones por email cuando haya actualizaciones disponibles. Podrás descargar las nuevas versiones desde tu área de cliente.</p>
-                    </div>
-                </div>
-                <div class="faq-item">
-                    <div class="faq-question">
-                        <h3>¿Qué métodos de pago aceptan?</h3>
-                        <i class="fas fa-chevron-down"></i>
-                    </div>
-                    <div class="faq-answer">
-                        <p>Aceptamos tarjetas de crédito/débito (Visa, MasterCard, American Express), PayPal y transferencias bancarias. Todos los pagos se procesan de forma segura a través de nuestra pasarela de pago.</p>
-                    </div>
-                </div>
-                <div class="faq-item">
-                    <div class="faq-question">
-                        <h3>¿Ofrecen soporte personalizado?</h3>
-                        <i class="fas fa-chevron-down"></i>
-                    </div>
-                    <div class="faq-answer">
-                        <p>Sí, todos nuestros planes incluyen soporte. El plan Básico incluye soporte por email con respuesta en 24 horas. Los planes superiores incluyen soporte prioritario y acceso a chat en vivo durante horario comercial.</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- CTA -->
-    <section class="cta">
-        <div class="container">
-            <div class="cta-content">
-                <h2>Impulsa tus proyectos con nuestras plantillas</h2>
-                <p>Ahorra tiempo y dinero con nuestras plantillas profesionales. Ideal para freelancers, agencias y emprendedores.</p>
-                <a href="#pricing" class="btn btn-accent">Ver Planes de Precios</a>
-            </div>
-        </div>
-    </section>
+    </div>
 
     <!-- Footer -->
     <footer>
         <div class="container">
-            <div class="footer-grid">
+            <div class="footer-content">
                 <div class="footer-col">
-                    <h3>WebTemplates</h3>
-                    <p>Plantillas HTML/CSS premium para desarrolladores y diseñadores que buscan calidad y ahorro de tiempo.</p>
-                    <div class="footer-social">
-                        <a href="#" class="social-link"><i class="fab fa-github"></i></a>
-                        <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
-                        <a href="#" class="social-link"><i class="fab fa-instagram"></i></a>
-                        <a href="#" class="social-link"><i class="fab fa-linkedin"></i></a>
-                    </div>
+                    <h3>Rust Tracker</h3>
+                    <p>La herramienta definitiva para seguir servidores oficiales de Rust. Monitoreo en tiempo real, mapas detallados y estadísticas avanzadas.</p>
                 </div>
+                
                 <div class="footer-col">
-                    <h3>Enlaces</h3>
+                    <h3>Enlaces rápidos</h3>
                     <ul class="footer-links">
-                        <li><a href="#features">Características</a></li>
-                        <li><a href="#templates">Plantillas</a></li>
-                        <li><a href="#preview">Ejemplos</a></li>
-                        <li><a href="#pricing">Precios</a></li>
-                        <li><a href="#faq">FAQ</a></li>
+                        <li><a href="#">Servidores oficiales</a></li>
+                        <li><a href="#">Mapas destacados</a></li>
+                        <li><a href="#">Estadísticas globales</a></li>
+                        <li><a href="#">Calendario de wipes</a></li>
+                        <li><a href="#">API para desarrolladores</a></li>
                     </ul>
                 </div>
+                
                 <div class="footer-col">
-                    <h3>Plantillas</h3>
+                    <h3>Recursos</h3>
                     <ul class="footer-links">
-                        <li><a href="#">E-Commerce</a></li>
-                        <li><a href="#">Portfolio</a></li>
-                        <li><a href="#">Blog</a></li>
-                        <li><a href="#">Landing Page</a></li>
-                        <li><a href="#">Dashboard</a></li>
+                        <li><a href="#">Guía de mapas</a></li>
+                        <li><a href="#">Tutoriales de Rust</a></li>
+                        <li><a href="#">Comunidad de Discord</a></li>
+                        <li><a href="#">Blog de actualizaciones</a></li>
+                        <li><a href="#">Soporte técnico</a></li>
                     </ul>
                 </div>
+                
                 <div class="footer-col">
-                    <h3>Contacto</h3>
+                    <h3>Legal</h3>
                     <ul class="footer-links">
-                        <li><i class="fas fa-envelope"></i> info@webtemplates.com</li>
-                        <li><i class="fas fa-phone"></i> +34 912 345 678</li>
-                        <li><i class="fas fa-map-marker-alt"></i> Madrid, España</li>
+                        <li><a href="#">Términos de servicio</a></li>
+                        <li><a href="#">Política de privacidad</a></li>
+                        <li><a href="#">Política de cookies</a></li>
+                        <li><a href="#">Aviso legal</a></li>
                     </ul>
                 </div>
             </div>
-            <div class="copyright">
-                <p>&copy; 2023 WebTemplates. Todos los derechos reservados.</p>
+            
+            <div class="footer-bottom">
+                <p>Rust Tracker es un sitio no oficial de fans y no está afiliado con Facepunch Studios. Rust es una marca registrada de Facepunch Studios.</p>
+                <p>&copy; 2023 Rust Tracker. Todos los derechos reservados.</p>
             </div>
         </div>
     </footer>
 
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
     <script>
-        // Funcionalidad para FAQ
-        document.querySelectorAll('.faq-question').forEach(question => {
-            question.addEventListener('click', () => {
-                const item = question.parentNode;
-                item.classList.toggle('active');
-            });
-        });
-
-        // Smooth scrolling
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function(e) {
-                e.preventDefault();
-                
-                const target = document.querySelector(this.getAttribute('href'));
-                if (target) {
-                    window.scrollTo({
-                        top: target.offsetTop - 80,
-                        behavior: 'smooth'
-                    });
-                }
-            });
-        });
-
-        // Header scroll effect
-        window.addEventListener('scroll', () => {
-            const header = document.querySelector('header');
-            if (window.scrollY > 50) {
-                header.style.boxShadow = '0 5px 20px rgba(0, 0, 0, 0.1)';
-            } else {
-                header.style.boxShadow = '0 2px 10px rgba(0, 0, 0, 0.1)';
-            }
-        });
-
-        // Preview selector functionality
-        const previewBtns = document.querySelectorAll('.preview-btn');
-        const previewContents = document.querySelectorAll('.preview-content');
+        // Initialize the map
+        const map = L.map('server-map').setView([51.505, -0.09], 5);
         
-        previewBtns.forEach(btn => {
-            btn.addEventListener('click', () => {
-                // Remove active class from all buttons
-                previewBtns.forEach(b => b.classList.remove('active'));
+        // Add a tile layer (using a Rust-style map)
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+            maxZoom: 8,
+            minZoom: 3
+        }).addTo(map);
+        
+        // Add custom styling
+        map.setView([50.0, 10.0], 5);
+        
+        // Add some markers for important locations (monuments)
+        const monuments = [
+            {name: "Bandit Camp", position: [49.8, 9.8], type: "monument"},
+            {name: "Launch Site", position: [50.3, 10.3], type: "monument"},
+            {name: "Military Tunnels", position: [49.9, 10.5], type: "monument"},
+            {name: "Oil Rig", position: [50.5, 9.5], type: "monument"},
+            {name: "Outpost", position: [50.1, 10.1], type: "safe"},
+            {name: "Sewer Branch", position: [49.7, 10.2], type: "monument"},
+            {name: "Train Yard", position: [50.2, 9.9], type: "monument"},
+            {name: "Water Treatment", position: [49.8, 10.4], type: "monument"}
+        ];
+        
+        // Define custom icons
+        const monumentIcon = L.icon({
+            iconUrl: 'https://cdn-icons-png.flaticon.com/512/149/149060.png',
+            iconSize: [30, 30],
+            iconAnchor: [15, 15]
+        });
+        
+        const safeIcon = L.icon({
+            iconUrl: 'https://cdn-icons-png.flaticon.com/512/447/447031.png',
+            iconSize: [30, 30],
+            iconAnchor: [15, 15]
+        });
+        
+        // Add markers to the map
+        monuments.forEach(monument => {
+            const icon = monument.type === "safe" ? safeIcon : monumentIcon;
+            const marker = L.marker(monument.position, {icon: icon}).addTo(map);
+            marker.bindPopup(`<b>${monument.name}</b><br>${monument.type === "safe" ? "Zona segura" : "Monumento"}`);
+        });
+        
+        // Add player clusters
+        const playerClusters = [
+            {position: [50.0, 10.0], size: 15},
+            {position: [49.9, 10.1], size: 8},
+            {position: [50.1, 9.9], size: 12},
+            {position: [50.2, 10.2], size: 20},
+            {position: [49.8, 10.0], size: 5}
+        ];
+        
+        playerClusters.forEach(cluster => {
+            L.circle(cluster.position, {
+                color: '#e06c1f',
+                fillColor: '#f0a64b',
+                fillOpacity: 0.3,
+                radius: cluster.size * 30
+            }).addTo(map).bindPopup(`Zona de actividad: ~${cluster.size} jugadores`);
+        });
+        
+        // Add map features
+        L.rectangle([[49.5, 9.5], [50.5, 10.5]], {
+            color: "#3a6ea5",
+            fillColor: "#3a6ea5",
+            fillOpacity: 0.1,
+            weight: 1
+        }).addTo(map);
+        
+        L.polygon([
+            [50.3, 9.7],
+            [50.1, 9.6],
+            [50.0, 9.8],
+            [50.2, 10.0]
+        ], {
+            color: "#5cb85c",
+            fillColor: "#5cb85c",
+            fillOpacity: 0.2,
+            weight: 1
+        }).addTo(map).bindPopup("Bosque denso");
+        
+        L.polygon([
+            [49.6, 10.3],
+            [49.7, 10.1],
+            [49.9, 10.2],
+            [49.8, 10.4]
+        ], {
+            color: "#d9534f",
+            fillColor: "#d9534f",
+            fillOpacity: 0.1,
+            weight: 1
+        }).addTo(map).bindPopup("Zona radiactiva");
+        
+        // Server list interaction
+        document.querySelectorAll('.server-item').forEach(item => {
+            item.addEventListener('click', function() {
+                // Remove active class from all items
+                document.querySelectorAll('.server-item').forEach(i => {
+                    i.classList.remove('active');
+                });
                 
-                // Add active class to clicked button
-                btn.classList.add('active');
+                // Add active class to clicked item
+                this.classList.add('active');
                 
-                // Hide all preview contents
-                previewContents.forEach(content => content.classList.remove('active'));
+                // Update server info in the map section
+                const serverName = this.querySelector('.server-name').textContent.trim();
+                document.querySelector('.server-info h3').textContent = serverName;
                 
-                // Show selected preview content
-                const previewId = btn.getAttribute('data-preview');
-                document.getElementById(`${previewId}-preview`).classList.add('active');
+                // Simulate updating the map
+                const lat = 50 + (Math.random() - 0.5) * 1.5;
+                const lng = 10 + (Math.random() - 0.5) * 1.5;
+                map.setView([lat, lng], 5);
             });
         });
+        
+        // Update time simulation
+        function updateTime() {
+            const times = ["Hace unos segundos", "Hace 1 minuto", "Hace 2 minutos", "Hace 3 minutos"];
+            const randomTime = times[Math.floor(Math.random() * times.length)];
+            document.getElementById('update-time').textContent = randomTime;
+        }
+        
+        setInterval(updateTime, 30000);
+        
+        // Initial call
+        updateTime();
     </script>
 </body>
 </html>
