@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GitAlert - Alertas Gratuitas para Rust</title>
+    <title>RustAlert - Alertas en tiempo real para tu base en Rust</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
     <style>
@@ -11,6 +11,8 @@
             --rust-dark: #2c1e1a;
             --rust-orange: #e67e22;
             --rust-red: #e74c3c;
+            --rust-blue: #3498db;
+            --rust-green: #2ecc71;
             --rust-gray: #7f8c8d;
             --rust-light: #ecf0f1;
             --rust-metal: #95a5a6;
@@ -29,6 +31,7 @@
             line-height: 1.6;
             overflow-x: hidden;
             background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><rect width="100" height="100" fill="%232c1e1a"/><path d="M0 50 L100 50" stroke="%233a2925" stroke-width="1"/><path d="M50 0 L50 100" stroke="%233a2925" stroke-width="1"/></svg>');
+            min-height: 100vh;
         }
         
         .container {
@@ -104,6 +107,24 @@
             width: 100%;
         }
         
+        .user-menu {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        
+        .user-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: var(--rust-metal);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            cursor: pointer;
+        }
+        
         .btn {
             display: inline-block;
             padding: 0.8rem 1.8rem;
@@ -144,316 +165,285 @@
             box-shadow: 0 0 20px rgba(230, 126, 34, 0.7);
         }
         
-        /* Hero Section */
-        .hero {
-            padding: 6rem 0 4rem;
-            text-align: center;
-            position: relative;
-            overflow: hidden;
+        .btn-secondary {
+            background: var(--rust-blue);
+            color: white;
+            border: 2px solid var(--rust-blue);
         }
         
-        .hero::before {
-            content: '';
-            position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: radial-gradient(circle, rgba(230, 126, 34, 0.1) 0%, transparent 70%);
-            z-index: -1;
+        .btn-secondary:hover {
+            background: #2980b9;
+            border-color: #2980b9;
         }
         
-        .hero-content {
-            max-width: 800px;
-            margin: 0 auto;
-            position: relative;
-            z-index: 2;
-        }
-        
-        .hero h1 {
-            font-size: 3.5rem;
-            line-height: 1.2;
-            margin-bottom: 1.5rem;
-            font-family: 'Orbitron', sans-serif;
-            text-transform: uppercase;
-            text-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
-        }
-        
-        .hero h1 span {
-            color: var(--rust-orange);
-            text-shadow: 0 0 10px rgba(230, 126, 34, 0.7);
-        }
-        
-        .hero p {
-            font-size: 1.4rem;
-            margin-bottom: 2rem;
-            color: var(--rust-light);
-            max-width: 700px;
-            margin-left: auto;
-            margin-right: auto;
-        }
-        
-        .hero-btns {
-            display: flex;
-            gap: 1.5rem;
-            justify-content: center;
-            margin-top: 2.5rem;
-        }
-        
-        .hero-image {
-            margin-top: 3rem;
-            position: relative;
-            max-width: 900px;
-            margin-left: auto;
-            margin-right: auto;
-            border: 2px solid var(--rust-orange);
-            border-radius: 10px;
-            overflow: hidden;
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
-        }
-        
-        .hero-image img {
-            width: 100%;
-            display: block;
-        }
-        
-        /* Features */
-        .features {
-            padding: 5rem 0;
-        }
-        
-        .section-title {
-            text-align: center;
-            margin-bottom: 4rem;
-        }
-        
-        .section-title h2 {
-            font-size: 2.5rem;
-            color: var(--rust-light);
-            margin-bottom: 1rem;
-            font-family: 'Orbitron', sans-serif;
-            position: relative;
-            display: inline-block;
-        }
-        
-        .section-title h2::after {
-            content: '';
-            position: absolute;
-            bottom: -10px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 80px;
-            height: 4px;
-            background: var(--rust-orange);
-            border-radius: 2px;
-        }
-        
-        .features-grid {
+        /* Dashboard */
+        .dashboard {
+            padding: 3rem 0;
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2.5rem;
+            grid-template-columns: 250px 1fr;
+            gap: 2rem;
         }
         
-        .feature-card {
-            background: rgba(44, 30, 26, 0.7);
-            border: 1px solid rgba(230, 126, 34, 0.3);
+        .sidebar {
+            background: rgba(44, 30, 26, 0.8);
             border-radius: 8px;
-            padding: 2.5rem 2rem;
-            text-align: center;
-            transition: transform 0.3s, box-shadow 0.3s;
-            backdrop-filter: blur(5px);
+            padding: 1.5rem;
+            height: fit-content;
+            border: 1px solid rgba(230, 126, 34, 0.3);
         }
         
-        .feature-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
-            border-color: var(--rust-orange);
+        .sidebar-title {
+            font-size: 1.3rem;
+            margin-bottom: 1.5rem;
+            color: var(--rust-orange);
+            font-family: 'Orbitron', sans-serif;
+            padding-bottom: 10px;
+            border-bottom: 1px solid rgba(230, 126, 34, 0.3);
         }
         
-        .feature-icon {
-            width: 70px;
-            height: 70px;
-            background: rgba(230, 126, 34, 0.1);
-            border-radius: 50%;
+        .sidebar-menu {
+            list-style: none;
+        }
+        
+        .sidebar-menu li {
+            margin-bottom: 0.8rem;
+        }
+        
+        .sidebar-menu a {
             display: flex;
             align-items: center;
-            justify-content: center;
-            margin: 0 auto 1.5rem;
-            font-size: 1.8rem;
+            padding: 0.8rem;
+            text-decoration: none;
+            color: var(--rust-light);
+            border-radius: 4px;
+            transition: all 0.3s;
+        }
+        
+        .sidebar-menu a i {
+            margin-right: 10px;
+            width: 20px;
+            text-align: center;
+        }
+        
+        .sidebar-menu a:hover, .sidebar-menu a.active {
+            background: rgba(230, 126, 34, 0.2);
             color: var(--rust-orange);
         }
         
-        .feature-card h3 {
-            font-size: 1.5rem;
+        .dashboard-content {
+            background: rgba(44, 30, 26, 0.8);
+            border-radius: 8px;
+            padding: 2rem;
+            border: 1px solid rgba(230, 126, 34, 0.3);
+        }
+        
+        .content-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+        }
+        
+        .content-header h2 {
+            font-size: 1.8rem;
+            color: var(--rust-light);
+            font-family: 'Orbitron', sans-serif;
+        }
+        
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+        
+        .stat-card {
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 8px;
+            padding: 1.5rem;
+            text-align: center;
+            border: 1px solid rgba(230, 126, 34, 0.2);
+        }
+        
+        .stat-icon {
+            font-size: 2rem;
+            color: var(--rust-orange);
             margin-bottom: 1rem;
+        }
+        
+        .stat-value {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
             color: var(--rust-light);
         }
         
-        .feature-card p {
+        .stat-label {
             color: var(--rust-gray);
         }
         
-        /* How It Works */
-        .how-it-works {
-            padding: 5rem 0;
-            background: rgba(0, 0, 0, 0.2);
-            position: relative;
-        }
-        
-        .how-it-works::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><rect width="100" height="100" fill="%231a120f"/><path d="M0 0 L100 100" stroke="%232c1e1a" stroke-width="1"/><path d="M100 0 L0 100" stroke="%232c1e1a" stroke-width="1"/></svg>');
-            z-index: -1;
-        }
-        
-        .steps {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: 2rem;
-            max-width: 1000px;
-            margin: 0 auto;
-        }
-        
-        .step {
-            flex: 1;
-            min-width: 250px;
-            max-width: 300px;
-            background: rgba(44, 30, 26, 0.8);
-            border: 1px solid var(--rust-metal);
+        .alert-status {
+            background: rgba(0, 0, 0, 0.3);
             border-radius: 8px;
-            padding: 2rem;
-            text-align: center;
-            position: relative;
-        }
-        
-        .step-number {
-            position: absolute;
-            top: -20px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 40px;
-            height: 40px;
-            background: var(--rust-orange);
-            border-radius: 50%;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
             display: flex;
             align-items: center;
-            justify-content: center;
-            font-weight: bold;
-            font-size: 1.2rem;
-            color: white;
+            border: 1px solid rgba(52, 152, 219, 0.3);
         }
         
-        .step h3 {
-            font-size: 1.4rem;
-            margin-bottom: 1rem;
-            color: var(--rust-orange);
+        .status-indicator {
+            width: 15px;
+            height: 15px;
+            border-radius: 50%;
+            background: var(--rust-green);
+            margin-right: 15px;
+            box-shadow: 0 0 10px var(--rust-green);
         }
         
-        .step p {
+        .status-text {
+            flex: 1;
+        }
+        
+        .status-text h3 {
+            color: var(--rust-light);
+            margin-bottom: 0.3rem;
+        }
+        
+        .status-text p {
+            color: var(--rust-gray);
+            font-size: 0.9rem;
+        }
+        
+        .section {
+            margin-bottom: 2.5rem;
+        }
+        
+        .section-title {
+            font-size: 1.3rem;
+            color: var(--rust-light);
+            margin-bottom: 1.5rem;
+            padding-bottom: 10px;
+            border-bottom: 1px solid rgba(230, 126, 34, 0.3);
+        }
+        
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
             color: var(--rust-light);
         }
         
-        /* Comparison */
-        .comparison {
-            padding: 5rem 0;
-        }
-        
-        .comparison-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
-            max-width: 1000px;
-            margin: 0 auto;
-        }
-        
-        .comparison-card {
-            background: rgba(44, 30, 26, 0.7);
-            border-radius: 8px;
-            padding: 2.5rem;
-            text-align: center;
+        .form-control {
+            width: 100%;
+            padding: 0.8rem 1rem;
+            background: rgba(0, 0, 0, 0.3);
             border: 1px solid rgba(230, 126, 34, 0.3);
+            border-radius: 4px;
+            color: var(--rust-light);
+            font-size: 1rem;
         }
         
-        .comparison-card h3 {
-            font-size: 1.8rem;
-            margin-bottom: 1.5rem;
-            color: var(--rust-orange);
+        .form-control:focus {
+            outline: none;
+            border-color: var(--rust-orange);
+            box-shadow: 0 0 0 3px rgba(230, 126, 34, 0.3);
         }
         
-        .features-list {
-            list-style: none;
-            text-align: left;
-        }
-        
-        .features-list li {
-            margin-bottom: 1rem;
-            padding-left: 30px;
-            position: relative;
-        }
-        
-        .features-list li::before {
-            content: '✓';
-            position: absolute;
-            left: 0;
-            color: var(--rust-orange);
-            font-weight: bold;
-        }
-        
-        .features-list .missing::before {
-            content: '✗';
-            color: var(--rust-red);
-        }
-        
-        /* Testimonials */
-        .testimonials {
-            padding: 5rem 0;
-            background: rgba(0, 0, 0, 0.2);
-        }
-        
-        .testimonials-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-        
-        .testimonial-card {
-            background: rgba(44, 30, 26, 0.7);
-            border-radius: 8px;
-            padding: 2rem;
-            position: relative;
-            border: 1px solid rgba(230, 126, 34, 0.3);
-        }
-        
-        .testimonial-card::before {
-            content: '"';
-            position: absolute;
-            top: 20px;
-            left: 20px;
-            font-size: 4rem;
-            color: var(--rust-orange);
-            opacity: 0.2;
-            font-family: serif;
-        }
-        
-        .testimonial-content {
-            margin-bottom: 1.5rem;
-            font-style: italic;
-        }
-        
-        .testimonial-author {
+        .checkbox-group {
             display: flex;
             align-items: center;
+            margin-bottom: 1rem;
         }
         
-        .testimonial-avatar {
+        .checkbox-group input {
+            margin-right: 10px;
+        }
+        
+        .checkbox-group label {
+            margin-bottom: 0;
+        }
+        
+        .alert-types {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .alert-type {
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 8px;
+            padding: 1rem;
+            border: 1px solid rgba(230, 126, 34, 0.3);
+        }
+        
+        .alert-type.active {
+            border-color: var(--rust-orange);
+            background: rgba(230, 126, 34, 0.1);
+        }
+        
+        .alert-type h4 {
+            color: var(--rust-light);
+            margin-bottom: 0.5rem;
+        }
+        
+        .alert-type p {
+            color: var(--rust-gray);
+            font-size: 0.9rem;
+        }
+        
+        .notification-methods {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .notification-method {
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 8px;
+            padding: 1rem;
+            text-align: center;
+            border: 1px solid rgba(230, 126, 34, 0.3);
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .notification-method.active {
+            border-color: var(--rust-orange);
+            background: rgba(230, 126, 34, 0.1);
+        }
+        
+        .notification-method i {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            color: var(--rust-orange);
+        }
+        
+        .notification-method h4 {
+            color: var(--rust-light);
+        }
+        
+        .clan-members {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+        }
+        
+        .clan-member {
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 8px;
+            padding: 1.5rem;
+            display: flex;
+            align-items: center;
+            border: 1px solid rgba(230, 126, 34, 0.3);
+        }
+        
+        .member-avatar {
             width: 50px;
             height: 50px;
             border-radius: 50%;
@@ -465,158 +455,235 @@
             font-size: 1.5rem;
         }
         
-        .author-info h4 {
-            color: var(--rust-light);
-            margin-bottom: 0.2rem;
+        .member-info {
+            flex: 1;
         }
         
-        .author-info p {
-            color: var(--rust-orange);
+        .member-info h4 {
+            color: var(--rust-light);
+            margin-bottom: 0.3rem;
+        }
+        
+        .member-info p {
+            color: var(--rust-gray);
             font-size: 0.9rem;
         }
         
-        /* CTA */
-        .cta {
-            text-align: center;
-            padding: 6rem 0;
-            position: relative;
-            overflow: hidden;
+        .member-role {
+            background: rgba(230, 126, 34, 0.2);
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            color: var(--rust-orange);
         }
         
-        .cta::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: radial-gradient(circle, rgba(230, 126, 34, 0.15) 0%, transparent 70%);
-            z-index: -1;
+        .activity-log {
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 8px;
+            padding: 1.5rem;
+            max-height: 400px;
+            overflow-y: auto;
         }
         
-        .cta h2 {
-            font-size: 2.8rem;
-            margin-bottom: 1.5rem;
-            font-family: 'Orbitron', sans-serif;
+        .log-item {
+            padding: 1rem 0;
+            border-bottom: 1px solid rgba(230, 126, 34, 0.1);
+            display: flex;
         }
         
-        .cta p {
-            max-width: 600px;
-            margin: 0 auto 2.5rem;
-            font-size: 1.2rem;
+        .log-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: rgba(231, 76, 60, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 15px;
+            color: var(--rust-red);
+            flex-shrink: 0;
+        }
+        
+        .log-content {
+            flex: 1;
+        }
+        
+        .log-content h4 {
             color: var(--rust-light);
+            margin-bottom: 0.3rem;
+        }
+        
+        .log-meta {
+            display: flex;
+            color: var(--rust-gray);
+            font-size: 0.9rem;
+        }
+        
+        .log-meta span {
+            margin-right: 1rem;
+        }
+        
+        .plans {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+        }
+        
+        .plan-card {
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 8px;
+            padding: 2rem;
+            text-align: center;
+            border: 1px solid rgba(230, 126, 34, 0.3);
+            position: relative;
+            transition: all 0.3s;
+        }
+        
+        .plan-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+        }
+        
+        .plan-card.recommended {
+            border: 2px solid var(--rust-orange);
+        }
+        
+        .plan-card h3 {
+            font-size: 1.5rem;
+            color: var(--rust-light);
+            margin-bottom: 1rem;
+        }
+        
+        .plan-price {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--rust-orange);
+            margin-bottom: 1.5rem;
+        }
+        
+        .plan-price span {
+            font-size: 1rem;
+            color: var(--rust-gray);
+        }
+        
+        .plan-features {
+            list-style: none;
+            margin-bottom: 2rem;
+            text-align: left;
+        }
+        
+        .plan-features li {
+            margin-bottom: 0.8rem;
+            padding-left: 25px;
+            position: relative;
+        }
+        
+        .plan-features li::before {
+            content: '✓';
+            position: absolute;
+            left: 0;
+            color: var(--rust-green);
+        }
+        
+        .mobile-integration {
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+        
+        .mobile-info {
+            flex: 1;
+        }
+        
+        .mobile-qr {
+            background: white;
+            padding: 1rem;
+            border-radius: 8px;
+            text-align: center;
+        }
+        
+        .mobile-qr img {
+            width: 150px;
+            height: 150px;
+            display: block;
+            margin: 0 auto;
+        }
+        
+        .mobile-qr p {
+            margin-top: 0.5rem;
+            color: var(--rust-dark);
+            font-weight: 500;
         }
         
         /* Footer */
         footer {
             background: rgba(0, 0, 0, 0.8);
-            padding: 4rem 0 2rem;
+            padding: 2rem 0;
             border-top: 1px solid var(--rust-orange);
+            margin-top: 3rem;
         }
         
-        .footer-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 3rem;
-            margin-bottom: 3rem;
+        .footer-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
         }
         
-        .footer-col h3 {
-            font-size: 1.5rem;
-            margin-bottom: 1.5rem;
-            color: var(--rust-light);
-            position: relative;
-            padding-bottom: 10px;
-            font-family: 'Orbitron', sans-serif;
+        .footer-links {
+            display: flex;
+            gap: 1.5rem;
         }
         
-        .footer-col h3::after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 40px;
-            height: 3px;
-            background: var(--rust-orange);
-        }
-        
-        .footer-col ul {
-            list-style: none;
-        }
-        
-        .footer-col ul li {
-            margin-bottom: 0.8rem;
-        }
-        
-        .footer-col ul li a {
+        .footer-links a {
             color: var(--rust-gray);
             text-decoration: none;
             transition: color 0.3s;
         }
         
-        .footer-col ul li a:hover {
+        .footer-links a:hover {
             color: var(--rust-orange);
         }
         
-        .social-links {
-            display: flex;
-            gap: 1rem;
-            margin-top: 1.5rem;
-        }
-        
-        .social-links a {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            background: rgba(255, 255, 255, 0.1);
-            color: var(--rust-light);
-            text-decoration: none;
-            transition: all 0.3s;
-        }
-        
-        .social-links a:hover {
-            background: var(--rust-orange);
-            transform: translateY(-3px);
-        }
-        
         .copyright {
-            text-align: center;
-            padding-top: 2rem;
-            border-top: 1px solid rgba(255, 255, 255, 0.1);
             color: var(--rust-gray);
             font-size: 0.9rem;
         }
         
         /* Responsive */
+        @media (max-width: 992px) {
+            .dashboard {
+                grid-template-columns: 1fr;
+            }
+            
+            .sidebar {
+                display: none;
+            }
+            
+            .mobile-integration {
+                flex-direction: column;
+            }
+        }
+        
         @media (max-width: 768px) {
             .navbar {
-                flex-direction: column;
-                gap: 1.5rem;
-            }
-            
-            .nav-links {
                 flex-wrap: wrap;
-                justify-content: center;
-            }
-            
-            .nav-links li {
-                margin: 0.5rem 1rem;
-            }
-            
-            .hero h1 {
-                font-size: 2.5rem;
-            }
-            
-            .hero-btns {
-                flex-direction: column;
                 gap: 1rem;
             }
             
-            .section-title h2 {
-                font-size: 2rem;
+            .nav-links {
+                order: 3;
+                width: 100%;
+                justify-content: center;
+                margin-top: 1rem;
+            }
+            
+            .nav-links li {
+                margin: 0 0.8rem;
+            }
+            
+            .user-menu {
+                margin-left: auto;
             }
         }
         
@@ -630,6 +697,43 @@
         .pulse {
             animation: pulse 2s infinite;
         }
+        
+        /* Tabs */
+        .tabs {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+            border-bottom: 1px solid rgba(230, 126, 34, 0.3);
+        }
+        
+        .tab {
+            padding: 0.8rem 1.5rem;
+            cursor: pointer;
+            position: relative;
+            color: var(--rust-gray);
+        }
+        
+        .tab.active {
+            color: var(--rust-orange);
+        }
+        
+        .tab.active::after {
+            content: '';
+            position: absolute;
+            bottom: -1px;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: var(--rust-orange);
+        }
+        
+        .tab-content {
+            display: none;
+        }
+        
+        .tab-content.active {
+            display: block;
+        }
     </style>
 </head>
 <body>
@@ -639,334 +743,591 @@
             <div class="navbar">
                 <a href="#" class="logo">
                     <i class="fas fa-bell"></i>
-                    GitAlert
+                    RustAlert
                 </a>
                 <ul class="nav-links">
-                    <li><a href="#features">Características</a></li>
-                    <li><a href="#how-it-works">Cómo Funciona</a></li>
-                    <li><a href="#comparison">Comparación</a></li>
-                    <li><a href="#testimonials">Testimonios</a></li>
+                    <li><a href="#dashboard" class="active">Dashboard</a></li>
+                    <li><a href="#alerts">Alertas</a></li>
+                    <li><a href="#clan">Clan</a></li>
+                    <li><a href="#logs">Registros</a></li>
+                    <li><a href="#subscription">Suscripción</a></li>
+                    <li><a href="#mobile">Móvil</a></li>
                 </ul>
-                <a href="#cta" class="btn btn-outline">Descargar Ahora</a>
+                <div class="user-menu">
+                    <a href="#" class="btn btn-outline">Premium</a>
+                    <div class="user-avatar">
+                        <i class="fas fa-user"></i>
+                    </div>
+                </div>
             </div>
         </div>
     </header>
 
-    <!-- Hero Section -->
-    <section class="hero">
-        <div class="container">
-            <div class="hero-content">
-                <h1>Protege tu base en <span>Rust</span> con alertas en tiempo real</h1>
-                <p>Recibe notificaciones instantáneas en tu móvil cuando tu base está siendo atacada. ¡No pierdas tus recursos nunca más!</p>
-                <div class="hero-btns">
-                    <a href="#cta" class="btn btn-primary pulse">Descargar Gratis</a>
-                    <a href="#how-it-works" class="btn btn-outline">Ver Demo</a>
-                </div>
-            </div>
-            <div class="hero-image">
-                <img src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='800' height='400' viewBox='0 0 800 400'><rect width='800' height='400' fill='%232c1e1a'/><rect x='50' y='50' width='700' height='300' fill='%233a2925' rx='10'/><text x='400' y='100' font-family='Arial' font-size='24' fill='%23e67e22' text-anchor='middle'>ALERTA DE INCURSIÓN DETECTADA!</text><text x='400' y='150' font-family='Arial' font-size='18' fill='%23ecf0f1' text-anchor='middle'>Base: Torre Principal</text><text x='400' y='200' font-family='Arial' font-size='18' fill='%23ecf0f1' text-anchor='middle'>Ubicación: H12</text><text x='400' y='250' font-family='Arial' font-size='18' fill='%23ecf0f1' text-anchor='middle'>Tiempo: 02:45 AM</text><rect x='300' y='300' width='200' height='40' fill='%23e67e22' rx='5'/><text x='400' y='325' font-family='Arial' font-size='18' fill='white' text-anchor='middle'>VER DETALLES</text></svg>" alt="GitAlert en acción">
-            </div>
+    <!-- Dashboard -->
+    <section id="dashboard" class="dashboard">
+        <div class="sidebar">
+            <h3 class="sidebar-title">Menú</h3>
+            <ul class="sidebar-menu">
+                <li><a href="#overview" class="active"><i class="fas fa-home"></i> Resumen</a></li>
+                <li><a href="#link-server"><i class="fas fa-link"></i> Vincular Servidor</a></li>
+                <li><a href="#alert-settings"><i class="fas fa-cog"></i> Configurar Alertas</a></li>
+                <li><a href="#notification-methods"><i class="fas fa-bell"></i> Métodos de Notificación</a></li>
+                <li><a href="#clan-settings"><i class="fas fa-users"></i> Gestión de Clan</a></li>
+                <li><a href="#activity-logs"><i class="fas fa-history"></i> Registros de Actividad</a></li>
+                <li><a href="#subscription"><i class="fas fa-crown"></i> Suscripción Premium</a></li>
+                <li><a href="#mobile-app"><i class="fas fa-mobile-alt"></i> App Móvil</a></li>
+                <li><a href="#settings"><i class="fas fa-user-cog"></i> Configuración de Cuenta</a></li>
+            </ul>
         </div>
-    </section>
 
-    <!-- Features -->
-    <section id="features" class="features">
-        <div class="container">
-            <div class="section-title">
-                <h2>Características Principales</h2>
-                <p>Todo lo que necesitas para proteger tu base en Rust</p>
-            </div>
-            <div class="features-grid">
-                <div class="feature-card">
-                    <div class="feature-icon">
-                        <i class="fas fa-mobile-alt"></i>
+        <div class="dashboard-content">
+            <!-- Vista de Resumen -->
+            <div id="overview" class="tab-content active">
+                <div class="content-header">
+                    <h2>Resumen de tu Base</h2>
+                    <div class="server-status">
+                        <span class="status-indicator"></span>
+                        <span>Servidor: Online</span>
                     </div>
-                    <h3>Notificaciones Instantáneas</h3>
-                    <p>Recibe alertas en tu móvil en segundos cuando detectamos actividad sospechosa cerca de tu base.</p>
                 </div>
-                <div class="feature-card">
-                    <div class="feature-icon">
-                        <i class="fas fa-bolt"></i>
+                
+                <div class="alert-status">
+                    <div class="status-indicator"></div>
+                    <div class="status-text">
+                        <h3>Estado: Todo seguro</h3>
+                        <p>No se han detectado actividades sospechosas en las últimas 24 horas</p>
                     </div>
-                    <h3>Respuesta Rápida</h3>
-                    <p>Actúa inmediatamente con opciones para unirte al servidor directamente desde la notificación.</p>
+                    <button class="btn btn-outline">Ver detalles</button>
                 </div>
-                <div class="feature-card">
-                    <div class="feature-icon">
-                        <i class="fas fa-shield-alt"></i>
-                    </div>
-                    <h3>Protección Completa</h3>
-                    <p>Monitorea todas tus bases, trampas y almacenes con un solo sistema.</p>
-                </div>
-                <div class="feature-card">
-                    <div class="feature-icon">
-                        <i class="fas fa-plug"></i>
-                    </div>
-                    <h3>Compatible con Oxide/uMod</h3>
-                    <p>Fácil instalación en cualquier servidor con soporte para plugins Oxide/uMod.</p>
-                </div>
-                <div class="feature-card">
-                    <div class="feature-icon">
-                        <i class="fas fa-bell-slash"></i>
-                    </div>
-                    <h3>Modo Silencioso</h3>
-                    <p>Configura horarios en los que no quieres recibir notificaciones.</p>
-                </div>
-                <div class="feature-card">
-                    <div class="feature-icon">
-                        <i class="fas fa-dollar-sign"></i>
-                    </div>
-                    <h3>Completamente Gratis</h3>
-                    <p>Todas las funciones disponibles sin costo. Sin suscripciones ni pagos ocultos.</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- How It Works -->
-    <section id="how-it-works" class="how-it-works">
-        <div class="container">
-            <div class="section-title">
-                <h2>Cómo Funciona</h2>
-                <p>Configura GitAlert en 3 simples pasos</p>
-            </div>
-            <div class="steps">
-                <div class="step">
-                    <div class="step-number">1</div>
-                    <h3>Instala el Plugin</h3>
-                    <p>Descarga el plugin GitAlert y colócalo en la carpeta de plugins de tu servidor Oxide/uMod.</p>
-                </div>
-                <div class="step">
-                    <div class="step-number">2</div>
-                    <h3>Configura tu Base</h3>
-                    <p>Usa el comando /gitalert en el juego para definir las áreas que quieres proteger.</p>
-                </div>
-                <div class="step">
-                    <div class="step-number">3</div>
-                    <h3>Recibe Alertas</h3>
-                    <p>¡Listo! Recibirás notificaciones en tu móvil cuando detectemos actividad sospechosa.</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Comparison -->
-    <section id="comparison" class="comparison">
-        <div class="container">
-            <div class="section-title">
-                <h2>Comparación con Alternativas</h2>
-                <p>GitAlert vs otras soluciones del mercado</p>
-            </div>
-            <div class="comparison-grid">
-                <div class="comparison-card">
-                    <h3>GitAlert</h3>
-                    <ul class="features-list">
-                        <li>Completamente gratuito</li>
-                        <li>Notificaciones instantáneas</li>
-                        <li>Soporte para múltiples bases</li>
-                        <li>Configuración fácil en juego</li>
-                        <li>Compatible con Oxide/uMod</li>
-                        <li>Sin límite de alertas</li>
-                        <li>Soporte 24/7 en Discord</li>
-                    </ul>
-                </div>
-                <div class="comparison-card">
-                    <h3>RustAlert</h3>
-                    <ul class="features-list">
-                        <li class="missing">Suscripción mensual requerida</li>
-                        <li>Notificaciones instantáneas</li>
-                        <li>Soporte para múltiples bases</li>
-                        <li>Configuración compleja</li>
-                        <li>Compatible con Oxide/uMod</li>
-                        <li class="missing">Límite de alertas diarias</li>
-                        <li class="missing">Soporte limitado</li>
-                    </ul>
-                </div>
-                <div class="comparison-card">
-                    <h3>Rust+</h3>
-                    <ul class="features-list">
-                        <li>Gratuito</li>
-                        <li class="missing">Solo alertas básicas</li>
-                        <li class="missing">No detecta incursiones</li>
-                        <li>Configuración fácil</li>
-                        <li>Oficial de Facepunch</li>
-                        <li class="missing">Funcionalidad limitada</li>
-                        <li>Soporte básico</li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Testimonials -->
-    <section id="testimonials" class="testimonials">
-        <div class="container">
-            <div class="section-title">
-                <h2>Testimonios de Jugadores</h2>
-                <p>Lo que dicen los usuarios de GitAlert</p>
-            </div>
-            <div class="testimonials-grid">
-                <div class="testimonial-card">
-                    <div class="testimonial-content">
-                        <p>GitAlert salvó mi base durante una incursión mientras estaba en el trabajo. Recibí la alerta, me conecté rápidamente y pude defender mis recursos. ¡Increíble!</p>
-                    </div>
-                    <div class="testimonial-author">
-                        <div class="testimonial-avatar">
-                            <i class="fas fa-user"></i>
+                
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-icon">
+                            <i class="fas fa-shield-alt"></i>
                         </div>
-                        <div class="author-info">
-                            <h4>Alex "Raider" Johnson</h4>
-                            <p>Jugador de Rust desde 2018</p>
+                        <div class="stat-value">12</div>
+                        <div class="stat-label">Días protegidos</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon">
+                            <i class="fas fa-bell"></i>
                         </div>
+                        <div class="stat-value">3</div>
+                        <div class="stat-label">Alertas este mes</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon">
+                            <i class="fas fa-users"></i>
+                        </div>
+                        <div class="stat-value">5</div>
+                        <div class="stat-label">Miembros del clan</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon">
+                            <i class="fas fa-calendar"></i>
+                        </div>
+                        <div class="stat-value">23</div>
+                        <div class="stat-label">Días de suscripción</div>
                     </div>
                 </div>
-                <div class="testimonial-card">
-                    <div class="testimonial-content">
-                        <p>Como administrador de servidor, recomiendo GitAlert a todos mis jugadores. Es fácil de instalar, no afecta el rendimiento y mantiene a la comunidad segura.</p>
-                    </div>
-                    <div class="testimonial-author">
-                        <div class="testimonial-avatar">
-                            <i class="fas fa-user"></i>
-                        </div>
-                        <div class="author-info">
-                            <h4>Sarah "Admin" Martinez</h4>
-                            <p>Administradora de servidores Rust</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="testimonial-card">
-                    <div class="testimonial-content">
-                        <p>Probé varias soluciones pagas, pero GitAlert supera a todas siendo gratis. Las alertas llegan más rápido y la configuración es mucho más sencilla.</p>
-                    </div>
-                    <div class="testimonial-author">
-                        <div class="testimonial-avatar">
-                            <i class="fas fa-user"></i>
-                        </div>
-                        <div class="author-info">
-                            <h4>Mike "Sniper" Thompson</h4>
-                            <p>Clan: The Rust Guardians</p>
+                
+                <div class="section">
+                    <h3 class="section-title">Tus Bases Vinculadas</h3>
+                    <div class="bases-list">
+                        <div class="alert-type active">
+                            <h4>Base Principal (H12)</h4>
+                            <p>Última actividad: Hoy 14:23</p>
+                            <p>Estado: Segura</p>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
-    </section>
-
-    <!-- CTA -->
-    <section id="cta" class="cta">
-        <div class="container">
-            <h2>¡Protege tu base ahora mismo!</h2>
-            <p>Descarga GitAlert completamente gratis y recibe alertas instantáneas en tu móvil cuando tu base está en peligro.</p>
-            <a href="#" class="btn btn-primary pulse">Descargar Gratis</a>
+            
+            <!-- Vincular Servidor -->
+            <div id="link-server" class="tab-content">
+                <div class="content-header">
+                    <h2>Vincular con Servidor Rust</h2>
+                </div>
+                
+                <div class="section">
+                    <h3 class="section-title">Instrucciones para Vincular</h3>
+                    <ol style="margin-left: 1.5rem; margin-bottom: 1.5rem; color: var(--rust-light);">
+                        <li style="margin-bottom: 0.8rem;">Abre Rust y únete a un servidor con RustAlert instalado</li>
+                        <li style="margin-bottom: 0.8rem;">Ejecuta el comando: <code style="background: rgba(0,0,0,0.3); padding: 0.2rem 0.5rem; border-radius: 4px;">/rustalert link</code></li>
+                        <li style="margin-bottom: 0.8rem;">Copia el código de 8 dígitos que aparece en pantalla</li>
+                        <li style="margin-bottom: 0.8rem;">Pega el código en el campo a continuación</li>
+                    </ol>
+                    
+                    <div class="form-group">
+                        <label for="link-code">Código de Vinculación</label>
+                        <input type="text" id="link-code" class="form-control" placeholder="Ej: A1B2C3D4">
+                    </div>
+                    
+                    <button class="btn btn-primary">Vincular Servidor</button>
+                </div>
+            </div>
+            
+            <!-- Configurar Alertas -->
+            <div id="alert-settings" class="tab-content">
+                <div class="content-header">
+                    <h2>Configuración de Alertas</h2>
+                </div>
+                
+                <div class="section">
+                    <h3 class="section-title">Tipos de Alertas</h3>
+                    <p style="margin-bottom: 1.5rem; color: var(--rust-light);">Selecciona qué eventos quieres que te notifiquemos</p>
+                    
+                    <div class="alert-types">
+                        <div class="alert-type active">
+                            <h4>Daño a Estructuras</h4>
+                            <p>Cuando paredes, puertas o ventanas reciben daño</p>
+                        </div>
+                        <div class="alert-type active">
+                            <h4>Daño al TC</h4>
+                            <p>Cuando el Tool Cupboard está siendo atacado</p>
+                        </div>
+                        <div class="alert-type">
+                            <h4>Decaimiento de Base</h4>
+                            <p>Cuando tus estructuras están decayendo</p>
+                        </div>
+                        <div class="alert-type active">
+                            <h4>Activación de Trampas</h4>
+                            <p>Cuando tus trampas o turrets son activadas</p>
+                        </div>
+                        <div class="alert-type">
+                            <h4>Ataques Offline</h4>
+                            <p>Cuando tu base es atacada mientras no estás conectado</p>
+                        </div>
+                        <div class="alert-type">
+                            <h4>Intrusos Detectados</h4>
+                            <p>Cuando jugadores enemigos entran en tu territorio</p>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <div class="checkbox-group">
+                            <input type="checkbox" id="alert-all" checked>
+                            <label for="alert-all">Recibir todas las alertas críticas</label>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="section">
+                    <h3 class="section-title">Sensibilidad de Alertas</h3>
+                    <div class="form-group">
+                        <label for="sensitivity">Nivel de Sensibilidad</label>
+                        <select id="sensitivity" class="form-control">
+                            <option value="low">Baja (solo ataques graves)</option>
+                            <option value="medium" selected>Media (recomendado)</option>
+                            <option value="high">Alta (cualquier actividad)</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="quiet-hours">Horas Silenciosas</label>
+                        <input type="text" id="quiet-hours" class="form-control" placeholder="Ej: 00:00 - 08:00">
+                        <p style="margin-top: 0.5rem; color: var(--rust-gray); font-size: 0.9rem;">Durante estas horas no recibirás notificaciones, excepto alertas críticas</p>
+                    </div>
+                </div>
+                
+                <button class="btn btn-primary">Guardar Configuración</button>
+            </div>
+            
+            <!-- Métodos de Notificación -->
+            <div id="notification-methods" class="tab-content">
+                <div class="content-header">
+                    <h2>Métodos de Notificación</h2>
+                </div>
+                
+                <div class="section">
+                    <h3 class="section-title">Selecciona cómo quieres recibir alertas</h3>
+                    
+                    <div class="notification-methods">
+                        <div class="notification-method active">
+                            <i class="fas fa-mobile-alt"></i>
+                            <h4>Notificación Push</h4>
+                        </div>
+                        <div class="notification-method">
+                            <i class="fas fa-phone"></i>
+                            <h4>Llamada Telefónica</h4>
+                        </div>
+                        <div class="notification-method">
+                            <i class="fab fa-discord"></i>
+                            <h4>Discord Webhook</h4>
+                        </div>
+                        <div class="notification-method">
+                            <i class="fas fa-envelope"></i>
+                            <h4>Correo Electrónico</h4>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="phone-number">Número de Teléfono (para llamadas)</label>
+                        <input type="tel" id="phone-number" class="form-control" placeholder="+34 600 123 456">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="discord-webhook">Webhook de Discord</label>
+                        <input type="text" id="discord-webhook" class="form-control" placeholder="https://discord.com/api/webhooks/...">
+                    </div>
+                    
+                    <button class="btn btn-primary">Guardar Configuración</button>
+                </div>
+            </div>
+            
+            <!-- Gestión de Clan -->
+            <div id="clan-settings" class="tab-content">
+                <div class="content-header">
+                    <h2>Gestión de Clan</h2>
+                    <button class="btn btn-secondary">Añadir Miembro</button>
+                </div>
+                
+                <div class="section">
+                    <h3 class="section-title">Miembros del Clan</h3>
+                    
+                    <div class="clan-members">
+                        <div class="clan-member">
+                            <div class="member-avatar">
+                                <i class="fas fa-user"></i>
+                            </div>
+                            <div class="member-info">
+                                <h4>Alex "Raider" Johnson</h4>
+                                <p>En línea - Base Principal</p>
+                            </div>
+                            <div class="member-role">Admin</div>
+                        </div>
+                        <div class="clan-member">
+                            <div class="member-avatar">
+                                <i class="fas fa-user"></i>
+                            </div>
+                            <div class="member-info">
+                                <h4>Sarah "Sniper" Martinez</h4>
+                                <p>Desconectado hace 2 horas</p>
+                            </div>
+                            <div class="member-role">Miembro</div>
+                        </div>
+                        <div class="clan-member">
+                            <div class="member-avatar">
+                                <i class="fas fa-user"></i>
+                            </div>
+                            <div class="member-info">
+                                <h4>Mike "Builder" Thompson</h4>
+                                <p>Desconectado hace 5 horas</p>
+                            </div>
+                            <div class="member-role">Miembro</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="section">
+                    <h3 class="section-title">Permisos de Alertas</h3>
+                    
+                    <div class="form-group">
+                        <div class="checkbox-group">
+                            <input type="checkbox" id="permission-all" checked>
+                            <label for="permission-all">Todos los miembros reciben alertas</label>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <div class="checkbox-group">
+                            <input type="checkbox" id="permission-admin" checked>
+                            <label for="permission-admin">Solo admins pueden modificar configuraciones</label>
+                        </div>
+                    </div>
+                    
+                    <button class="btn btn-primary">Guardar Configuración</button>
+                </div>
+            </div>
+            
+            <!-- Registros de Actividad -->
+            <div id="activity-logs" class="tab-content">
+                <div class="content-header">
+                    <h2>Registros de Actividad</h2>
+                    <button class="btn btn-outline">Exportar Registros</button>
+                </div>
+                
+                <div class="section">
+                    <h3 class="section-title">Historial de Eventos</h3>
+                    
+                    <div class="activity-log">
+                        <div class="log-item">
+                            <div class="log-icon">
+                                <i class="fas fa-exclamation-triangle"></i>
+                            </div>
+                            <div class="log-content">
+                                <h4>Intruso detectado en Base Principal</h4>
+                                <p>Jugador desconocido detectado cerca del TC</p>
+                                <div class="log-meta">
+                                    <span><i class="fas fa-clock"></i> Hoy, 14:23</span>
+                                    <span><i class="fas fa-map-marker-alt"></i> H12</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="log-item">
+                            <div class="log-icon">
+                                <i class="fas fa-shield-alt"></i>
+                            </div>
+                            <div class="log-content">
+                                <h4>Base asegurada</h4>
+                                <p>Todas las puertas y contenedores están seguros</p>
+                                <div class="log-meta">
+                                    <span><i class="fas fa-clock"></i> Ayer, 22:45</span>
+                                    <span><i class="fas fa-map-marker-alt"></i> Base Principal</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="log-item">
+                            <div class="log-icon">
+                                <i class="fas fa-radiation"></i>
+                            </div>
+                            <div class="log-content">
+                                <h4>Ataque a puerta detectado</h4>
+                                <p>Puerta sur está recibiendo daño de explosivos</p>
+                                <div class="log-meta">
+                                    <span><i class="fas fa-clock"></i> Ayer, 15:12</span>
+                                    <span><i class="fas fa-map-marker-alt"></i> H12</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="log-item">
+                            <div class="log-icon">
+                                <i class="fas fa-tools"></i>
+                            </div>
+                            <div class="log-content">
+                                <h4>Configuración modificada</h4>
+                                <p>Alex "Raider" Johnson cambió la sensibilidad de alertas</p>
+                                <div class="log-meta">
+                                    <span><i class="fas fa-clock"></i> 24 Jun, 11:30</span>
+                                    <span><i class="fas fa-user"></i> Alex Johnson</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Suscripción Premium -->
+            <div id="subscription" class="tab-content">
+                <div class="content-header">
+                    <h2>Suscripción Premium</h2>
+                </div>
+                
+                <div class="section">
+                    <h3 class="section-title">Elige tu Plan</h3>
+                    
+                    <div class="plans">
+                        <div class="plan-card">
+                            <h3>Básico</h3>
+                            <div class="plan-price">Gratis</div>
+                            <ul class="plan-features">
+                                <li>Alertas Push básicas</li>
+                                <li>1 base vinculada</li>
+                                <li>3 miembros en clan</li>
+                                <li>Alertas cada 30 min</li>
+                                <li class="missing">Llamadas telefónicas</li>
+                                <li class="missing">Alertas en tiempo real</li>
+                                <li class="missing">Soporte prioritario</li>
+                            </ul>
+                            <button class="btn btn-outline">Plan Actual</button>
+                        </div>
+                        <div class="plan-card recommended">
+                            <h3>Premium</h3>
+                            <div class="plan-price">$4.99 <span>/mes</span></div>
+                            <ul class="plan-features">
+                                <li>Alertas Push ilimitadas</li>
+                                <li>3 bases vinculadas</li>
+                                <li>10 miembros en clan</li>
+                                <li>Alertas en tiempo real</li>
+                                <li>Llamadas telefónicas</li>
+                                <li>Integración con Discord</li>
+                                <li>Soporte prioritario 24/7</li>
+                            </ul>
+                            <button class="btn btn-primary">Actualizar a Premium</button>
+                        </div>
+                        <div class="plan-card">
+                            <h3>Clan</h3>
+                            <div class="plan-price">$9.99 <span>/mes</span></div>
+                            <ul class="plan-features">
+                                <li>Todas las ventajas Premium</li>
+                                <li>Bases ilimitadas</li>
+                                <li>Miembros ilimitados</li>
+                                <li>Alertas personalizadas</li>
+                                <li>Roles avanzados</li>
+                                <li>Estadísticas detalladas</li>
+                                <li>Soporte dedicado</li>
+                            </ul>
+                            <button class="btn btn-outline">Seleccionar Plan</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Integración Móvil -->
+            <div id="mobile-app" class="tab-content">
+                <div class="content-header">
+                    <h2>App Móvil</h2>
+                </div>
+                
+                <div class="section">
+                    <h3 class="section-title">Conecta tu dispositivo móvil</h3>
+                    
+                    <div class="mobile-integration">
+                        <div class="mobile-info">
+                            <p style="margin-bottom: 1.5rem; color: var(--rust-light);">
+                                Descarga la app RustAlert para recibir notificaciones push directamente en tu dispositivo móvil. Disponible para iOS y Android.
+                            </p>
+                            
+                            <div class="form-group">
+                                <label for="device-name">Nombre del Dispositivo</label>
+                                <input type="text" id="device-name" class="form-control" placeholder="Ej: iPhone de Alex">
+                            </div>
+                            
+                            <div class="notification-methods" style="margin-top: 2rem;">
+                                <a href="#" class="notification-method">
+                                    <i class="fab fa-apple"></i>
+                                    <h4>App Store</h4>
+                                </a>
+                                <a href="#" class="notification-method">
+                                    <i class="fab fa-google-play"></i>
+                                    <h4>Play Store</h4>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="mobile-qr">
+                            <img src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='150' height='150' viewBox='0 0 36 36'><rect width='36' height='36' fill='white'/><path d='M0 0h8v8H0zm10 0h8v8h-8zm10 0h8v8h-8zM0 10h8v8H0zm10 0h8v8h-8zm10 0h8v8h-8zM0 20h8v8H0zm10 0h8v8h-8zm10 0h8v8h-8z' fill='black'/></svg>" alt="QR Code">
+                            <p>Escanear para vincular</p>
+                        </div>
+                    </div>
+                    
+                    <button class="btn btn-primary">Vincular Dispositivo</button>
+                </div>
+            </div>
         </div>
     </section>
 
     <!-- Footer -->
     <footer>
         <div class="container">
-            <div class="footer-grid">
-                <div class="footer-col">
-                    <h3>GitAlert</h3>
-                    <p>Sistema de alertas gratuito para Rust que protege tus bases de incursiones con notificaciones instantáneas.</p>
-                    <div class="social-links">
-                        <a href="#"><i class="fab fa-discord"></i></a>
-                        <a href="#"><i class="fab fa-steam"></i></a>
-                        <a href="#"><i class="fab fa-github"></i></a>
-                        <a href="#"><i class="fab fa-youtube"></i></a>
-                    </div>
+            <div class="footer-content">
+                <div class="copyright">
+                    © 2023 RustAlert - Sistema de alertas para Rust. No afiliado con Facepunch Studios.
                 </div>
-                <div class="footer-col">
-                    <h3>Enlaces</h3>
-                    <ul>
-                        <li><a href="#">Descargar</a></li>
-                        <li><a href="#">Documentación</a></li>
-                        <li><a href="#">Soporte</a></li>
-                        <li><a href="#">FAQ</a></li>
-                    </ul>
+                <div class="footer-links">
+                    <a href="#">Términos</a>
+                    <a href="#">Privacidad</a>
+                    <a href="#">Soporte</a>
+                    <a href="#">API</a>
                 </div>
-                <div class="footer-col">
-                    <h3>Comunidad</h3>
-                    <ul>
-                        <li><a href="#">Foro</a></li>
-                        <li><a href="#">Discord</a></li>
-                        <li><a href="#">Servidores Recomendados</a></li>
-                        <li><a href="#">Contribuir</a></li>
-                    </ul>
-                </div>
-                <div class="footer-col">
-                    <h3>Legal</h3>
-                    <ul>
-                        <li><a href="#">Términos de Uso</a></li>
-                        <li><a href="#">Privacidad</a></li>
-                        <li><a href="#">Licencia</a></li>
-                        <li><a href="#">Aviso Legal</a></li>
-                    </ul>
-                </div>
-            </div>
-            <div class="copyright">
-                <p>© 2023 GitAlert. Este es un proyecto de fans no afiliado con Facepunch Studios. Rust es una marca registrada de Facepunch Studios.</p>
             </div>
         </div>
     </footer>
 
     <script>
-        // Smooth scrolling for navigation links
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
+        // Tabs functionality
+        document.querySelectorAll('.tab').forEach(tab => {
+            tab.addEventListener('click', function() {
+                // Remove active class from all tabs
+                document.querySelectorAll('.tab').forEach(t => {
+                    t.classList.remove('active');
+                });
+                
+                // Add active class to clicked tab
+                this.classList.add('active');
+                
+                // Hide all tab content
+                document.querySelectorAll('.tab-content').forEach(content => {
+                    content.classList.remove('active');
+                });
+                
+                // Show corresponding tab content
+                const targetId = this.getAttribute('data-target');
+                document.getElementById(targetId).classList.add('active');
+            });
+        });
+        
+        // Navigation functionality
+        document.querySelectorAll('.nav-links a').forEach(link => {
+            link.addEventListener('click', function(e) {
                 e.preventDefault();
                 
-                const target = document.querySelector(this.getAttribute('href'));
-                if (target) {
-                    window.scrollTo({
-                        top: target.offsetTop - 80,
-                        behavior: 'smooth'
-                    });
-                }
-            });
-        });
-        
-        // Animation for feature cards on scroll
-        const featureCards = document.querySelectorAll('.feature-card');
-        
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.style.transform = 'translateY(0)';
-                    entry.target.style.opacity = '1';
-                }
-            });
-        }, { threshold: 0.1 });
-        
-        featureCards.forEach(card => {
-            card.style.transform = 'translateY(50px)';
-            card.style.opacity = '0';
-            card.style.transition = 'transform 0.5s, opacity 0.5s';
-            observer.observe(card);
-        });
-        
-        // Highlight active navigation link
-        window.addEventListener('scroll', function() {
-            const sections = document.querySelectorAll('section');
-            const navLinks = document.querySelectorAll('.nav-links a');
-            
-            let current = '';
-            
-            sections.forEach(section => {
-                const sectionTop = section.offsetTop;
-                const sectionHeight = section.clientHeight;
+                // Remove active class from all nav links
+                document.querySelectorAll('.nav-links a').forEach(l => {
+                    l.classList.remove('active');
+                });
                 
-                if (pageYOffset >= (sectionTop - 100)) {
-                    current = section.getAttribute('id');
-                }
-            });
-            
-            navLinks.forEach(link => {
-                link.classList.remove('active');
-                if (link.getAttribute('href').includes(current)) {
-                    link.classList.add('active');
-                }
+                // Add active class to clicked link
+                this.classList.add('active');
+                
+                // Hide all tab content
+                document.querySelectorAll('.tab-content').forEach(content => {
+                    content.classList.remove('active');
+                });
+                
+                // Show corresponding tab content
+                const targetId = this.getAttribute('href').substring(1);
+                document.getElementById(targetId).classList.add('active');
             });
         });
+        
+        // Sidebar menu functionality
+        document.querySelectorAll('.sidebar-menu a').forEach(link => {
+            link.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                // Remove active class from all menu items
+                document.querySelectorAll('.sidebar-menu a').forEach(item => {
+                    item.classList.remove('active');
+                });
+                
+                // Add active class to clicked item
+                this.classList.add('active');
+                
+                // Hide all tab content
+                document.querySelectorAll('.tab-content').forEach(content => {
+                    content.classList.remove('active');
+                });
+                
+                // Show corresponding tab content
+                const targetId = this.getAttribute('href').substring(1);
+                document.getElementById(targetId).classList.add('active');
+            });
+        });
+        
+        // Alert type selection
+        document.querySelectorAll('.alert-type').forEach(type => {
+            type.addEventListener('click', function() {
+                this.classList.toggle('active');
+            });
+        });
+        
+        // Notification method selection
+        document.querySelectorAll('.notification-method').forEach(method => {
+            method.addEventListener('click', function() {
+                this.classList.toggle('active');
+            });
+        });
+        
+        // Simulate server status changes
+        setInterval(() => {
+            const statusIndicator = document.querySelector('.status-indicator');
+            const statusText = document.querySelector('.status-text h3');
+            const statusDesc = document.querySelector('.status-text p');
+            
+            // Random status changes for demo
+            const statuses = [
+                {status: "Todo seguro", desc: "No se han detectado actividades sospechosas", color: "#2ecc71"},
+                {status: "Actividad sospechosa", desc: "Movimiento detectado cerca de la base", color: "#f39c12"},
+                {status: "ALERTA: Ataque detectado", desc: "Estructuras recibiendo daño", color: "#e74c3c"}
+            ];
+            
+            const randomStatus = statuses[Math.floor(Math.random() * statuses.length)];
+            
+            statusIndicator.style.background = randomStatus.color;
+            statusIndicator.style.boxShadow = `0 0 10px ${randomStatus.color}`;
+            statusText.textContent = `Estado: ${randomStatus.status}`;
+            statusDesc.textContent = randomStatus.desc;
+        }, 10000);
     </script>
 </body>
 </html>
