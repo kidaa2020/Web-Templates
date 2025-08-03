@@ -3,30 +3,58 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tienda de Licencias</title>
+    <title>Licencias Premium | Compra Segura</title>
     <link rel="stylesheet" href="style.css">
+    <script src="https://www.paypal.com/sdk/js?client-id=TU_CLIENT_ID&currency=EUR"></script>
+    <script src="script.js" defer></script>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
 </head>
 <body>
     <header class="header">
-        <h1>Licencias Premium</h1>
+        <h1>🎁 Licencias Premium</h1>
+        <p>Compra 100% segura con PayPal | Entrega al instante</p>
     </header>
 
-    <div class="product-grid">
+    <div class="products">
         <!-- Producto 1 -->
-        <a href="windows11.html" class="product-card">
-            <img src="win11pro.jpeg" alt="Windows 11 Pro">
+        <div<a href="windows11.html" class="product-card">>
+            <div class="product-img" style="background-image: url('win11pro.jpeg');"></div>
             <h2>Windows 11 Pro</h2>
             <p class="price">16 EUR</p>
-        </a>
+            <p class="description">Licencia permanente para 1 PC</p>
+            <div id="paypal-button-w11" class="paypal-button-container"></div>
+        </div>
 
         <!-- Producto 2 -->
-        <a href="windows10.html" class="product-card">
-            <img src="win10pro.png" alt="Windows 10 Pro">
+        <div class="product-card">
+            <div class="product-img" style="background-image: url('win10pro.png');"></div>
             <h2>Windows 10 Pro</h2>
             <p class="price">16 EUR</p>
-        </a>
+            <p class="description">Licencia permanente para 1 PC</p>
+            <div id="paypal-button-w10" class="paypal-button-container"></div>
+        </div>
 
-        <!-- Más productos... -->
+        <!-- Producto 3 -->
+        <div class="product-card">
+            <div class="product-img" style="background-image: url('spoti.png');"></div>
+            <h2>Spotify Premium</h2>
+            <p class="price">32 EUR</p>
+            <p class="description">1 año de cuenta premium</p>
+            <div id="paypal-button-spotify" class="paypal-button-container"></div>
+        </div>
+
+        <!-- Producto 4 -->
+        <div class="product-card">
+            <div class="product-img" style="background-image: url('365.jpeg');"></div>
+            <h2>Microsoft 365</h2>
+            <p class="price">16 EUR</p>
+            <p class="description">1 año de suscripción</p>
+            <div id="paypal-button-office" class="paypal-button-container"></div>
+        </div>
     </div>
+
+    <footer class="footer">
+        <p>© 2024 | Soporte: <a href="mailto:soporte@tudominio.com">soporte@tudominio.com</a></p>
+    </footer>
 </body>
 </html>
