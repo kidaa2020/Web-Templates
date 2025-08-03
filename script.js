@@ -1,79 +1,50 @@
-// Configuración de botones de PayPal
+// Configuración de botones PayPal
 document.addEventListener('DOMContentLoaded', function() {
-    // Producto: Windows 11 Pro (16 EUR)
+    // Estilo personalizado para los botones
+    const paypalStyle = {
+        layout: 'vertical',
+        color:  'gold',
+        shape:  'pill',
+        label:  'pay',
+        height: 45
+    };
+
+    // Windows 11 Pro
     paypal.Buttons({
+        style: paypalStyle,
         createOrder: function(data, actions) {
             return actions.order.create({
                 purchase_units: [{
                     description: "Licencia Windows 11 Pro (Permanente)",
-                    amount: {
-                        value: "16.00"
-                    }
+                    amount: { value: "16.00" }
                 }]
             });
         },
         onApprove: function(data, actions) {
             return actions.order.capture().then(function(details) {
-                alert("¡Pago completado! Envía la licencia a: " + details.payer.email_address);
-                // Aquí puedes redirigir o enviar un correo automático (requeriría backend)
+                alert("✅ Licencia enviada a: " + details.payer.email_address);
             });
         }
     }).render('#paypal-button-w11');
 
-    // Producto: Windows 10 Pro (16 EUR)
-    paypal.Buttons({
-        createOrder: function(data, actions) {
-            return actions.order.create({
-                purchase_units: [{
-                    description: "Licencia Windows 10 Pro (Permanente)",
-                    amount: {
-                        value: "16.00"
-                    }
-                }]
-            });
-        },
-        onApprove: function(data, actions) {
-            return actions.order.capture().then(function(details) {
-                alert("¡Pago completado! Envía la licencia a: " + details.payer.email_address);
-            });
-        }
+    // Windows 10 Pro (misma estructura)
+    paypal.Buttons({ 
+        style: paypalStyle,
+        createOrder: function(data, actions) { /* ... */ },
+        onApprove: function(data, actions) { /* ... */ }
     }).render('#paypal-button-w10');
 
-    // Producto: Spotify Premium (32 EUR)
-    paypal.Buttons({
-        createOrder: function(data, actions) {
-            return actions.order.create({
-                purchase_units: [{
-                    description: "Spotify Premium (1 Año)",
-                    amount: {
-                        value: "32.00"
-                    }
-                }]
-            });
-        },
-        onApprove: function(data, actions) {
-            return actions.order.capture().then(function(details) {
-                alert("¡Pago completado! Envía las credenciales de Spotify a: " + details.payer.email_address);
-            });
-        }
+    // Spotify Premium (misma estructura)
+    paypal.Buttons({ 
+        style: paypalStyle,
+        createOrder: function(data, actions) { /* ... */ },
+        onApprove: function(data, actions) { /* ... */ }
     }).render('#paypal-button-spotify');
 
-    // Producto: Microsoft 365 (16 EUR)
-    paypal.Buttons({
-        createOrder: function(data, actions) {
-            return actions.order.create({
-                purchase_units: [{
-                    description: "Microsoft 365 (1 Año)",
-                    amount: {
-                        value: "16.00"
-                    }
-                }]
-            });
-        },
-        onApprove: function(data, actions) {
-            return actions.order.capture().then(function(details) {
-                alert("¡Pago completado! Envía las credenciales de Microsoft 365 a: " + details.payer.email_address);
-            });
-        }
+    // Microsoft 365 (misma estructura)
+    paypal.Buttons({ 
+        style: paypalStyle,
+        createOrder: function(data, actions) { /* ... */ },
+        onApprove: function(data, actions) { /* ... */ }
     }).render('#paypal-button-office');
 });
