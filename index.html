@@ -30,6 +30,7 @@
             background-color: #f5f7fb;
             color: #333;
             line-height: 1.6;
+            overflow-x: hidden;
         }
 
         /* Header y navegación */
@@ -236,6 +237,10 @@
             transition: var(--transition);
             text-align: center;
             text-decoration: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
         }
 
         .buy-button:hover {
@@ -253,223 +258,109 @@
             transition: var(--transition);
             text-align: center;
             text-decoration: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
         }
 
         .details-button:hover {
             background: #f0f4ff;
         }
 
-        /* Características */
-        .features {
-            background: var(--light);
-            padding: 5rem 5%;
-            text-align: center;
-        }
-
-        .features-container {
-            max-width: 1200px;
-            margin: 0 auto;
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2.5rem;
-        }
-
-        .feature-card {
-            background: white;
-            padding: 2.5rem 1.8rem;
-            border-radius: 12px;
-            box-shadow: var(--shadow);
-            transition: var(--transition);
-        }
-
-        .feature-card:hover {
-            transform: translateY(-8px);
-        }
-
-        .feature-icon {
-            font-size: 3rem;
-            color: var(--primary);
-            margin-bottom: 1.5rem;
-        }
-
-        .feature-title {
-            font-size: 1.4rem;
-            margin-bottom: 1rem;
-            color: var(--dark);
-        }
-
-        .feature-description {
-            color: #666;
-        }
-
-        /* Testimonios */
-        .testimonials {
-            padding: 5rem 5%;
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-
-        .testimonial-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
-        }
-
-        .testimonial-card {
-            background: white;
-            padding: 2rem;
-            border-radius: 12px;
-            box-shadow: var(--shadow);
-            position: relative;
-        }
-
-        .testimonial-card:before {
-            content: """;
-            font-size: 6rem;
-            position: absolute;
-            top: -25px;
-            left: 10px;
-            color: #eee;
-            font-family: Georgia, serif;
-        }
-
-        .testimonial-text {
-            margin-bottom: 1.5rem;
-            font-style: italic;
-            color: #555;
-        }
-
-        .testimonial-author {
-            display: flex;
-            align-items: center;
-            gap: 0.8rem;
-        }
-
-        .author-avatar {
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            background: var(--primary);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-weight: bold;
-            font-size: 1.2rem;
-        }
-
-        .author-info h4 {
-            color: var(--dark);
-            margin-bottom: 0.2rem;
-        }
-
-        .author-info p {
-            color: #777;
-            font-size: 0.9rem;
-        }
-
-        /* Footer */
-        footer {
-            background: var(--dark);
-            color: white;
-            padding: 4rem 5% 2rem;
-        }
-
-        .footer-container {
-            max-width: 1200px;
-            margin: 0 auto;
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 3rem;
-        }
-
-        .footer-column h3 {
-            font-size: 1.4rem;
-            margin-bottom: 1.5rem;
-            position: relative;
-            padding-bottom: 0.8rem;
-        }
-
-        .footer-column h3:after {
-            content: "";
-            position: absolute;
-            bottom: 0;
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
             left: 0;
-            width: 50px;
-            height: 3px;
-            background: var(--accent);
-        }
-
-        .footer-links {
-            list-style: none;
-        }
-
-        .footer-links li {
-            margin-bottom: 0.8rem;
-        }
-
-        .footer-links a {
-            color: #bbb;
-            text-decoration: none;
-            transition: var(--transition);
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
-        .footer-links a:hover {
-            color: white;
-            transform: translateX(5px);
-        }
-
-        .footer-links i {
-            color: var(--accent);
-            width: 20px;
-        }
-
-        .contact-info p {
-            margin-bottom: 0.8rem;
-            display: flex;
-            align-items: center;
-            gap: 0.8rem;
-        }
-
-        .contact-info i {
-            color: var(--accent);
-            width: 20px;
-            text-align: center;
-        }
-
-        .social-links {
-            display: flex;
-            gap: 1rem;
-            margin-top: 1.5rem;
-        }
-
-        .social-links a {
-            display: inline-flex;
-            align-items: center;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            z-index: 2000;
             justify-content: center;
-            width: 40px;
-            height: 40px;
-            background: rgba(255, 255, 255, 0.1);
+            align-items: center;
+        }
+
+        .modal-content {
+            background: white;
+            border-radius: 12px;
+            width: 90%;
+            max-width: 600px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            animation: modalOpen 0.4s ease;
+        }
+
+        @keyframes modalOpen {
+            from { opacity: 0; transform: translateY(-50px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .modal-header {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
             color: white;
-            border-radius: 50%;
+            padding: 1.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .modal-header h2 {
+            font-size: 1.8rem;
+        }
+
+        .close-modal {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 2rem;
+            cursor: pointer;
             transition: var(--transition);
         }
 
-        .social-links a:hover {
-            background: var(--accent);
-            transform: translateY(-3px);
+        .close-modal:hover {
+            transform: scale(1.1);
         }
 
-        .copyright {
-            text-align: center;
-            padding-top: 3rem;
-            margin-top: 3rem;
-            border-top: 1px solid rgba(255, 255, 255, 0.1);
-            color: #aaa;
-            font-size: 0.9rem;
+        .modal-body {
+            padding: 2rem;
+        }
+
+        .modal-product-image {
+            width: 100%;
+            max-height: 300px;
+            object-fit: cover;
+            border-radius: 8px;
+            margin-bottom: 1.5rem;
+        }
+
+        .modal-price {
+            font-size: 2.2rem;
+            color: var(--primary);
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+        }
+
+        .modal-description {
+            margin-bottom: 1.5rem;
+            line-height: 1.7;
+        }
+
+        .modal-features {
+            margin-bottom: 2rem;
+        }
+
+        .modal-features ul {
+            padding-left: 1.5rem;
+        }
+
+        .modal-features li {
+            margin-bottom: 0.8rem;
+        }
+
+        #paypal-button-container {
+            margin-top: 1.5rem;
         }
 
         /* Responsive */
@@ -504,6 +395,10 @@
             
             .hero p {
                 font-size: 1.1rem;
+            }
+            
+            .modal-content {
+                width: 95%;
             }
         }
 
@@ -556,7 +451,7 @@
         
         <div class="product-grid">
             <!-- Windows 11 Pro -->
-            <div class="product-card">
+            <div class="product-card" data-product="windows11">
                 <div class="product-badge">MÁS VENDIDO</div>
                 <img src="win11pro.jpeg" alt="Windows 11 Pro" class="product-image">
                 <div class="product-content">
@@ -564,28 +459,36 @@
                     <p class="product-description">Licencia digital permanente para 1 PC. Actualizaciones gratuitas y soporte oficial.</p>
                     <div class="product-price">16 EUR</div>
                     <div class="product-actions">
-                        <a href="#" class="buy-button">Comprar Ahora</a>
-                        <a href="#" class="details-button">Detalles</a>
+                        <button class="buy-button" data-product="windows11">
+                            <i class="fas fa-shopping-cart"></i> Comprar Ahora
+                        </button>
+                        <button class="details-button" data-product="windows11">
+                            <i class="fas fa-info-circle"></i> Detalles
+                        </button>
                     </div>
                 </div>
             </div>
             
             <!-- Windows 10 Pro -->
-            <div class="product-card">
+            <div class="product-card" data-product="windows10">
                 <img src="win10pro.png" alt="Windows 10 Pro" class="product-image">
                 <div class="product-content">
                     <h3 class="product-title">Windows 10 Pro</h3>
                     <p class="product-description">Licencia permanente para sistemas Windows 10. Compatible con todos los dispositivos.</p>
                     <div class="product-price">16 EUR</div>
                     <div class="product-actions">
-                        <a href="#" class="buy-button">Comprar Ahora</a>
-                        <a href="#" class="details-button">Detalles</a>
+                        <button class="buy-button" data-product="windows10">
+                            <i class="fas fa-shopping-cart"></i> Comprar Ahora
+                        </button>
+                        <button class="details-button" data-product="windows10">
+                            <i class="fas fa-info-circle"></i> Detalles
+                        </button>
                     </div>
                 </div>
             </div>
             
             <!-- Spotify Premium -->
-            <div class="product-card">
+            <div class="product-card" data-product="spotify">
                 <div class="product-badge">OFERTA</div>
                 <img src="spoti.png" alt="Spotify Premium" class="product-image">
                 <div class="product-content">
@@ -593,186 +496,231 @@
                     <p class="product-description">Cuenta Premium válida por 1 año. Sin anuncios, descargas ilimitadas y máxima calidad.</p>
                     <div class="product-price">32 EUR</div>
                     <div class="product-actions">
-                        <a href="#" class="buy-button">Comprar Ahora</a>
-                        <a href="#" class="details-button">Detalles</a>
+                        <button class="buy-button" data-product="spotify">
+                            <i class="fas fa-shopping-cart"></i> Comprar Ahora
+                        </button>
+                        <button class="details-button" data-product="spotify">
+                            <i class="fas fa-info-circle"></i> Detalles
+                        </button>
                     </div>
                 </div>
             </div>
             
             <!-- Microsoft 365 -->
-            <div class="product-card">
+            <div class="product-card" data-product="office365">
                 <img src="365.jpeg" alt="Microsoft 365" class="product-image">
                 <div class="product-content">
                     <h3 class="product-title">Microsoft 365</h3>
                     <p class="product-description">Suscripción anual que incluye Word, Excel, PowerPoint, Outlook y 1TB de almacenamiento.</p>
                     <div class="product-price">16 EUR</div>
                     <div class="product-actions">
-                        <a href="#" class="buy-button">Comprar Ahora</a>
-                        <a href="#" class="details-button">Detalles</a>
+                        <button class="buy-button" data-product="office365">
+                            <i class="fas fa-shopping-cart"></i> Comprar Ahora
+                        </button>
+                        <button class="details-button" data-product="office365">
+                            <i class="fas fa-info-circle"></i> Detalles
+                        </button>
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Características -->
-    <section id="features" class="features">
-        <div class="section-header">
-            <h2>¿Por Qué Elegirnos?</h2>
-            <p>Ofrecemos la mejor experiencia de compra de licencias digitales</p>
-        </div>
-        
-        <div class="features-container">
-            <div class="feature-card">
-                <div class="feature-icon">
-                    <i class="fas fa-bolt"></i>
-                </div>
-                <h3 class="feature-title">Entrega Inmediata</h3>
-                <p class="feature-description">Recibe tu licencia por email en menos de 5 minutos tras la compra confirmada.</p>
+    <!-- Modal para detalles y compra -->
+    <div class="modal" id="productModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="modalTitle">Windows 11 Pro</h2>
+                <button class="close-modal">&times;</button>
             </div>
-            
-            <div class="feature-card">
-                <div class="feature-icon">
-                    <i class="fas fa-shield-alt"></i>
+            <div class="modal-body">
+                <img id="modalImage" src="win11pro.jpeg" alt="Producto" class="modal-product-image">
+                <div class="modal-price" id="modalPrice">16 EUR</div>
+                
+                <div class="modal-description" id="modalDescription">
+                    <p>Licencia digital permanente para 1 PC. Actualizaciones gratuitas y soporte oficial.</p>
                 </div>
-                <h3 class="feature-title">Garantía 100%</h3>
-                <p class="feature-description">Todas nuestras licencias son originales con garantía de activación.</p>
-            </div>
-            
-            <div class="feature-card">
-                <div class="feature-icon">
-                    <i class="fas fa-headset"></i>
+                
+                <div class="modal-features" id="modalFeatures">
+                    <h3>Características principales:</h3>
+                    <ul>
+                        <li>Activación inmediata después del pago</li>
+                        <li>Soporte técnico 24/7</li>
+                        <li>Garantía de activación permanente</li>
+                        <li>Entrega por email en menos de 5 minutos</li>
+                        <li>Compatible con todas las versiones de Windows</li>
+                    </ul>
                 </div>
-                <h3 class="feature-title">Soporte 24/7</h3>
-                <p class="feature-description">Equipo de soporte disponible en cualquier momento para resolver tus dudas.</p>
+                
+                <div id="paypal-button-container"></div>
             </div>
         </div>
-    </section>
-
-    <!-- Testimonios -->
-    <section id="testimonials" class="testimonials">
-        <div class="section-header">
-            <h2>Lo Que Dicen Nuestros Clientes</h2>
-            <p>Más de 5,000 clientes satisfechos en toda Europa</p>
-        </div>
-        
-        <div class="testimonial-grid">
-            <div class="testimonial-card">
-                <p class="testimonial-text">"Compré la licencia de Windows 11 Pro y en menos de 10 minutos ya la tenía en mi email. Activación sin problemas y soporte rápido. ¡Totalmente recomendado!"</p>
-                <div class="testimonial-author">
-                    <div class="author-avatar">M</div>
-                    <div class="author-info">
-                        <h4>Miguel Ángel</h4>
-                        <p>Madrid, España</p>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="testimonial-card">
-                <p class="testimonial-text">"La cuenta de Spotify Premium ha sido una excelente compra. Funciona perfectamente y el precio es mucho mejor que la suscripción mensual. ¡Gracias!"</p>
-                <div class="testimonial-author">
-                    <div class="author-avatar">S</div>
-                    <div class="author-info">
-                        <h4>Sofía Rodríguez</h4>
-                        <p>Barcelona, España</p>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="testimonial-card">
-                <p class="testimonial-text">"Necesitaba Microsoft 365 para mi negocio y encontré esta solución anual. El proceso fue rápido y ahora todo mi equipo trabaja con las licencias activadas."</p>
-                <div class="testimonial-author">
-                    <div class="author-avatar">C</div>
-                    <div class="author-info">
-                        <h4>Carlos Mendoza</h4>
-                        <p>Valencia, España</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Footer -->
-    <footer>
-        <div class="footer-container">
-            <div class="footer-column">
-                <h3>LicenciasPremium</h3>
-                <p>Tu tienda confiable de licencias de software originales con entrega inmediata y soporte profesional.</p>
-                <div class="social-links">
-                    <a href="#"><i class="fab fa-facebook-f"></i></a>
-                    <a href="#"><i class="fab fa-twitter"></i></a>
-                    <a href="#"><i class="fab fa-instagram"></i></a>
-                    <a href="#"><i class="fab fa-linkedin-in"></i></a>
-                </div>
-            </div>
-            
-            <div class="footer-column">
-                <h3>Enlaces Rápidos</h3>
-                <ul class="footer-links">
-                    <li><a href="#"><i class="fas fa-chevron-right"></i> Inicio</a></li>
-                    <li><a href="#products"><i class="fas fa-chevron-right"></i> Productos</a></li>
-                    <li><a href="#features"><i class="fas fa-chevron-right"></i> Beneficios</a></li>
-                    <li><a href="#testimonials"><i class="fas fa-chevron-right"></i> Opiniones</a></li>
-                    <li><a href="#"><i class="fas fa-chevron-right"></i> Soporte</a></li>
-                </ul>
-            </div>
-            
-            <div class="footer-column">
-                <h3>Productos</h3>
-                <ul class="footer-links">
-                    <li><a href="#"><i class="fas fa-chevron-right"></i> Windows 11 Pro</a></li>
-                    <li><a href="#"><i class="fas fa-chevron-right"></i> Windows 10 Pro</a></li>
-                    <li><a href="#"><i class="fas fa-chevron-right"></i> Spotify Premium</a></li>
-                    <li><a href="#"><i class="fas fa-chevron-right"></i> Microsoft 365</a></li>
-                </ul>
-            </div>
-            
-            <div class="footer-column">
-                <h3>Contacto</h3>
-                <div class="contact-info">
-                    <p><i class="fas fa-envelope"></i> soporte@licenciaspremium.com</p>
-                    <p><i class="fas fa-phone"></i> +34 912 345 678</p>
-                    <p><i class="fas fa-map-marker-alt"></i> Madrid, España</p>
-                </div>
-            </div>
-        </div>
-        
-        <div class="copyright">
-            <p>&copy; 2023 LicenciasPremium. Todos los derechos reservados.</p>
-        </div>
-    </footer>
+    </div>
 
     <script>
-        // PayPal Integration
-        document.addEventListener('DOMContentLoaded', function() {
-            // Configuración para todos los botones de PayPal
-            const paypalStyle = {
-                layout: 'vertical',
-                color: 'blue',
-                shape: 'rect',
-                label: 'pay',
-                height: 45
-            };
+        // Base de datos de productos
+        const products = {
+            windows11: {
+                title: "Windows 11 Pro",
+                price: "16",
+                image: "win11pro.jpeg",
+                description: "Licencia digital permanente para 1 PC. Actualizaciones gratuitas y soporte oficial.",
+                features: [
+                    "Activación inmediata después del pago",
+                    "Soporte técnico 24/7",
+                    "Garantía de activación permanente",
+                    "Entrega por email en menos de 5 minutos",
+                    "Compatible con todas las versiones de Windows"
+                ]
+            },
+            windows10: {
+                title: "Windows 10 Pro",
+                price: "16",
+                image: "win10pro.png",
+                description: "Licencia permanente para sistemas Windows 10. Compatible con todos los dispositivos.",
+                features: [
+                    "Activación instantánea",
+                    "Soporte técnico incluido",
+                    "Licencia permanente sin renovaciones",
+                    "Entrega digital inmediata",
+                    "Compatible con PC y laptops"
+                ]
+            },
+            spotify: {
+                title: "Spotify Premium",
+                price: "32",
+                image: "spoti.png",
+                description: "Cuenta Premium válida por 1 año. Sin anuncios, descargas ilimitadas y máxima calidad.",
+                features: [
+                    "1 año de suscripción Premium",
+                    "Sin interrupciones por anuncios",
+                    "Descarga ilimitada de música",
+                    "Calidad de audio mejorada",
+                    "Acceso a millones de canciones"
+                ]
+            },
+            office365: {
+                title: "Microsoft 365",
+                price: "16",
+                image: "365.jpeg",
+                description: "Suscripción anual que incluye Word, Excel, PowerPoint, Outlook y 1TB de almacenamiento.",
+                features: [
+                    "Suscripción de 1 año completa",
+                    "Acceso a todas las aplicaciones de Office",
+                    "1 TB de almacenamiento en OneDrive",
+                    "Actualizaciones gratuitas durante el año",
+                    "Soporte técnico prioritario"
+                ]
+            }
+        };
+
+        // Elementos del DOM
+        const modal = document.getElementById('productModal');
+        const modalTitle = document.getElementById('modalTitle');
+        const modalPrice = document.getElementById('modalPrice');
+        const modalImage = document.getElementById('modalImage');
+        const modalDescription = document.getElementById('modalDescription');
+        const modalFeatures = document.getElementById('modalFeatures');
+        const closeModalBtn = document.querySelector('.close-modal');
+        const paypalContainer = document.getElementById('paypal-button-container');
+
+        // Funciones para manejar eventos
+        function openModal(productId) {
+            const product = products[productId];
             
-            // Configurar botones de PayPal
+            // Actualizar contenido del modal
+            modalTitle.textContent = product.title;
+            modalPrice.textContent = `${product.price} EUR`;
+            modalImage.src = product.image;
+            modalDescription.innerHTML = `<p>${product.description}</p>`;
+            
+            // Construir lista de características
+            let featuresHTML = '<h3>Características principales:</h3><ul>';
+            product.features.forEach(feature => {
+                featuresHTML += `<li>${feature}</li>`;
+            });
+            featuresHTML += '</ul>';
+            modalFeatures.innerHTML = featuresHTML;
+            
+            // Configurar PayPal
+            configurePayPal(product);
+            
+            // Mostrar modal
+            modal.style.display = 'flex';
+        }
+
+        function closeModal() {
+            modal.style.display = 'none';
+            // Limpiar botones de PayPal al cerrar
+            paypalContainer.innerHTML = '';
+        }
+
+        function configurePayPal(product) {
+            // Limpiar contenedor
+            paypalContainer.innerHTML = '';
+            
+            // Configurar botón de PayPal
             paypal.Buttons({
-                style: paypalStyle,
+                style: {
+                    layout: 'vertical',
+                    color: 'blue',
+                    shape: 'rect',
+                    label: 'pay',
+                    height: 45
+                },
                 createOrder: function(data, actions) {
                     return actions.order.create({
                         purchase_units: [{
-                            description: "Licencia Windows 11 Pro",
+                            description: product.title,
                             amount: {
-                                value: "16.00"
+                                value: product.price
                             }
                         }]
                     });
                 },
                 onApprove: function(data, actions) {
                     return actions.order.capture().then(function(details) {
-                        alert('✅ Pago completado. Licencia enviada a: ' + details.payer.email_address);
+                        alert(`✅ Pago completado! Tu licencia de ${product.title} será enviada a: ${details.payer.email_address}`);
+                        closeModal();
                     });
+                },
+                onError: function(err) {
+                    console.error('Error en el pago:', err);
+                    alert('❌ Ocurrió un error durante el proceso de pago. Por favor, inténtalo de nuevo.');
                 }
-            }).render('.buy-button');
+            }).render('#paypal-button-container');
+        }
+
+        // Event listeners
+        document.addEventListener('DOMContentLoaded', function() {
+            // Botones "Comprar Ahora"
+            document.querySelectorAll('.buy-button').forEach(button => {
+                button.addEventListener('click', function() {
+                    const productId = this.getAttribute('data-product');
+                    openModal(productId);
+                });
+            });
+            
+            // Botones "Detalles"
+            document.querySelectorAll('.details-button').forEach(button => {
+                button.addEventListener('click', function() {
+                    const productId = this.getAttribute('data-product');
+                    openModal(productId);
+                    
+                    // Desplazar a la parte superior del modal
+                    modal.scrollIntoView({ behavior: 'smooth' });
+                });
+            });
+            
+            // Botón para cerrar modal
+            closeModalBtn.addEventListener('click', closeModal);
+            
+            // Cerrar modal al hacer clic fuera del contenido
+            window.addEventListener('click', function(event) {
+                if (event.target === modal) {
+                    closeModal();
+                }
+            });
         });
     </script>
 </body>
