@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Licencias Premium | Tienda Oficial</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <script src="https://www.paypal.com/sdk/js?client-id=TU_CLIENT_ID&currency=EUR"></script>
+    <script src="https://www.paypal.com/sdk/js?client-id=sb&currency=EUR"></script>
     <style>
         /* Variables y estilos base */
         :root {
@@ -363,6 +363,219 @@
             margin-top: 1.5rem;
         }
 
+        /* Características */
+        .features {
+            background: var(--light);
+            padding: 5rem 5%;
+            text-align: center;
+        }
+
+        .features-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2.5rem;
+        }
+
+        .feature-card {
+            background: white;
+            padding: 2.5rem 1.8rem;
+            border-radius: 12px;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+        }
+
+        .feature-card:hover {
+            transform: translateY(-8px);
+        }
+
+        .feature-icon {
+            font-size: 3rem;
+            color: var(--primary);
+            margin-bottom: 1.5rem;
+        }
+
+        .feature-title {
+            font-size: 1.4rem;
+            margin-bottom: 1rem;
+            color: var(--dark);
+        }
+
+        .feature-description {
+            color: #666;
+        }
+
+        /* Testimonios */
+        .testimonials {
+            padding: 5rem 5%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .testimonial-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .testimonial-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: var(--shadow);
+            position: relative;
+        }
+
+        .testimonial-card:before {
+            content: """;
+            font-size: 6rem;
+            position: absolute;
+            top: -25px;
+            left: 10px;
+            color: #eee;
+            font-family: Georgia, serif;
+        }
+
+        .testimonial-text {
+            margin-bottom: 1.5rem;
+            font-style: italic;
+            color: #555;
+        }
+
+        .testimonial-author {
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+        }
+
+        .author-avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: var(--primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            font-size: 1.2rem;
+        }
+
+        .author-info h4 {
+            color: var(--dark);
+            margin-bottom: 0.2rem;
+        }
+
+        .author-info p {
+            color: #777;
+            font-size: 0.9rem;
+        }
+
+        /* Footer */
+        footer {
+            background: var(--dark);
+            color: white;
+            padding: 4rem 5% 2rem;
+        }
+
+        .footer-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 3rem;
+        }
+
+        .footer-column h3 {
+            font-size: 1.4rem;
+            margin-bottom: 1.5rem;
+            position: relative;
+            padding-bottom: 0.8rem;
+        }
+
+        .footer-column h3:after {
+            content: "";
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 50px;
+            height: 3px;
+            background: var(--accent);
+        }
+
+        .footer-links {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 0.8rem;
+        }
+
+        .footer-links a {
+            color: #bbb;
+            text-decoration: none;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .footer-links a:hover {
+            color: white;
+            transform: translateX(5px);
+        }
+
+        .footer-links i {
+            color: var(--accent);
+            width: 20px;
+        }
+
+        .contact-info p {
+            margin-bottom: 0.8rem;
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+        }
+
+        .contact-info i {
+            color: var(--accent);
+            width: 20px;
+            text-align: center;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+
+        .social-links a {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            border-radius: 50%;
+            transition: var(--transition);
+        }
+
+        .social-links a:hover {
+            background: var(--accent);
+            transform: translateY(-3px);
+        }
+
+        .copyright {
+            text-align: center;
+            padding-top: 3rem;
+            margin-top: 3rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: #aaa;
+            font-size: 0.9rem;
+        }
+
         /* Responsive */
         @media (max-width: 900px) {
             .hero h1 {
@@ -526,6 +739,83 @@
         </div>
     </section>
 
+    <!-- Características -->
+    <section id="features" class="features">
+        <div class="section-header">
+            <h2>¿Por Qué Elegirnos?</h2>
+            <p>Ofrecemos la mejor experiencia de compra de licencias digitales</p>
+        </div>
+        
+        <div class="features-container">
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-bolt"></i>
+                </div>
+                <h3 class="feature-title">Entrega Inmediata</h3>
+                <p class="feature-description">Recibe tu licencia por email en menos de 5 minutos tras la compra confirmada.</p>
+            </div>
+            
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-shield-alt"></i>
+                </div>
+                <h3 class="feature-title">Garantía 100%</h3>
+                <p class="feature-description">Todas nuestras licencias son originales con garantía de activación.</p>
+            </div>
+            
+            <div class="feature-card">
+                <div class="feature-icon">
+                    <i class="fas fa-headset"></i>
+                </div>
+                <h3 class="feature-title">Soporte 24/7</h3>
+                <p class="feature-description">Equipo de soporte disponible en cualquier momento para resolver tus dudas.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonios -->
+    <section id="testimonials" class="testimonials">
+        <div class="section-header">
+            <h2>Lo Que Dicen Nuestros Clientes</h2>
+            <p>Más de 5,000 clientes satisfechos en toda Europa</p>
+        </div>
+        
+        <div class="testimonial-grid">
+            <div class="testimonial-card">
+                <p class="testimonial-text">"Compré la licencia de Windows 11 Pro y en menos de 10 minutos ya la tenía en mi email. Activación sin problemas y soporte rápido. ¡Totalmente recomendado!"</p>
+                <div class="testimonial-author">
+                    <div class="author-avatar">M</div>
+                    <div class="author-info">
+                        <h4>Miguel Ángel</h4>
+                        <p>Madrid, España</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="testimonial-card">
+                <p class="testimonial-text">"La cuenta de Spotify Premium ha sido una excelente compra. Funciona perfectamente y el precio es mucho mejor que la suscripción mensual. ¡Gracias!"</p>
+                <div class="testimonial-author">
+                    <div class="author-avatar">S</div>
+                    <div class="author-info">
+                        <h4>Sofía Rodríguez</h4>
+                        <p>Barcelona, España</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="testimonial-card">
+                <p class="testimonial-text">"Necesitaba Microsoft 365 para mi negocio y encontré esta solución anual. El proceso fue rápido y ahora todo mi equipo trabaja con las licencias activadas."</p>
+                <div class="testimonial-author">
+                    <div class="author-avatar">C</div>
+                    <div class="author-info">
+                        <h4>Carlos Mendoza</h4>
+                        <p>Valencia, España</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <!-- Modal para detalles y compra -->
     <div class="modal" id="productModal">
         <div class="modal-content">
@@ -556,6 +846,56 @@
             </div>
         </div>
     </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-container">
+            <div class="footer-column">
+                <h3>LicenciasPremium</h3>
+                <p>Tu tienda confiable de licencias de software originales con entrega inmediata y soporte profesional.</p>
+                <div class="social-links">
+                    <a href="#"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-linkedin-in"></i></a>
+                </div>
+            </div>
+            
+            <div class="footer-column">
+                <h3>Enlaces Rápidos</h3>
+                <ul class="footer-links">
+                    <li><a href="#"><i class="fas fa-chevron-right"></i> Inicio</a></li>
+                    <li><a href="#products"><i class="fas fa-chevron-right"></i> Productos</a></li>
+                    <li><a href="#features"><i class="fas fa-chevron-right"></i> Beneficios</a></li>
+                    <li><a href="#testimonials"><i class="fas fa-chevron-right"></i> Opiniones</a></li>
+                    <li><a href="#"><i class="fas fa-chevron-right"></i> Soporte</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-column">
+                <h3>Productos</h3>
+                <ul class="footer-links">
+                    <li><a href="#" class="product-link" data-product="windows11"><i class="fas fa-chevron-right"></i> Windows 11 Pro</a></li>
+                    <li><a href="#" class="product-link" data-product="windows10"><i class="fas fa-chevron-right"></i> Windows 10 Pro</a></li>
+                    <li><a href="#" class="product-link" data-product="spotify"><i class="fas fa-chevron-right"></i> Spotify Premium</a></li>
+                    <li><a href="#" class="product-link" data-product="office365"><i class="fas fa-chevron-right"></i> Microsoft 365</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-column">
+                <h3>Contacto</h3>
+                <div class="contact-info">
+                    <p><i class="fas fa-envelope"></i> soporte@licenciaspremium.com</p>
+                    <p><i class="fas fa-phone"></i> +34 912 345 678</p>
+                    <p><i class="fas fa-map-marker-alt"></i> Madrid, España</p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="copyright">
+            <p>&copy; 2023 LicenciasPremium. Todos los derechos reservados.</p>
+        </div>
+    </footer>
 
     <script>
         // Base de datos de productos
@@ -691,6 +1031,17 @@
             }).render('#paypal-button-container');
         }
 
+        // Función para scroll suave a secciones
+        function scrollToSection(sectionId) {
+            const section = document.getElementById(sectionId);
+            if (section) {
+                window.scrollTo({
+                    top: section.offsetTop - 100,
+                    behavior: 'smooth'
+                });
+            }
+        }
+
         // Event listeners
         document.addEventListener('DOMContentLoaded', function() {
             // Botones "Comprar Ahora"
@@ -706,9 +1057,6 @@
                 button.addEventListener('click', function() {
                     const productId = this.getAttribute('data-product');
                     openModal(productId);
-                    
-                    // Desplazar a la parte superior del modal
-                    modal.scrollIntoView({ behavior: 'smooth' });
                 });
             });
             
@@ -720,6 +1068,33 @@
                 if (event.target === modal) {
                     closeModal();
                 }
+            });
+            
+            // Navegación a secciones
+            document.querySelectorAll('nav a').forEach(link => {
+                link.addEventListener('click', function(e) {
+                    const href = this.getAttribute('href');
+                    if (href.startsWith('#')) {
+                        e.preventDefault();
+                        const sectionId = href.substring(1);
+                        scrollToSection(sectionId);
+                    }
+                });
+            });
+            
+            // Enlaces de productos en el footer
+            document.querySelectorAll('.product-link').forEach(link => {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const productId = this.getAttribute('data-product');
+                    openModal(productId);
+                });
+            });
+            
+            // Enlace "Ver Productos" en el hero
+            document.querySelector('.cta-button').addEventListener('click', function(e) {
+                e.preventDefault();
+                scrollToSection('products');
             });
         });
     </script>
