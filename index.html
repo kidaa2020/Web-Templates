@@ -7,7 +7,6 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script src="https://www.paypal.com/sdk/js?client-id=sb&currency=EUR"></script>
     <style>
-        /* Variables y estilos base */
         :root {
             --primary: #4a6fc9;
             --secondary: #3a5ab4;
@@ -33,7 +32,6 @@
             overflow-x: hidden;
         }
 
-        /* Header y navegación */
         header {
             background: linear-gradient(135deg, var(--primary), var(--secondary));
             color: white;
@@ -84,7 +82,6 @@
             background: rgba(255, 255, 255, 0.15);
         }
 
-        /* Hero Section */
         .hero {
             background: linear-gradient(rgba(58, 90, 180, 0.9), rgba(58, 90, 180, 0.8)), url('https://images.unsplash.com/photo-1555066931-4365d14bab8c?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80');
             background-size: cover;
@@ -132,7 +129,6 @@
             box-shadow: 0 6px 15px rgba(243, 156, 18, 0.4);
         }
 
-        /* Productos */
         .products-section {
             padding: 5rem 5%;
             max-width: 1200px;
@@ -268,7 +264,6 @@
             background: #f0f4ff;
         }
 
-        /* Modal Compacto */
         .modal {
             display: none;
             position: fixed;
@@ -286,7 +281,7 @@
             background: white;
             border-radius: 12px;
             width: 90%;
-            max-width: 500px; /* Modal más compacto */
+            max-width: 500px;
             overflow: hidden;
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
             animation: modalOpen 0.4s ease;
@@ -385,7 +380,6 @@
             padding-bottom: 0.5rem;
         }
 
-        /* Características */
         .features {
             background: var(--light);
             padding: 5rem 5%;
@@ -429,7 +423,6 @@
             font-size: 0.95rem;
         }
 
-        /* Testimonios */
         .testimonials {
             padding: 5rem 5%;
             max-width: 1200px;
@@ -497,7 +490,141 @@
             font-size: 0.85rem;
         }
 
-        /* Footer */
+        .comments-section {
+            background: white;
+            padding: 5rem 5%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .comments-container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .comment-form {
+            background: #f8f9fa;
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: var(--shadow);
+            margin-bottom: 3rem;
+        }
+
+        .comment-form h3 {
+            margin-bottom: 1.5rem;
+            color: var(--dark);
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+            color: #555;
+        }
+
+        .form-group textarea {
+            width: 100%;
+            padding: 1rem;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            resize: vertical;
+            min-height: 120px;
+            font-family: inherit;
+        }
+
+        .google-signin {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #4285F4;
+            color: white;
+            border: none;
+            padding: 0.8rem 1.5rem;
+            border-radius: 6px;
+            font-weight: 600;
+            cursor: pointer;
+            margin-bottom: 1rem;
+            transition: var(--transition);
+            width: 100%;
+        }
+
+        .google-signin:hover {
+            background: #3367d6;
+        }
+
+        .google-signin i {
+            font-size: 1.2rem;
+            margin-right: 10px;
+        }
+
+        .comment-submit {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 0.8rem 1.5rem;
+            border-radius: 6px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            width: 100%;
+            display: none;
+        }
+
+        .comment-submit:hover {
+            background: var(--secondary);
+        }
+
+        .comments-list {
+            margin-top: 2rem;
+        }
+
+        .comment-card {
+            background: white;
+            border: 1px solid #eee;
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            box-shadow: var(--shadow);
+        }
+
+        .comment-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .comment-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: var(--primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            margin-right: 1rem;
+        }
+
+        .comment-author {
+            font-weight: 600;
+            color: var(--dark);
+        }
+
+        .comment-date {
+            color: #777;
+            font-size: 0.85rem;
+            margin-top: 0.2rem;
+        }
+
+        .comment-content {
+            line-height: 1.6;
+        }
+
         footer {
             background: var(--dark);
             color: white;
@@ -606,7 +733,6 @@
             font-size: 0.85rem;
         }
 
-        /* Responsive */
         @media (max-width: 900px) {
             .hero h1 {
                 font-size: 2.5rem;
@@ -673,7 +799,6 @@
     </style>
 </head>
 <body>
-    <!-- Header -->
     <header>
         <div class="header-container">
             <div class="logo">
@@ -686,13 +811,12 @@
                     <li><a href="#products"><i class="fas fa-box"></i> Productos</a></li>
                     <li><a href="#features"><i class="fas fa-star"></i> Beneficios</a></li>
                     <li><a href="#testimonials"><i class="fas fa-comment"></i> Opiniones</a></li>
-                    <li><a href="#"><i class="fas fa-headset"></i> Soporte</a></li>
+                    <li><a href="#comments"><i class="fas fa-comments"></i> Comentarios</a></li>
                 </ul>
             </nav>
         </div>
     </header>
 
-    <!-- Hero Section -->
     <section class="hero">
         <div class="hero-content">
             <h1>Licencias de Software Premium</h1>
@@ -701,7 +825,6 @@
         </div>
     </section>
 
-    <!-- Productos -->
     <section id="products" class="products-section">
         <div class="section-header">
             <h2>Nuestras Licencias Destacadas</h2>
@@ -709,7 +832,6 @@
         </div>
         
         <div class="product-grid">
-            <!-- Windows 11 Pro -->
             <div class="product-card" data-product="windows11">
                 <div class="product-badge">MÁS VENDIDO</div>
                 <img src="win11pro.jpeg" alt="Windows 11 Pro" class="product-image">
@@ -728,7 +850,6 @@
                 </div>
             </div>
             
-            <!-- Windows 10 Pro -->
             <div class="product-card" data-product="windows10">
                 <img src="win10pro.png" alt="Windows 10 Pro" class="product-image">
                 <div class="product-content">
@@ -746,7 +867,6 @@
                 </div>
             </div>
             
-            <!-- Spotify Premium -->
             <div class="product-card" data-product="spotify">
                 <div class="product-badge">OFERTA</div>
                 <img src="spoti.png" alt="Spotify Premium" class="product-image">
@@ -765,7 +885,6 @@
                 </div>
             </div>
             
-            <!-- Microsoft 365 -->
             <div class="product-card" data-product="office365">
                 <img src="365.jpeg" alt="Microsoft 365" class="product-image">
                 <div class="product-content">
@@ -785,7 +904,6 @@
         </div>
     </section>
 
-    <!-- Características -->
     <section id="features" class="features">
         <div class="section-header">
             <h2>¿Por Qué Elegirnos?</h2>
@@ -819,7 +937,6 @@
         </div>
     </section>
 
-    <!-- Testimonios -->
     <section id="testimonials" class="testimonials">
         <div class="section-header">
             <h2>Lo Que Dicen Nuestros Clientes</h2>
@@ -862,7 +979,58 @@
         </div>
     </section>
 
-    <!-- Modal para detalles y compra -->
+    <section id="comments" class="comments-section">
+        <div class="section-header">
+            <h2>Comentarios de Clientes</h2>
+            <p>Comparte tu experiencia con otros usuarios</p>
+        </div>
+        
+        <div class="comments-container">
+            <div class="comment-form">
+                <h3>Deja tu comentario</h3>
+                <div class="form-group">
+                    <label for="comment-text">Tu comentario:</label>
+                    <textarea id="comment-text" placeholder="Escribe tu experiencia con nuestros productos..."></textarea>
+                </div>
+                <button id="google-signin" class="google-signin">
+                    <i class="fab fa-google"></i> Iniciar sesión con Google para comentar
+                </button>
+                <button id="comment-submit" class="comment-submit">Publicar Comentario</button>
+                <div id="user-info" style="display: none; margin-top: 1rem; text-align: center;">
+                    <p>Estás comentando como: <span id="user-name"></span></p>
+                </div>
+            </div>
+            
+            <div class="comments-list">
+                <div class="comment-card">
+                    <div class="comment-header">
+                        <div class="comment-avatar">M</div>
+                        <div>
+                            <div class="comment-author">María López</div>
+                            <div class="comment-date">15 de Noviembre, 2023</div>
+                        </div>
+                    </div>
+                    <div class="comment-content">
+                        Excelente servicio! Compré la licencia de Windows 11 y llegó en menos de 5 minutos. La activación fue sin problemas y el soporte respondió todas mis dudas rápidamente. Totalmente recomendado!
+                    </div>
+                </div>
+                
+                <div class="comment-card">
+                    <div class="comment-header">
+                        <div class="comment-avatar">J</div>
+                        <div>
+                            <div class="comment-author">Juan Martínez</div>
+                            <div class="comment-date">10 de Noviembre, 2023</div>
+                        </div>
+                    </div>
+                    <div class="comment-content">
+                        La cuenta de Spotify Premium funciona perfectamente. Llevo 3 meses usándola sin ningún problema. El precio es mucho mejor que pagar mensualmente. Volveré a comprar cuando se acabe el año!
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <div class="modal" id="productModal">
         <div class="modal-content">
             <div class="modal-header">
@@ -893,7 +1061,6 @@
         </div>
     </div>
 
-    <!-- Footer -->
     <footer>
         <div class="footer-container">
             <div class="footer-column">
@@ -914,7 +1081,7 @@
                     <li><a href="#products"><i class="fas fa-chevron-right"></i> Productos</a></li>
                     <li><a href="#features"><i class="fas fa-chevron-right"></i> Beneficios</a></li>
                     <li><a href="#testimonials"><i class="fas fa-chevron-right"></i> Opiniones</a></li>
-                    <li><a href="#"><i class="fas fa-chevron-right"></i> Soporte</a></li>
+                    <li><a href="#comments"><i class="fas fa-chevron-right"></i> Comentarios</a></li>
                 </ul>
             </div>
             
@@ -931,9 +1098,7 @@
             <div class="footer-column">
                 <h3>Contacto</h3>
                 <div class="contact-info">
-                    <p><i class="fas fa-envelope"></i> licenciaspremium3@gmail.com
-</p>
-                    <p><i class="fas fa-phone"></i></p>
+                    <p><i class="fas fa-envelope"></i> licenciaspremium3@gmail.com</p>
                     <p><i class="fas fa-map-marker-alt"></i> Madrid, España</p>
                 </div>
             </div>
@@ -1010,18 +1175,22 @@
         const modalFeatures = document.getElementById('modalFeatures');
         const closeModalBtn = document.querySelector('.close-modal');
         const paypalContainer = document.getElementById('paypal-button-container');
+        const googleSigninBtn = document.getElementById('google-signin');
+        const commentSubmitBtn = document.getElementById('comment-submit');
+        const commentText = document.getElementById('comment-text');
+        const userInfo = document.getElementById('user-info');
+        const userName = document.getElementById('user-name');
+        let currentUser = null;
 
         // Funciones para manejar eventos
         function openModal(productId) {
             const product = products[productId];
             
-            // Actualizar contenido del modal
             modalTitle.textContent = product.title;
             modalPrice.textContent = `${product.price} EUR`;
             modalImage.src = product.image;
             modalDescription.innerHTML = `<p>${product.description}</p>`;
             
-            // Construir lista de características
             let featuresHTML = '<h3>Características principales:</h3><ul>';
             product.features.forEach(feature => {
                 featuresHTML += `<li>${feature}</li>`;
@@ -1029,26 +1198,21 @@
             featuresHTML += '</ul>';
             modalFeatures.innerHTML = featuresHTML;
             
-            // Configurar PayPal
             configurePayPal(product);
             
-            // Mostrar modal
             modal.style.display = 'flex';
-            document.body.style.overflow = 'hidden'; // Deshabilitar scroll en el fondo
+            document.body.style.overflow = 'hidden';
         }
 
         function closeModal() {
             modal.style.display = 'none';
-            document.body.style.overflow = 'auto'; // Habilitar scroll nuevamente
-            // Limpiar botones de PayPal al cerrar
+            document.body.style.overflow = 'auto';
             paypalContainer.innerHTML = '';
         }
 
         function configurePayPal(product) {
-            // Limpiar contenedor
             paypalContainer.innerHTML = '';
             
-            // Configurar botón de PayPal
             paypal.Buttons({
                 style: {
                     layout: 'vertical',
@@ -1080,7 +1244,6 @@
             }).render('#paypal-button-container');
         }
 
-        // Función para scroll suave a secciones
         function scrollToSection(sectionId) {
             const section = document.getElementById(sectionId);
             if (section) {
@@ -1091,9 +1254,79 @@
             }
         }
 
+        // Función para simular inicio de sesión con Google
+        function signInWithGoogle() {
+            // En un caso real, esto se conectaría con Firebase Auth
+            // Para esta demo, simulamos un usuario
+            
+            // Simular inicio de sesión exitoso
+            currentUser = {
+                name: "Usuario Demo",
+                email: "usuario@demo.com",
+                avatar: "U"
+            };
+            
+            // Actualizar UI
+            googleSigninBtn.style.display = 'none';
+            commentSubmitBtn.style.display = 'block';
+            userInfo.style.display = 'block';
+            userName.textContent = currentUser.name;
+        }
+
+        // Función para publicar un comentario
+        function submitComment() {
+            if (!currentUser) {
+                alert('Por favor inicia sesión para publicar un comentario');
+                return;
+            }
+            
+            if (!commentText.value.trim()) {
+                alert('Por favor escribe un comentario');
+                return;
+            }
+            
+            // Crear elemento de comentario
+            const commentsList = document.querySelector('.comments-list');
+            const commentCard = document.createElement('div');
+            commentCard.className = 'comment-card';
+            
+            // Obtener fecha actual
+            const now = new Date();
+            const dateStr = `${now.getDate()} de ${getMonthName(now.getMonth())}, ${now.getFullYear()}`;
+            
+            commentCard.innerHTML = `
+                <div class="comment-header">
+                    <div class="comment-avatar">${currentUser.avatar}</div>
+                    <div>
+                        <div class="comment-author">${currentUser.name}</div>
+                        <div class="comment-date">${dateStr}</div>
+                    </div>
+                </div>
+                <div class="comment-content">${commentText.value}</div>
+            `;
+            
+            // Agregar al principio de la lista
+            commentsList.insertBefore(commentCard, commentsList.firstChild);
+            
+            // Resetear formulario
+            commentText.value = '';
+            
+            // Mostrar mensaje de éxito
+            alert('¡Comentario publicado con éxito!');
+        }
+
+        // Función auxiliar para obtener nombre del mes
+        function getMonthName(monthIndex) {
+            const months = [
+                'Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio',
+                'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'
+            ];
+            return months[monthIndex];
+        }
+
         // Event listeners
         document.addEventListener('DOMContentLoaded', function() {
-            // Botones "Comprar Ahora"
+            // Botones de productos
             document.querySelectorAll('.buy-button').forEach(button => {
                 button.addEventListener('click', function() {
                     const productId = this.getAttribute('data-product');
@@ -1101,7 +1334,6 @@
                 });
             });
             
-            // Botones "Detalles"
             document.querySelectorAll('.details-button').forEach(button => {
                 button.addEventListener('click', function() {
                     const productId = this.getAttribute('data-product');
@@ -1152,6 +1384,12 @@
                 e.preventDefault();
                 scrollToSection('products');
             });
+            
+            // Botón de inicio de sesión con Google
+            googleSigninBtn.addEventListener('click', signInWithGoogle);
+            
+            // Botón para enviar comentario
+            commentSubmitBtn.addEventListener('click', submitComment);
         });
     </script>
 </body>
