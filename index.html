@@ -526,14 +526,18 @@
             color: #555;
         }
 
+        .form-group input,
         .form-group textarea {
             width: 100%;
             padding: 1rem;
             border: 1px solid #ddd;
             border-radius: 8px;
+            font-family: inherit;
+        }
+
+        .form-group textarea {
             resize: vertical;
             min-height: 120px;
-            font-family: inherit;
         }
 
         .google-signin {
@@ -571,7 +575,6 @@
             cursor: pointer;
             transition: var(--transition);
             width: 100%;
-            display: none;
         }
 
         .comment-submit:hover {
@@ -589,6 +592,12 @@
             padding: 1.5rem;
             margin-bottom: 1.5rem;
             box-shadow: var(--shadow);
+            animation: fadeIn 0.5s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
         .comment-header {
@@ -623,6 +632,29 @@
 
         .comment-content {
             line-height: 1.6;
+        }
+
+        .comment-rating {
+            display: flex;
+            margin-top: 10px;
+        }
+
+        .comment-rating .fa-star {
+            color: #ddd;
+            cursor: pointer;
+            font-size: 1.2rem;
+            margin-right: 3px;
+        }
+
+        .comment-rating .fa-star.active {
+            color: var(--accent);
+        }
+
+        .no-comments {
+            text-align: center;
+            padding: 2rem;
+            color: #777;
+            font-style: italic;
         }
 
         footer {
@@ -795,6 +827,10 @@
             .modal-price {
                 font-size: 1.6rem;
             }
+            
+            .comment-form {
+                padding: 1.5rem;
+            }
         }
     </style>
 </head>
@@ -940,7 +976,7 @@
     <section id="testimonials" class="testimonials">
         <div class="section-header">
             <h2>Lo Que Dicen Nuestros Clientes</h2>
-            <p>Más de 5,000 clientes satisfechos en toda Europa</p>
+            <p>Opiniones reales de clientes satisfechos</p>
         </div>
         
         <div class="testimonial-grid">
@@ -989,44 +1025,29 @@
             <div class="comment-form">
                 <h3>Deja tu comentario</h3>
                 <div class="form-group">
+                    <label for="comment-name">Tu nombre:</label>
+                    <input type="text" id="comment-name" placeholder="Nombre (opcional)">
+                </div>
+                <div class="form-group">
                     <label for="comment-text">Tu comentario:</label>
                     <textarea id="comment-text" placeholder="Escribe tu experiencia con nuestros productos..."></textarea>
                 </div>
-                <button id="google-signin" class="google-signin">
-                    <i class="fab fa-google"></i> Iniciar sesión con Google para comentar
-                </button>
-                <button id="comment-submit" class="comment-submit">Publicar Comentario</button>
-                <div id="user-info" style="display: none; margin-top: 1rem; text-align: center;">
-                    <p>Estás comentando como: <span id="user-name"></span></p>
+                <div class="form-group">
+                    <label>Calificación:</label>
+                    <div class="comment-rating" id="comment-rating">
+                        <i class="fas fa-star" data-value="1"></i>
+                        <i class="fas fa-star" data-value="2"></i>
+                        <i class="fas fa-star" data-value="3"></i>
+                        <i class="fas fa-star" data-value="4"></i>
+                        <i class="fas fa-star" data-value="5"></i>
+                    </div>
                 </div>
+                <button id="comment-submit" class="comment-submit">Publicar Comentario</button>
             </div>
             
-            <div class="comments-list">
-                <div class="comment-card">
-                    <div class="comment-header">
-                        <div class="comment-avatar">M</div>
-                        <div>
-                            <div class="comment-author">María López</div>
-                            <div class="comment-date">15 de Noviembre, 2023</div>
-                        </div>
-                    </div>
-                    <div class="comment-content">
-                        Excelente servicio! Compré la licencia de Windows 11 y llegó en menos de 5 minutos. La activación fue sin problemas y el soporte respondió todas mis dudas rápidamente. Totalmente recomendado!
-                    </div>
-                </div>
-                
-                <div class="comment-card">
-                    <div class="comment-header">
-                        <div class="comment-avatar">J</div>
-                        <div>
-                            <div class="comment-author">Juan Martínez</div>
-                            <div class="comment-date">10 de Noviembre, 2023</div>
-                        </div>
-                    </div>
-                    <div class="comment-content">
-                        La cuenta de Spotify Premium funciona perfectamente. Llevo 3 meses usándola sin ningún problema. El precio es mucho mejor que pagar mensualmente. Volveré a comprar cuando se acabe el año!
-                    </div>
-                </div>
+            <div class="comments-list" id="comments-list">
+                <!-- Los comentarios se cargarán dinámicamente aquí -->
+                <div class="no-comments">Sé el primero en dejar un comentario...</div>
             </div>
         </div>
     </section>
@@ -1175,12 +1196,12 @@
         const modalFeatures = document.getElementById('modalFeatures');
         const closeModalBtn = document.querySelector('.close-modal');
         const paypalContainer = document.getElementById('paypal-button-container');
-        const googleSigninBtn = document.getElementById('google-signin');
         const commentSubmitBtn = document.getElementById('comment-submit');
         const commentText = document.getElementById('comment-text');
-        const userInfo = document.getElementById('user-info');
-        const userName = document.getElementById('user-name');
-        let currentUser = null;
+        const commentName = document.getElementById('comment-name');
+        const commentsList = document.getElementById('comments-list');
+        const ratingStars = document.querySelectorAll('#comment-rating .fa-star');
+        let currentRating = 0;
 
         // Funciones para manejar eventos
         function openModal(productId) {
@@ -1254,74 +1275,116 @@
             }
         }
 
-        // Función para simular inicio de sesión con Google
-        function signInWithGoogle() {
-            // En un caso real, esto se conectaría con Firebase Auth
-            // Para esta demo, simulamos un usuario
-            
-            // Simular inicio de sesión exitoso
-            currentUser = {
-                name: "Usuario Demo",
-                email: "usuario@demo.com",
-                avatar: "U"
-            };
-            
-            // Actualizar UI
-            googleSigninBtn.style.display = 'none';
-            commentSubmitBtn.style.display = 'block';
-            userInfo.style.display = 'block';
-            userName.textContent = currentUser.name;
-        }
-
         // Función para publicar un comentario
         function submitComment() {
-            if (!currentUser) {
-                alert('Por favor inicia sesión para publicar un comentario');
-                return;
-            }
-            
-            if (!commentText.value.trim()) {
+            const content = commentText.value.trim();
+            if (!content) {
                 alert('Por favor escribe un comentario');
                 return;
             }
             
-            // Crear elemento de comentario
-            const commentsList = document.querySelector('.comments-list');
-            const commentCard = document.createElement('div');
-            commentCard.className = 'comment-card';
+            const name = commentName.value.trim() || "Anónimo";
+            const avatar = name.charAt(0).toUpperCase();
             
-            // Obtener fecha actual
-            const now = new Date();
-            const dateStr = `${now.getDate()} de ${getMonthName(now.getMonth())}, ${now.getFullYear()}`;
+            const comment = {
+                author: name,
+                avatar: avatar,
+                date: getFormattedDate(),
+                content: content,
+                rating: currentRating
+            };
             
-            commentCard.innerHTML = `
-                <div class="comment-header">
-                    <div class="comment-avatar">${currentUser.avatar}</div>
-                    <div>
-                        <div class="comment-author">${currentUser.name}</div>
-                        <div class="comment-date">${dateStr}</div>
-                    </div>
-                </div>
-                <div class="comment-content">${commentText.value}</div>
-            `;
-            
-            // Agregar al principio de la lista
-            commentsList.insertBefore(commentCard, commentsList.firstChild);
+            saveComment(comment);
+            renderComments();
             
             // Resetear formulario
             commentText.value = '';
+            commentName.value = '';
+            resetRating();
             
             // Mostrar mensaje de éxito
             alert('¡Comentario publicado con éxito!');
         }
 
-        // Función auxiliar para obtener nombre del mes
-        function getMonthName(monthIndex) {
-            const months = [
-                'Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio',
-                'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'
-            ];
-            return months[monthIndex];
+        // Función para guardar comentario en localStorage
+        function saveComment(comment) {
+            let comments = JSON.parse(localStorage.getItem('productComments')) || [];
+            comments.unshift(comment);
+            localStorage.setItem('productComments', JSON.stringify(comments));
+        }
+
+        // Función para cargar comentarios
+        function loadComments() {
+            return JSON.parse(localStorage.getItem('productComments')) || [];
+        }
+
+        // Función para mostrar comentarios
+        function renderComments() {
+            const comments = loadComments();
+            commentsList.innerHTML = '';
+            
+            if (comments.length === 0) {
+                commentsList.innerHTML = '<div class="no-comments">Sé el primero en dejar un comentario...</div>';
+                return;
+            }
+            
+            comments.forEach(comment => {
+                const commentCard = document.createElement('div');
+                commentCard.className = 'comment-card';
+                
+                // Generar estrellas de calificación
+                let ratingHTML = '';
+                if (comment.rating > 0) {
+                    ratingHTML = '<div class="comment-rating">';
+                    for (let i = 1; i <= 5; i++) {
+                        ratingHTML += `<i class="fas fa-star ${i <= comment.rating ? 'active' : ''}"></i>`;
+                    }
+                    ratingHTML += '</div>';
+                }
+                
+                commentCard.innerHTML = `
+                    <div class="comment-header">
+                        <div class="comment-avatar">${comment.avatar}</div>
+                        <div>
+                            <div class="comment-author">${comment.author}</div>
+                            <div class="comment-date">${comment.date}</div>
+                        </div>
+                    </div>
+                    <div class="comment-content">${comment.content}</div>
+                    ${ratingHTML}
+                `;
+                
+                commentsList.appendChild(commentCard);
+            });
+        }
+
+        // Función para obtener fecha formateada
+        function getFormattedDate() {
+            const now = new Date();
+            const months = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'];
+            return `${now.getDate()} de ${months[now.getMonth()]}, ${now.getFullYear()}`;
+        }
+
+        // Función para manejar calificación con estrellas
+        function handleRating(e) {
+            const value = parseInt(e.target.getAttribute('data-value'));
+            currentRating = value;
+            
+            ratingStars.forEach((star, index) => {
+                if (index < value) {
+                    star.classList.add('active');
+                } else {
+                    star.classList.remove('active');
+                }
+            });
+        }
+
+        // Función para resetear calificación
+        function resetRating() {
+            currentRating = 0;
+            ratingStars.forEach(star => {
+                star.classList.remove('active');
+            });
         }
 
         // Event listeners
@@ -1385,11 +1448,16 @@
                 scrollToSection('products');
             });
             
-            // Botón de inicio de sesión con Google
-            googleSigninBtn.addEventListener('click', signInWithGoogle);
-            
             // Botón para enviar comentario
             commentSubmitBtn.addEventListener('click', submitComment);
+            
+            // Calificación con estrellas
+            ratingStars.forEach(star => {
+                star.addEventListener('click', handleRating);
+            });
+            
+            // Cargar comentarios al inicio
+            renderComments();
         });
     </script>
 </body>
