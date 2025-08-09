@@ -280,13 +280,13 @@
     </section>
 
     <section id="comments" class="comments-section">
-        <div class="section-header animate-on-scroll">
+        <div class="section-header">
             <h2>Comentarios de Clientes</h2>
             <p>Comparte tu experiencia con otros usuarios</p>
         </div>
-
+        
         <div class="comments-container">
-            <div class="comment-form animate-on-scroll">
+            <div class="comment-form">
                 <h3>Deja tu comentario</h3>
                 <div class="form-group">
                     <label for="comment-name">Tu nombre:</label>
@@ -308,8 +308,9 @@
                 </div>
                 <button id="comment-submit" class="comment-submit">Publicar Comentario</button>
             </div>
-
+            
             <div class="comments-list" id="comments-list">
+                <!-- Los comentarios se cargarán dinámicamente aquí -->
                 <div class="no-comments">Sé el primero en dejar un comentario...</div>
             </div>
         </div>
@@ -342,25 +343,28 @@
                     <a href="#"><i class="fab fa-linkedin-in"></i></a>
                 </div>
             </div>
+            
             <div class="footer-column">
                 <h3>Enlaces Rápidos</h3>
                 <ul class="footer-links">
-                    <li><a href="#">Inicio</a></li>
-                    <li><a href="#products">Productos</a></li>
-                    <li><a href="#features">Beneficios</a></li>
-                    <li><a href="#comments">Comentarios</a></li>
+                    <li><a href="#"><i class="fas fa-chevron-right"></i> Inicio</a></li>
+                    <li><a href="#products"><i class="fas fa-chevron-right"></i> Productos</a></li>
+                    <li><a href="#features"><i class="fas fa-chevron-right"></i> Beneficios</a></li>
+                    <li><a href="#comments"><i class="fas fa-chevron-right"></i> Comentarios</a></li>
                 </ul>
             </div>
+            
             <div class="footer-column">
                 <h3>Productos</h3>
                 <ul class="footer-links">
-                    <li><a href="#" class="product-link" data-product="windows11">Windows 11 Pro</a></li>
-                    <li><a href="#" class="product-link" data-product="windows10">Windows 10 Pro</a></li>
-                    <li><a href="#" class="product-link" data-product="spotify">Spotify Premium</a></li>
-                    <li><a href="#" class="product-link" data-product="office365">Microsoft 365</a></li>
-                    <li><a href="#" class="product-link" data-product="discord">Discord Nitro Basic</a></li>
+                    <li><a href="#" class="product-link" data-product="windows11"><i class="fas fa-chevron-right"></i> Windows 11 Pro</a></li>
+                    <li><a href="#" class="product-link" data-product="windows10"><i class="fas fa-chevron-right"></i> Windows 10 Pro</a></li>
+                    <li><a href="#" class="product-link" data-product="spotify"><i class="fas fa-chevron-right"></i> Spotify Premium</a></li>
+                    <li><a href="#" class="product-link" data-product="office365"><i class="fas fa-chevron-right"></i> Microsoft 365</a></li>
+                    <li><a href="#" class="product-link" data-product="discord"><i class="fas fa-chevron-right"></i> Discord Nitro Basic</a></li>
                 </ul>
             </div>
+            
             <div class="footer-column">
                 <h3>Contacto</h3>
                 <div class="contact-info">
@@ -369,7 +373,10 @@
                 </div>
             </div>
         </div>
-        <div class="copyright" style="text-align:center; color:#bbb; margin-top:1rem;">&copy; 2023 LicenciasPremium. Todos los derechos reservados.</div>
+        
+        <div class="copyright">
+            <p>&copy; 2023 LicenciasPremium. Todos los derechos reservados.</p>
+        </div>
     </footer>
 
     <script>
