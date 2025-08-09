@@ -15,852 +15,149 @@
             --dark: #2c3e50;
             --success: #27ae60;
             --discord: #5865F2;
-            --shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
-            --transition: all 0.3s ease;
+            --shadow: 0 8px 30px rgba(18, 38, 75, 0.08);
+            --glass: rgba(255,255,255,0.07);
+            --transition: all 0.35s cubic-bezier(.2,.9,.2,1);
         }
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
+        /* Reduced motion respect */
+        @media (prefers-reduced-motion: reduce) {
+            * { animation-duration: 0.001ms !important; animation-iteration-count: 1 !important; transition-duration: 0.001ms !important; }
         }
 
+        * { box-sizing: border-box; margin: 0; padding: 0; }
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: #f5f7fb;
-            color: #333;
+            background: linear-gradient(180deg,#f6f8fc 0%, #ffffff 100%);
+            color: #222;
             line-height: 1.6;
-            overflow-x: hidden;
+            -webkit-font-smoothing:antialiased;
         }
 
+        /* Header */
         header {
             background: linear-gradient(135deg, var(--primary), var(--secondary));
             color: white;
-            padding: 1.2rem 5%;
-            box-shadow: var(--shadow);
-            position: sticky;
-            top: 0;
-            z-index: 1000;
-        }
-
-        .header-container {
-            max-width: 1200px;
-            margin: 0 auto;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .logo {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            font-size: 1.8rem;
-            font-weight: 700;
-        }
-
-        .logo i {
-            color: var(--accent);
-        }
-
-        nav ul {
-            display: flex;
-            list-style: none;
-            gap: 1.8rem;
-        }
-
-        nav a {
-            color: white;
-            text-decoration: none;
-            font-weight: 500;
-            font-size: 1.1rem;
+            padding: 1rem 5%;
+            position: sticky; top: 0; z-index: 1200;
+            box-shadow: 0 6px 18px rgba(42, 67, 123, 0.12);
             transition: var(--transition);
-            padding: 0.5rem 0.8rem;
-            border-radius: 4px;
+            transform-origin: top center;
         }
 
-        nav a:hover {
-            background: rgba(255, 255, 255, 0.15);
-        }
+        header.shrink { padding: 0.5rem 5%; transform: translateY(-2px); box-shadow: 0 10px 30px rgba(28,46,92,0.18); }
 
+        .header-container { max-width:1200px; margin:0 auto; display:flex; align-items:center; justify-content:space-between; gap:1rem; }
+        .logo { display:flex; align-items:center; gap:.6rem; font-weight:700; font-size:1.4rem; }
+        .logo i { color: var(--accent); font-size:1.4rem }
+        nav ul { display:flex; gap:1.4rem; list-style:none; }
+        nav a { color: white; text-decoration:none; font-weight:600; padding: .3rem .6rem; border-radius:6px; transition: var(--transition); }
+        nav a:hover { background: rgba(255,255,255,0.08); transform: translateY(-2px); }
+
+        /* Hero with subtle parallax */
         .hero {
-            background: linear-gradient(rgba(58, 90, 180, 0.9), rgba(58, 90, 180, 0.8)), url('https://images.unsplash.com/photo-1555066931-4365d14bab8c?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80');
-            background-size: cover;
-            background-position: center;
+            position:relative; overflow:hidden;
+            min-height: 58vh; display:flex; align-items:center; justify-content:center; text-align:center;
+            padding: 4rem 5%;
             color: white;
-            padding: 5rem 5%;
-            text-align: center;
+            background: linear-gradient(rgba(58,90,180,0.85), rgba(58,90,180,0.75)), url('https://images.unsplash.com/photo-1555066931-4365d14bab8c?ixlib=rb-4.0.3&auto=format&fit=crop&w=1600&q=80') center/cover no-repeat;
         }
 
-        .hero-content {
-            max-width: 800px;
-            margin: 0 auto;
+        .hero::after {
+            content: ""; position:absolute; inset:0; background: linear-gradient(180deg, rgba(0,0,0,0.08), rgba(0,0,0,0.12)); pointer-events:none;
         }
 
-        .hero h1 {
-            font-size: 3.2rem;
-            margin-bottom: 1.2rem;
-            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
-        }
+        .hero-content { max-width:860px; position:relative; z-index:2; }
+        .hero h1 { font-size:3rem; margin-bottom:.8rem; text-shadow:0 6px 30px rgba(34,34,34,0.4); letter-spacing: -0.5px; }
+        .hero p { font-size:1.15rem; opacity:.95; margin-bottom:1.4rem; }
 
-        .hero p {
-            font-size: 1.4rem;
-            margin-bottom: 2rem;
-            opacity: 0.9;
-        }
+        .cta-button { background: linear-gradient(90deg,var(--accent), #e67e22); color:white; padding:.85rem 2.2rem; border-radius:999px; font-weight:700; letter-spacing:.2px; box-shadow: 0 10px 30px rgba(243,156,18,0.16); border:none; cursor:pointer; transition: var(--transition); position:relative; overflow:hidden; }
+        .cta-button:focus { outline: 3px solid rgba(243,156,18,0.18); }
+        .cta-button:hover { transform: translateY(-6px) scale(1.01); box-shadow: 0 20px 40px rgba(243,156,18,0.2); }
 
-        .cta-button {
-            background: var(--accent);
-            color: white;
-            border: none;
-            padding: 0.8rem 2.2rem;
-            font-size: 1.1rem;
-            font-weight: 600;
-            border-radius: 50px;
-            cursor: pointer;
-            transition: var(--transition);
-            display: inline-block;
-            text-decoration: none;
-            box-shadow: 0 4px 10px rgba(243, 156, 18, 0.3);
-        }
+        /* button ripple */
+        .cta-button .ripple { position:absolute; border-radius:50%; transform:scale(0); animation: ripple 700ms ease-out; background: rgba(255,255,255,0.24); }
+        @keyframes ripple { to { transform:scale(4); opacity:0; } }
 
-        .cta-button:hover {
-            background: #e67e22;
-            transform: translateY(-3px);
-            box-shadow: 0 6px 15px rgba(243, 156, 18, 0.4);
-        }
+        /* Section headers */
+        .section-header { text-align:center; margin: 3.5rem 0; }
+        .section-header h2 { font-size:2.4rem; color:var(--dark); margin-bottom:.5rem; }
+        .section-header p { color:#5e6b80; max-width:700px; margin: 0 auto; }
 
-        .products-section {
-            padding: 5rem 5%;
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-
-        .section-header {
-            text-align: center;
-            margin-bottom: 3.5rem;
-        }
-
-        .section-header h2 {
-            font-size: 2.5rem;
-            color: var(--dark);
-            margin-bottom: 0.8rem;
-        }
-
-        .section-header p {
-            color: #666;
-            font-size: 1.2rem;
-            max-width: 700px;
-            margin: 0 auto;
-        }
-
-        .product-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-            gap: 2.5rem;
-        }
+        /* Product grid */
+        .products-section { padding:2.5rem 5%; max-width:1200px; margin:0 auto; }
+        .product-grid { display:grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap:1.8rem; }
 
         .product-card {
-            background: white;
-            border-radius: 12px;
-            overflow: hidden;
-            box-shadow: var(--shadow);
-            transition: var(--transition);
-            position: relative;
+            background: linear-gradient(180deg, #ffffff, #fbfdff);
+            border-radius:14px; padding:0; overflow:hidden; box-shadow: var(--shadow); position:relative;
+            transform: translateZ(0); transition: transform .45s cubic-bezier(.2,.9,.3,1), box-shadow .35s ease;
+            will-change: transform;
+        }
+        .product-card.animate-tilt { perspective: 1000px; }
+        .product-card:hover { transform: translateY(-18px) scale(1.01); box-shadow: 0 25px 50px rgba(32,48,99,0.12); }
+
+        .product-image { height:200px; width:100%; object-fit:cover; display:block; border-bottom:1px solid #eef3ff; }
+        .product-content { padding:1.4rem; }
+        .product-title { font-size:1.2rem; margin-bottom:.6rem; color:var(--dark); }
+        .product-description { color:#6d7788; font-size:.95rem; min-height:56px; margin-bottom:.8rem; }
+        .product-price { font-size:1.4rem; font-weight:800; color:var(--primary); margin-bottom:1rem; }
+        .product-badge { position:absolute; top:14px; right:14px; padding:.4rem .8rem; background:var(--accent); color:white; border-radius:999px; font-weight:700; font-size:.85rem; box-shadow: 0 6px 18px rgba(243,156,18,0.16); animation: badgePulse 2.4s infinite ease-in-out; }
+        .discord-badge { background: var(--discord); box-shadow: 0 6px 18px rgba(88,101,242,0.12); }
+        @keyframes badgePulse { 0%{ transform:scale(1); } 50%{ transform:scale(1.06);} 100%{ transform:scale(1);} }
+
+        .product-actions { display:flex; gap:.6rem; margin-top:10px; }
+        .buy-button { flex:1; background:var(--primary); color:white; border:none; padding:.7rem; border-radius:8px; font-weight:700; cursor:pointer; display:inline-flex; align-items:center; justify-content:center; gap:.6rem; transition:var(--transition); position:relative; overflow:hidden; }
+        .buy-button:hover { transform: translateY(-3px); }
+        .discord-button { background: var(--discord); }
+        .details-button { background:white; border:1px solid #e6efff; color:var(--primary); font-weight:700; }
+
+        /* Features grid */
+        .features { padding:3.2rem 5%; background: linear-gradient(180deg, rgba(250,252,255,1), rgba(244,247,255,1)); }
+        .features-container { display:grid; grid-template-columns: repeat(auto-fit, minmax(260px,1fr)); gap:1.6rem; max-width:1200px; margin:0 auto; }
+        .feature-card { background:white; padding:1.6rem; border-radius:12px; box-shadow: var(--shadow); transition: transform .45s ease, box-shadow .35s ease; }
+        .feature-card:hover { transform: translateY(-10px); }
+
+        /* Testimonials */
+        .testimonials { padding:2.6rem 5%; max-width:1200px; margin:0 auto; }
+
+        /* Comments */
+        .comments-section { padding:2.6rem 5%; max-width:1200px; margin:0 auto; }
+
+        /* Modal */
+        .modal { display:none; position:fixed; inset:0; background: rgba(4, 13, 30, 0.5); z-index:2000; align-items:center; justify-content:center; padding:2rem; }
+        .modal.open { display:flex; }
+        .modal-content { width:100%; max-width:560px; border-radius:12px; overflow:hidden; background: linear-gradient(180deg,#fff,#fbfdff); box-shadow: 0 30px 80px rgba(14,30,70,0.42); transform: translateY(20px) scale(.98); animation: modalIn .36s cubic-bezier(.12,.9,.2,1) forwards; }
+        @keyframes modalIn { to { transform: translateY(0) scale(1); } }
+        .modal-header { padding:1rem 1.2rem; display:flex; align-items:center; justify-content:space-between; background:linear-gradient(135deg,var(--primary),var(--secondary)); color:white; }
+        .close-modal { background:none; border:none; color:white; font-size:1.6rem; cursor:pointer; }
+
+        /* Floating support */
+        .support-fab { position:fixed; right:20px; bottom:20px; width:56px; height:56px; border-radius:50%; background: linear-gradient(180deg,#25d366,#128c7e); color:white; display:flex; align-items:center; justify-content:center; box-shadow: 0 14px 40px rgba(18,124,120,0.16); z-index:1400; cursor:pointer; transition: transform .22s ease; }
+        .support-fab:hover { transform: translateY(-6px); }
+
+        /* Animate on scroll utility */
+        .animate-on-scroll { opacity:0; transform: translateY(18px); transition: opacity .7s ease, transform .7s cubic-bezier(.2,.9,.2,1); will-change: transform, opacity; }
+        .in-view { opacity:1; transform: translateY(0); }
+
+        /* Tilt transform applied dynamically */
+        .tilt { transform-style: preserve-3d; }
+
+        /* Small helpers */
+        .hidden { display:none !important; }
+        footer { background:var(--dark); color:white; padding:2.2rem 5%; margin-top:2.4rem; }
+
+        /* Responsive */
+        @media (max-width:768px) {
+            .hero { min-height:46vh; padding:2.5rem 5%; }
+            .hero h1 { font-size:1.9rem; }
+            nav ul { display:none; }
         }
 
-        .product-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 12px 20px rgba(0, 0, 0, 0.12);
-        }
-
-        .product-badge {
-            position: absolute;
-            top: 15px;
-            right: 15px;
-            background: var(--accent);
-            color: white;
-            padding: 0.4rem 0.8rem;
-            border-radius: 50px;
-            font-weight: 600;
-            font-size: 0.9rem;
-            z-index: 10;
-        }
-
-        .discord-badge {
-            background: var(--discord);
-        }
-
-        .product-image {
-            height: 220px;
-            width: 100%;
-            object-fit: cover;
-            border-bottom: 1px solid #eee;
-        }
-
-        .product-content {
-            padding: 1.8rem;
-        }
-
-        .product-title {
-            font-size: 1.4rem;
-            margin-bottom: 0.8rem;
-            color: var(--dark);
-        }
-
-        .product-description {
-            color: #666;
-            margin-bottom: 1.5rem;
-            min-height: 70px;
-        }
-
-        .product-price {
-            font-size: 1.8rem;
-            font-weight: 700;
-            color: var(--primary);
-            margin-bottom: 1.5rem;
-        }
-
-        .discord-price {
-            color: var(--discord);
-        }
-
-        .product-actions {
-            display: flex;
-            gap: 0.8rem;
-        }
-
-        .buy-button {
-            flex: 1;
-            background: var(--primary);
-            color: white;
-            border: none;
-            padding: 0.8rem;
-            border-radius: 6px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: var(--transition);
-            text-align: center;
-            text-decoration: none;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
-        }
-
-        .buy-button:hover {
-            background: var(--secondary);
-        }
-
-        .discord-button {
-            background: var(--discord);
-        }
-
-        .discord-button:hover {
-            background: #4752c4;
-        }
-
-        .details-button {
-            background: white;
-            color: var(--primary);
-            border: 1px solid var(--primary);
-            padding: 0.8rem;
-            border-radius: 6px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: var(--transition);
-            text-align: center;
-            text-decoration: none;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
-        }
-
-        .details-button:hover {
-            background: #f0f4ff;
-        }
-
-        .modal {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.7);
-            z-index: 2000;
-            justify-content: center;
-            align-items: center;
-        }
-
-        .modal-content {
-            background: white;
-            border-radius: 12px;
-            width: 90%;
-            max-width: 500px;
-            overflow: hidden;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
-            animation: modalOpen 0.4s ease;
-            max-height: 90vh;
-            overflow-y: auto;
-        }
-
-        @keyframes modalOpen {
-            from { opacity: 0; transform: translateY(-50px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        .modal-header {
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
-            color: white;
-            padding: 1.2rem 1.5rem;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            position: sticky;
-            top: 0;
-            z-index: 10;
-        }
-
-        .discord-header {
-            background: linear-gradient(135deg, var(--discord), #4752c4);
-        }
-
-        .modal-header h2 {
-            font-size: 1.5rem;
-            margin-right: 10px;
-        }
-
-        .close-modal {
-            background: none;
-            border: none;
-            color: white;
-            font-size: 2rem;
-            cursor: pointer;
-            transition: var(--transition);
-            width: 40px;
-            height: 40px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border-radius: 50%;
-        }
-
-        .close-modal:hover {
-            background: rgba(255, 255, 255, 0.2);
-            transform: scale(1.1);
-        }
-
-        .modal-body {
-            padding: 1.5rem;
-        }
-
-        .modal-product-image {
-            width: 100%;
-            max-height: 200px;
-            object-fit: contain;
-            border-radius: 8px;
-            margin-bottom: 1.2rem;
-        }
-
-        .modal-price {
-            font-size: 1.8rem;
-            color: var(--primary);
-            font-weight: 700;
-            margin-bottom: 1.2rem;
-        }
-
-        .discord-modal-price {
-            color: var(--discord);
-        }
-
-        .modal-description {
-            margin-bottom: 1.2rem;
-            line-height: 1.6;
-            font-size: 1rem;
-        }
-
-        .modal-features {
-            margin-bottom: 1.5rem;
-        }
-
-        .modal-features h3 {
-            font-size: 1.2rem;
-            margin-bottom: 0.8rem;
-            color: var(--dark);
-        }
-
-        .modal-features ul {
-            padding-left: 1.2rem;
-        }
-
-        .modal-features li {
-            margin-bottom: 0.6rem;
-            font-size: 0.95rem;
-        }
-
-        #paypal-button-container {
-            margin-top: 1.2rem;
-            padding-bottom: 0.5rem;
-        }
-
-        .features {
-            background: var(--light);
-            padding: 5rem 5%;
-            text-align: center;
-        }
-
-        .features-container {
-            max-width: 1200px;
-            margin: 0 auto;
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2.5rem;
-        }
-
-        .feature-card {
-            background: white;
-            padding: 2rem;
-            border-radius: 12px;
-            box-shadow: var(--shadow);
-            transition: var(--transition);
-        }
-
-        .feature-card:hover {
-            transform: translateY(-8px);
-        }
-
-        .feature-icon {
-            font-size: 2.5rem;
-            color: var(--primary);
-            margin-bottom: 1.2rem;
-        }
-
-        .feature-title {
-            font-size: 1.3rem;
-            margin-bottom: 0.8rem;
-            color: var(--dark);
-        }
-
-        .feature-description {
-            color: #666;
-            font-size: 0.95rem;
-        }
-
-        .testimonials {
-            padding: 5rem 5%;
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-
-        .testimonial-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
-        }
-
-        .testimonial-card {
-            background: white;
-            padding: 1.8rem;
-            border-radius: 12px;
-            box-shadow: var(--shadow);
-            position: relative;
-        }
-
-        .testimonial-card:before {
-            content: """;
-            font-size: 5rem;
-            position: absolute;
-            top: -20px;
-            left: 10px;
-            color: #eee;
-            font-family: Georgia, serif;
-        }
-
-        .testimonial-text {
-            margin-bottom: 1.2rem;
-            font-style: italic;
-            color: #555;
-            font-size: 0.95rem;
-        }
-
-        .testimonial-author {
-            display: flex;
-            align-items: center;
-            gap: 0.8rem;
-        }
-
-        .author-avatar {
-            width: 45px;
-            height: 45px;
-            border-radius: 50%;
-            background: var(--primary);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-weight: bold;
-            font-size: 1.1rem;
-        }
-
-        .author-info h4 {
-            color: var(--dark);
-            margin-bottom: 0.2rem;
-            font-size: 1.1rem;
-        }
-
-        .author-info p {
-            color: #777;
-            font-size: 0.85rem;
-        }
-
-        .comments-section {
-            background: white;
-            padding: 5rem 5%;
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-
-        .comments-container {
-            max-width: 800px;
-            margin: 0 auto;
-        }
-
-        .comment-form {
-            background: #f8f9fa;
-            padding: 2rem;
-            border-radius: 12px;
-            box-shadow: var(--shadow);
-            margin-bottom: 3rem;
-        }
-
-        .comment-form h3 {
-            margin-bottom: 1.5rem;
-            color: var(--dark);
-        }
-
-        .form-group {
-            margin-bottom: 1.5rem;
-        }
-
-        .form-group label {
-            display: block;
-            margin-bottom: 0.5rem;
-            font-weight: 500;
-            color: #555;
-        }
-
-        .form-group input,
-        .form-group textarea {
-            width: 100%;
-            padding: 1rem;
-            border: 1px solid #ddd;
-            border-radius: 8px;
-            font-family: inherit;
-        }
-
-        .form-group textarea {
-            resize: vertical;
-            min-height: 120px;
-        }
-
-        .google-signin {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background: #4285F4;
-            color: white;
-            border: none;
-            padding: 0.8rem 1.5rem;
-            border-radius: 6px;
-            font-weight: 600;
-            cursor: pointer;
-            margin-bottom: 1rem;
-            transition: var(--transition);
-            width: 100%;
-        }
-
-        .google-signin:hover {
-            background: #3367d6;
-        }
-
-        .google-signin i {
-            font-size: 1.2rem;
-            margin-right: 10px;
-        }
-
-        .comment-submit {
-            background: var(--primary);
-            color: white;
-            border: none;
-            padding: 0.8rem 1.5rem;
-            border-radius: 6px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: var(--transition);
-            width: 100%;
-        }
-
-        .comment-submit:hover {
-            background: var(--secondary);
-        }
-
-        .comments-list {
-            margin-top: 2rem;
-        }
-
-        .comment-card {
-            background: white;
-            border: 1px solid #eee;
-            border-radius: 12px;
-            padding: 1.5rem;
-            margin-bottom: 1.5rem;
-            box-shadow: var(--shadow);
-            animation: fadeIn 0.5s ease;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        .comment-header {
-            display: flex;
-            align-items: center;
-            margin-bottom: 1rem;
-        }
-
-        .comment-avatar {
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            background: var(--primary);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-weight: bold;
-            margin-right: 1rem;
-        }
-
-        .comment-author {
-            font-weight: 600;
-            color: var(--dark);
-        }
-
-        .comment-date {
-            color: #777;
-            font-size: 0.85rem;
-            margin-top: 0.2rem;
-        }
-
-        .comment-content {
-            line-height: 1.6;
-        }
-
-        .comment-rating {
-            display: flex;
-            margin-top: 10px;
-        }
-
-        .comment-rating .fa-star {
-            color: #ddd;
-            cursor: pointer;
-            font-size: 1.2rem;
-            margin-right: 3px;
-        }
-
-        .comment-rating .fa-star.active {
-            color: var(--accent);
-        }
-
-        .no-comments {
-            text-align: center;
-            padding: 2rem;
-            color: #777;
-            font-style: italic;
-        }
-
-        footer {
-            background: var(--dark);
-            color: white;
-            padding: 3rem 5% 1.5rem;
-        }
-
-        .footer-container {
-            max-width: 1200px;
-            margin: 0 auto;
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 2.5rem;
-        }
-
-        .footer-column h3 {
-            font-size: 1.2rem;
-            margin-bottom: 1.2rem;
-            position: relative;
-            padding-bottom: 0.6rem;
-        }
-
-        .footer-column h3:after {
-            content: "";
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 40px;
-            height: 2px;
-            background: var(--accent);
-        }
-
-        .footer-links {
-            list-style: none;
-        }
-
-        .footer-links li {
-            margin-bottom: 0.6rem;
-        }
-
-        .footer-links a {
-            color: #bbb;
-            text-decoration: none;
-            transition: var(--transition);
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            font-size: 0.9rem;
-        }
-
-        .footer-links a:hover {
-            color: white;
-            transform: translateX(5px);
-        }
-
-        .footer-links i {
-            color: var(--accent);
-            width: 18px;
-            font-size: 0.9rem;
-        }
-
-        .contact-info p {
-            margin-bottom: 0.6rem;
-            display: flex;
-            align-items: center;
-            gap: 0.6rem;
-            font-size: 0.9rem;
-        }
-
-        .contact-info i {
-            color: var(--accent);
-            width: 18px;
-            text-align: center;
-            font-size: 0.9rem;
-        }
-
-        .social-links {
-            display: flex;
-            gap: 0.8rem;
-            margin-top: 1.2rem;
-        }
-
-        .social-links a {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            width: 36px;
-            height: 36px;
-            background: rgba(255, 255, 255, 0.1);
-            color: white;
-            border-radius: 50%;
-            transition: var(--transition);
-            font-size: 0.9rem;
-        }
-
-        .social-links a:hover {
-            background: var(--accent);
-            transform: translateY(-3px);
-        }
-
-        .copyright {
-            text-align: center;
-            padding-top: 2rem;
-            margin-top: 2rem;
-            border-top: 1px solid rgba(255, 255, 255, 0.1);
-            color: #aaa;
-            font-size: 0.85rem;
-        }
-
-        @media (max-width: 900px) {
-            .hero h1 {
-                font-size: 2.5rem;
-            }
-            
-            nav ul {
-                gap: 1rem;
-            }
-            
-            .section-header h2 {
-                font-size: 2.2rem;
-            }
-        }
-
-        @media (max-width: 768px) {
-            .header-container {
-                flex-direction: column;
-                gap: 1rem;
-            }
-            
-            nav ul {
-                flex-wrap: wrap;
-                justify-content: center;
-            }
-            
-            .hero {
-                padding: 3rem 5%;
-            }
-            
-            .hero h1 {
-                font-size: 2.2rem;
-            }
-            
-            .hero p {
-                font-size: 1.1rem;
-            }
-            
-            .modal-content {
-                width: 95%;
-            }
-            
-            .product-grid {
-                gap: 1.5rem;
-            }
-        }
-
-        @media (max-width: 480px) {
-            .product-actions {
-                flex-direction: column;
-            }
-            
-            .hero h1 {
-                font-size: 2rem;
-            }
-            
-            .modal-header h2 {
-                font-size: 1.3rem;
-            }
-            
-            .modal-price {
-                font-size: 1.6rem;
-            }
-            
-            .comment-form {
-                padding: 1.5rem;
-            }
-        }
     </style>
 </head>
 <body>
-    <header>
+    <header id="mainHeader">
         <div class="header-container">
             <div class="logo">
                 <i class="fas fa-key"></i>
@@ -868,10 +165,10 @@
             </div>
             <nav>
                 <ul>
-                    <li><a href="#"><i class="fas fa-home"></i> Inicio</a></li>
-                    <li><a href="#products"><i class="fas fa-box"></i> Productos</a></li>
-                    <li><a href="#features"><i class="fas fa-star"></i> Beneficios</a></li>
-                    <li><a href="#comments"><i class="fas fa-comments"></i> Comentarios</a></li>
+                    <li><a href="#">Inicio</a></li>
+                    <li><a href="#products">Productos</a></li>
+                    <li><a href="#features">Beneficios</a></li>
+                    <li><a href="#comments">Comentarios</a></li>
                 </ul>
             </nav>
         </div>
@@ -879,137 +176,108 @@
 
     <section class="hero">
         <div class="hero-content">
-            <h1>Licencias de Software Premium</h1>
-            <p>Obtén las mejores licencias originales con entrega inmediata y soporte 24/7</p>
-            <a href="#products" class="cta-button">Ver Productos <i class="fas fa-arrow-right"></i></a>
+            <h1 class="animate-on-scroll">Licencias de Software Premium</h1>
+            <p class="animate-on-scroll" style="transition-delay:.08s">Obtén las mejores licencias originales con entrega inmediata y soporte 24/7</p>
+            <button class="cta-button" id="heroCta"><span>Ver Productos</span> <i class="fas fa-arrow-right"></i></button>
         </div>
     </section>
 
     <section id="products" class="products-section">
-        <div class="section-header">
+        <div class="section-header animate-on-scroll">
             <h2>Nuestras Licencias Destacadas</h2>
             <p>Licencias originales con garantía de activación y soporte técnico permanente</p>
         </div>
-        
         <div class="product-grid">
-            <div class="product-card" data-product="windows11">
+            <!-- Cards: we keep the same product set, but add animation classes and lazy-loading images -->
+            <div class="product-card animate-on-scroll animate-tilt" data-product="windows11">
                 <div class="product-badge">MÁS VENDIDO</div>
-                <img src="win11pro.jpeg" alt="Windows 11 Pro" class="product-image">
+                <img loading="lazy" src="win11pro.jpeg" alt="Windows 11 Pro" class="product-image">
                 <div class="product-content">
                     <h3 class="product-title">Windows 11 Pro</h3>
                     <p class="product-description">Licencia digital permanente para 1 PC. Actualizaciones gratuitas y soporte oficial.</p>
                     <div class="product-price">16 EUR</div>
                     <div class="product-actions">
-                        <button class="buy-button" data-product="windows11">
-                            <i class="fas fa-shopping-cart"></i> Comprar Ahora
-                        </button>
-                        <button class="details-button" data-product="windows11">
-                            <i class="fas fa-info-circle"></i> Detalles
-                        </button>
+                        <button class="buy-button" data-product="windows11"><i class="fas fa-shopping-cart"></i> Comprar Ahora</button>
+                        <button class="details-button" data-product="windows11"><i class="fas fa-info-circle"></i> Detalles</button>
                     </div>
                 </div>
             </div>
-            
-            <div class="product-card" data-product="windows10">
-                <img src="win10pro.png" alt="Windows 10 Pro" class="product-image">
+
+            <div class="product-card animate-on-scroll animate-tilt" data-product="windows10">
+                <img loading="lazy" src="win10pro.png" alt="Windows 10 Pro" class="product-image">
                 <div class="product-content">
                     <h3 class="product-title">Windows 10 Pro</h3>
                     <p class="product-description">Licencia permanente para sistemas Windows 10. Compatible con todos los dispositivos.</p>
                     <div class="product-price">16 EUR</div>
                     <div class="product-actions">
-                        <button class="buy-button" data-product="windows10">
-                            <i class="fas fa-shopping-cart"></i> Comprar Ahora
-                        </button>
-                        <button class="details-button" data-product="windows10">
-                            <i class="fas fa-info-circle"></i> Detalles
-                        </button>
+                        <button class="buy-button" data-product="windows10"><i class="fas fa-shopping-cart"></i> Comprar Ahora</button>
+                        <button class="details-button" data-product="windows10"><i class="fas fa-info-circle"></i> Detalles</button>
                     </div>
                 </div>
             </div>
-            
-            <div class="product-card" data-product="spotify">
+
+            <div class="product-card animate-on-scroll animate-tilt" data-product="spotify">
                 <div class="product-badge">OFERTA</div>
-                <img src="spoti.png" alt="Spotify Premium" class="product-image">
+                <img loading="lazy" src="spoti.png" alt="Spotify Premium" class="product-image">
                 <div class="product-content">
                     <h3 class="product-title">Spotify Premium</h3>
                     <p class="product-description">Cuenta Premium válida por 1 año. Sin anuncios, descargas ilimitadas y máxima calidad.</p>
                     <div class="product-price">32 EUR</div>
                     <div class="product-actions">
-                        <button class="buy-button" data-product="spotify">
-                            <i class="fas fa-shopping-cart"></i> Comprar Ahora
-                        </button>
-                        <button class="details-button" data-product="spotify">
-                            <i class="fas fa-info-circle"></i> Detalles
-                        </button>
+                        <button class="buy-button" data-product="spotify"><i class="fas fa-shopping-cart"></i> Comprar Ahora</button>
+                        <button class="details-button" data-product="spotify"><i class="fas fa-info-circle"></i> Detalles</button>
                     </div>
                 </div>
             </div>
-            
-            <div class="product-card" data-product="office365">
-                <img src="365.jpeg" alt="Microsoft 365" class="product-image">
+
+            <div class="product-card animate-on-scroll animate-tilt" data-product="office365">
+                <img loading="lazy" src="365.jpeg" alt="Microsoft 365" class="product-image">
                 <div class="product-content">
                     <h3 class="product-title">Microsoft 365</h3>
                     <p class="product-description">Suscripción anual que incluye Word, Excel, PowerPoint, Outlook y 1TB de almacenamiento.</p>
                     <div class="product-price">16 EUR</div>
                     <div class="product-actions">
-                        <button class="buy-button" data-product="office365">
-                            <i class="fas fa-shopping-cart"></i> Comprar Ahora
-                        </button>
-                        <button class="details-button" data-product="office365">
-                            <i class="fas fa-info-circle"></i> Detalles
-                        </button>
+                        <button class="buy-button" data-product="office365"><i class="fas fa-shopping-cart"></i> Comprar Ahora</button>
+                        <button class="details-button" data-product="office365"><i class="fas fa-info-circle"></i> Detalles</button>
                     </div>
                 </div>
             </div>
-            
-            <!-- Nuevo producto: Discord Nitro Basic -->
-            <div class="product-card" data-product="discord">
+
+            <div class="product-card animate-on-scroll animate-tilt" data-product="discord">
                 <div class="product-badge discord-badge">NUEVO</div>
-                <img src="nitro.jpeg" alt="Discord Nitro Basic" class="product-image">
+                <img loading="lazy" src="nitro.jpeg" alt="Discord Nitro Basic" class="product-image">
                 <div class="product-content">
                     <h3 class="product-title">Discord Nitro Basic</h3>
                     <p class="product-description">Mejora tu experiencia de Discord con emojis animados, avatar animado y más.</p>
-                    <div class="product-price discord-price">20 EUR</div>
+                    <div class="product-price" style="color:var(--discord)">20 EUR</div>
                     <div class="product-actions">
-                        <button class="buy-button discord-button" data-product="discord">
-                            <i class="fas fa-shopping-cart"></i> Comprar Ahora
-                        </button>
-                        <button class="details-button" data-product="discord">
-                            <i class="fas fa-info-circle"></i> Detalles
-                        </button>
+                        <button class="buy-button discord-button" data-product="discord"><i class="fas fa-shopping-cart"></i> Comprar Ahora</button>
+                        <button class="details-button" data-product="discord"><i class="fas fa-info-circle"></i> Detalles</button>
                     </div>
                 </div>
             </div>
+
         </div>
     </section>
 
-    <section id="features" class="features">
+    <section id="features" class="features animate-on-scroll">
         <div class="section-header">
             <h2>¿Por Qué Elegirnos?</h2>
             <p>Ofrecemos la mejor experiencia de compra de licencias digitales</p>
         </div>
-        
         <div class="features-container">
-            <div class="feature-card">
-                <div class="feature-icon">
-                    <i class="fas fa-bolt"></i>
-                </div>
+            <div class="feature-card animate-on-scroll">
+                <div class="feature-icon"><i class="fas fa-bolt"></i></div>
                 <h3 class="feature-title">Entrega Inmediata</h3>
                 <p class="feature-description">Recibe tu licencia por email en menos de 5 minutos tras la compra confirmada.</p>
             </div>
-            
-            <div class="feature-card">
-                <div class="feature-icon">
-                    <i class="fas fa-shield-alt"></i>
-                </div>
+            <div class="feature-card animate-on-scroll">
+                <div class="feature-icon"><i class="fas fa-shield-alt"></i></div>
                 <h3 class="feature-title">Garantía 100%</h3>
                 <p class="feature-description">Todas nuestras licencias son originales con garantía de activación.</p>
             </div>
-            
-            <div class="feature-card">
-                <div class="feature-icon">
-                    <i class="fas fa-headset"></i>
-                </div>
+            <div class="feature-card animate-on-scroll">
+                <div class="feature-icon"><i class="fas fa-headset"></i></div>
                 <h3 class="feature-title">Soporte 24/7</h3>
                 <p class="feature-description">Equipo de soporte disponible en cualquier momento para resolver tus dudas.</p>
             </div>
@@ -1017,13 +285,13 @@
     </section>
 
     <section id="comments" class="comments-section">
-        <div class="section-header">
+        <div class="section-header animate-on-scroll">
             <h2>Comentarios de Clientes</h2>
             <p>Comparte tu experiencia con otros usuarios</p>
         </div>
-        
+
         <div class="comments-container">
-            <div class="comment-form">
+            <div class="comment-form animate-on-scroll">
                 <h3>Deja tu comentario</h3>
                 <div class="form-group">
                     <label for="comment-name">Tu nombre:</label>
@@ -1045,42 +313,31 @@
                 </div>
                 <button id="comment-submit" class="comment-submit">Publicar Comentario</button>
             </div>
-            
+
             <div class="comments-list" id="comments-list">
-                <!-- Los comentarios se cargarán dinámicamente aquí -->
                 <div class="no-comments">Sé el primero en dejar un comentario...</div>
             </div>
         </div>
     </section>
 
-    <div class="modal" id="productModal">
+    <div class="modal" id="productModal" aria-hidden="true">
         <div class="modal-content">
             <div class="modal-header">
                 <h2 id="modalTitle">Windows 11 Pro</h2>
-                <button class="close-modal">&times;</button>
+                <button class="close-modal" aria-label="Cerrar modal">&times;</button>
             </div>
-            <div class="modal-body">
-                <img id="modalImage" src="win11pro.jpeg" alt="Producto" class="modal-product-image">
+            <div class="modal-body" style="padding:1.2rem">
+                <img id="modalImage" src="win11pro.jpeg" alt="Producto" class="modal-product-image" style="width:100%; max-height:220px; object-fit:contain; margin-bottom:1rem;">
                 <div class="modal-price" id="modalPrice">16 EUR</div>
-                
-                <div class="modal-description" id="modalDescription">
-                    <p>Licencia digital permanente para 1 PC. Actualizaciones gratuitas y soporte oficial.</p>
-                </div>
-                
-                <div class="modal-features" id="modalFeatures">
-                    <h3>Características principales:</h3>
-                    <ul>
-                        <li>Activación inmediata después del pago</li>
-                        <li>Soporte técnico 24/7</li>
-                        <li>Garantía de activación permanente</li>
-                        <li>Entrega por email en menos de 5 minutos</li>
-                        <li>Compatible con todas las versiones de Windows</li>
-                    </ul>
-                </div>
-                
+                <div class="modal-description" id="modalDescription"><p>Licencia digital permanente para 1 PC. Actualizaciones gratuitas y soporte oficial.</p></div>
+                <div class="modal-features" id="modalFeatures"><h3>Características principales:</h3><ul></ul></div>
                 <div id="paypal-button-container"></div>
             </div>
         </div>
+    </div>
+
+    <div class="support-fab" id="supportFab" title="Soporte">
+        <i class="fab fa-whatsapp"></i>
     </div>
 
     <footer>
@@ -1095,28 +352,25 @@
                     <a href="#"><i class="fab fa-linkedin-in"></i></a>
                 </div>
             </div>
-            
             <div class="footer-column">
                 <h3>Enlaces Rápidos</h3>
                 <ul class="footer-links">
-                    <li><a href="#"><i class="fas fa-chevron-right"></i> Inicio</a></li>
-                    <li><a href="#products"><i class="fas fa-chevron-right"></i> Productos</a></li>
-                    <li><a href="#features"><i class="fas fa-chevron-right"></i> Beneficios</a></li>
-                    <li><a href="#comments"><i class="fas fa-chevron-right"></i> Comentarios</a></li>
+                    <li><a href="#">Inicio</a></li>
+                    <li><a href="#products">Productos</a></li>
+                    <li><a href="#features">Beneficios</a></li>
+                    <li><a href="#comments">Comentarios</a></li>
                 </ul>
             </div>
-            
             <div class="footer-column">
                 <h3>Productos</h3>
                 <ul class="footer-links">
-                    <li><a href="#" class="product-link" data-product="windows11"><i class="fas fa-chevron-right"></i> Windows 11 Pro</a></li>
-                    <li><a href="#" class="product-link" data-product="windows10"><i class="fas fa-chevron-right"></i> Windows 10 Pro</a></li>
-                    <li><a href="#" class="product-link" data-product="spotify"><i class="fas fa-chevron-right"></i> Spotify Premium</a></li>
-                    <li><a href="#" class="product-link" data-product="office365"><i class="fas fa-chevron-right"></i> Microsoft 365</a></li>
-                    <li><a href="#" class="product-link" data-product="discord"><i class="fas fa-chevron-right"></i> Discord Nitro Basic</a></li>
+                    <li><a href="#" class="product-link" data-product="windows11">Windows 11 Pro</a></li>
+                    <li><a href="#" class="product-link" data-product="windows10">Windows 10 Pro</a></li>
+                    <li><a href="#" class="product-link" data-product="spotify">Spotify Premium</a></li>
+                    <li><a href="#" class="product-link" data-product="office365">Microsoft 365</a></li>
+                    <li><a href="#" class="product-link" data-product="discord">Discord Nitro Basic</a></li>
                 </ul>
             </div>
-            
             <div class="footer-column">
                 <h3>Contacto</h3>
                 <div class="contact-info">
@@ -1125,83 +379,20 @@
                 </div>
             </div>
         </div>
-        
-        <div class="copyright">
-            <p>&copy; 2023 LicenciasPremium. Todos los derechos reservados.</p>
-        </div>
+        <div class="copyright" style="text-align:center; color:#bbb; margin-top:1rem;">&copy; 2023 LicenciasPremium. Todos los derechos reservados.</div>
     </footer>
 
     <script>
-        // Base de datos de productos
+        // --- Productos base (igual que antes) ---
         const products = {
-            windows11: {
-                title: "Windows 11 Pro",
-                price: "16",
-                image: "win11pro.jpeg",
-                description: "Licencia digital permanente para 1 PC. Actualizaciones gratuitas y soporte oficial.",
-                features: [
-                    "Activación inmediata después del pago",
-                    "Soporte técnico 24/7",
-                    "Garantía de activación permanente",
-                    "Entrega por email en menos de 5 minutos",
-                    "Compatible con todas las versiones de Windows"
-                ]
-            },
-            windows10: {
-                title: "Windows 10 Pro",
-                price: "16",
-                image: "win10pro.png",
-                description: "Licencia permanente para sistemas Windows 10. Compatible con todos los dispositivos.",
-                features: [
-                    "Activación instantánea",
-                    "Soporte técnico incluido",
-                    "Licencia permanente sin renovaciones",
-                    "Entrega digital inmediata",
-                    "Compatible con PC y laptops"
-                ]
-            },
-            spotify: {
-                title: "Spotify Premium",
-                price: "32",
-                image: "spoti.png",
-                description: "Cuenta Premium válida por 1 año. Sin anuncios, descargas ilimitadas y máxima calidad.",
-                features: [
-                    "1 año de suscripción Premium",
-                    "Sin interrupciones por anuncios",
-                    "Descarga ilimitada de música",
-                    "Calidad de audio mejorada",
-                    "Acceso a millones de canciones"
-                ]
-            },
-            office365: {
-                title: "Microsoft 365",
-                price: "16",
-                image: "365.jpeg",
-                description: "Suscripción anual que incluye Word, Excel, PowerPoint, Outlook y 1TB de almacenamiento.",
-                features: [
-                    "Suscripción de 1 año completa",
-                    "Acceso a todas las aplicaciones de Office",
-                    "1 TB de almacenamiento en OneDrive",
-                    "Actualizaciones gratuitas durante el año",
-                    "Soporte técnico prioritario"
-                ]
-            },
-            discord: {
-                title: "Discord Nitro Basic",
-                price: "20",
-                image: "discord-nitro.jpg",
-                description: "Mejora tu experiencia de Discord con emojis animados, avatar animado y más.",
-                features: [
-                    "Emojis animados en cualquier servidor",
-                    "Avatar animado",
-                    "Fondo de perfil personalizado",
-                    "Soporte para subir archivos de hasta 50MB",
-                    "Etiqueta personalizada"
-                ]
-            }
+            windows11: { title: "Windows 11 Pro", price: "16", image: "win11pro.jpeg", description: "Licencia digital permanente para 1 PC. Actualizaciones gratuitas y soporte oficial.", features: ["Activación inmediata después del pago","Soporte técnico 24/7","Garantía de activación permanente","Entrega por email en menos de 5 minutos","Compatible con todas las versiones de Windows"] },
+            windows10: { title: "Windows 10 Pro", price: "16", image: "win10pro.png", description: "Licencia permanente para sistemas Windows 10. Compatible con todos los dispositivos.", features: ["Activación instantánea","Soporte técnico incluido","Licencia permanente sin renovaciones","Entrega digital inmediata","Compatible con PC y laptops"] },
+            spotify: { title: "Spotify Premium", price: "32", image: "spoti.png", description: "Cuenta Premium válida por 1 año. Sin anuncios, descargas ilimitadas y máxima calidad.", features: ["1 año de suscripción Premium","Sin interrupciones por anuncios","Descarga ilimitada de música","Calidad de audio mejorada","Acceso a millones de canciones"] },
+            office365: { title: "Microsoft 365", price: "16", image: "365.jpeg", description: "Suscripción anual que incluye Word, Excel, PowerPoint, Outlook y 1TB de almacenamiento.", features: ["Suscripción de 1 año completa","Acceso a todas las aplicaciones de Office","1 TB de almacenamiento en OneDrive","Actualizaciones gratuitas durante el año","Soporte técnico prioritario"] },
+            discord: { title: "Discord Nitro Basic", price: "20", image: "discord-nitro.jpg", description: "Mejora tu experiencia de Discord con emojis animados, avatar animado y más.", features: ["Emojis animados en cualquier servidor","Avatar animado","Fondo de perfil personalizado","Soporte para subir archivos de hasta 50MB","Etiqueta personalizada"] }
         };
 
-        // Elementos del DOM
+        // DOM Elements
         const modal = document.getElementById('productModal');
         const modalTitle = document.getElementById('modalTitle');
         const modalPrice = document.getElementById('modalPrice');
@@ -1210,6 +401,8 @@
         const modalFeatures = document.getElementById('modalFeatures');
         const closeModalBtn = document.querySelector('.close-modal');
         const paypalContainer = document.getElementById('paypal-button-container');
+
+        // Comment elements
         const commentSubmitBtn = document.getElementById('comment-submit');
         const commentText = document.getElementById('comment-text');
         const commentName = document.getElementById('comment-name');
@@ -1217,272 +410,151 @@
         const ratingStars = document.querySelectorAll('#comment-rating .fa-star');
         let currentRating = 0;
 
-        // Funciones para manejar eventos
+        // IntersectionObserver for animate-on-scroll
+        const io = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('in-view');
+                    // small stagger for children
+                    Array.from(entry.target.querySelectorAll('.animate-on-scroll')).forEach((el, idx) => {
+                        el.style.transitionDelay = (idx * 80) + 'ms';
+                        el.classList.add('in-view');
+                    });
+                }
+            });
+        }, { threshold: 0.12 });
+
+        document.addEventListener('DOMContentLoaded', function() {
+            // Attach IO to elements
+            document.querySelectorAll('.animate-on-scroll').forEach(el => io.observe(el));
+
+            // Product buttons
+            document.querySelectorAll('.buy-button').forEach(button => button.addEventListener('click', (e) => {
+                const productId = button.getAttribute('data-product'); openModal(productId);
+                // small click ripple
+                createRipple(button, e);
+            }));
+            document.querySelectorAll('.details-button').forEach(button => button.addEventListener('click', (e) => {
+                const productId = button.getAttribute('data-product'); openModal(productId);
+            }));
+
+            // Footer product links
+            document.querySelectorAll('.product-link').forEach(link => link.addEventListener('click', function(e){ e.preventDefault(); openModal(this.dataset.product); }));
+
+            // CTA
+            document.getElementById('heroCta').addEventListener('click', function(e){ e.preventDefault(); document.querySelector('#products').scrollIntoView({behavior:'smooth'}); createRipple(this, e); });
+
+            // Modal close events
+            closeModalBtn.addEventListener('click', closeModal);
+            window.addEventListener('click', (ev) => { if (ev.target === modal) closeModal(); });
+            document.addEventListener('keydown', (ev) => { if (ev.key === 'Escape' && modal.classList.contains('open')) closeModal(); });
+
+            // Support fab
+            document.getElementById('supportFab').addEventListener('click', () => {
+                window.open('https://wa.me/34600111222', '_blank');
+            });
+
+            // Comment system
+            commentSubmitBtn.addEventListener('click', submitComment);
+            ratingStars.forEach(star => star.addEventListener('click', handleRating));
+            renderComments();
+
+            // Add tilt effect for product cards
+            document.querySelectorAll('.animate-tilt').forEach(card => {
+                card.addEventListener('mousemove', handleTilt);
+                card.addEventListener('mouseleave', resetTilt);
+            });
+
+            // Header shrink on scroll
+            const header = document.getElementById('mainHeader');
+            let lastScroll = 0;
+            window.addEventListener('scroll', () => {
+                const sc = window.scrollY;
+                if (sc > 60) header.classList.add('shrink'); else header.classList.remove('shrink');
+                lastScroll = sc;
+            });
+
+            // Apply small initial animations
+            setTimeout(()=> document.querySelectorAll('.hero-content .animate-on-scroll').forEach(el => el.classList.add('in-view')), 120);
+        });
+
+        // Tilt helpers
+        function handleTilt(e) {
+            const card = e.currentTarget;
+            const rect = card.getBoundingClientRect();
+            const x = e.clientX - rect.left; // x position within the element.
+            const y = e.clientY - rect.top;  // y position within the element.
+            const cx = rect.width/2; const cy = rect.height/2;
+            const dx = (x - cx) / cx; const dy = (y - cy) / cy;
+            const rx = (dy * 6).toFixed(2); const ry = (dx * -8).toFixed(2);
+            card.style.transform = `rotateX(${rx}deg) rotateY(${ry}deg) translateZ(0)`;
+        }
+        function resetTilt(e) { e.currentTarget.style.transform = ''; }
+
+        // Modal open/close and paypal
         function openModal(productId) {
             const product = products[productId];
-            
             modalTitle.textContent = product.title;
             modalPrice.textContent = `${product.price} EUR`;
             modalImage.src = product.image;
             modalDescription.innerHTML = `<p>${product.description}</p>`;
-            
-            // Estilo especial para Discord
-            const modalHeader = document.querySelector('.modal-header');
-            if(productId === 'discord') {
-                modalHeader.classList.add('discord-header');
-                modalPrice.classList.add('discord-modal-price');
-            } else {
-                modalHeader.classList.remove('discord-header');
-                modalPrice.classList.remove('discord-modal-price');
-            }
-            
-            let featuresHTML = '<h3>Características principales:</h3><ul>';
-            product.features.forEach(feature => {
-                featuresHTML += `<li>${feature}</li>`;
-            });
-            featuresHTML += '</ul>';
-            modalFeatures.innerHTML = featuresHTML;
-            
-            configurePayPal(product);
-            
-            modal.style.display = 'flex';
-            document.body.style.overflow = 'hidden';
-        }
+            const ul = modalFeatures.querySelector('ul'); ul.innerHTML = '';
+            product.features.forEach(f => { const li = document.createElement('li'); li.textContent = f; ul.appendChild(li); });
 
-        function closeModal() {
-            modal.style.display = 'none';
-            document.body.style.overflow = 'auto';
+            // Paypal
             paypalContainer.innerHTML = '';
-        }
-
-        function configurePayPal(product) {
-            paypalContainer.innerHTML = '';
-            
             paypal.Buttons({
-                style: {
-                    layout: 'vertical',
-                    color: 'blue',
-                    shape: 'rect',
-                    label: 'pay',
-                    height: 45
-                },
-                createOrder: function(data, actions) {
-                    return actions.order.create({
-                        purchase_units: [{
-                            description: product.title,
-                            amount: {
-                                value: product.price
-                            }
-                        }]
-                    });
-                },
-                onApprove: function(data, actions) {
-                    return actions.order.capture().then(function(details) {
-                        alert(`✅ Pago completado! Tu licencia de ${product.title} será enviada a: ${details.payer.email_address}`);
-                        closeModal();
-                    });
-                },
-                onError: function(err) {
-                    console.error('Error en el pago:', err);
-                    alert('❌ Ocurrió un error durante el proceso de pago. Por favor, inténtalo de nuevo.');
-                }
+                style: { layout: 'vertical', color: 'blue', shape: 'rect', label: 'pay', height: 45 },
+                createOrder(data, actions) { return actions.order.create({ purchase_units: [{ description: product.title, amount: { value: product.price } }] }); },
+                onApprove(data, actions) { return actions.order.capture().then(details => { alert(`✅ Pago completado! Tu licencia de ${product.title} será enviada a: ${details.payer.email_address}`); closeModal(); }); },
+                onError(err) { console.error(err); alert('❌ Error durante el pago.'); }
             }).render('#paypal-button-container');
+
+            modal.classList.add('open'); modal.setAttribute('aria-hidden','false'); document.body.style.overflow = 'hidden';
+        }
+        function closeModal() { modal.classList.remove('open'); modal.setAttribute('aria-hidden','true'); paypalContainer.innerHTML = ''; document.body.style.overflow = ''; }
+
+        // Ripple effect for buttons
+        function createRipple(button, event) {
+            const rect = button.getBoundingClientRect();
+            const ripple = document.createElement('span'); ripple.className = 'ripple';
+            const size = Math.max(rect.width, rect.height); ripple.style.width = ripple.style.height = size + 'px';
+            ripple.style.left = (event.clientX - rect.left - size/2) + 'px'; ripple.style.top = (event.clientY - rect.top - size/2) + 'px';
+            button.appendChild(ripple);
+            setTimeout(()=> ripple.remove(), 700);
         }
 
-        function scrollToSection(sectionId) {
-            const section = document.getElementById(sectionId);
-            if (section) {
-                window.scrollTo({
-                    top: section.offsetTop - 80,
-                    behavior: 'smooth'
-                });
-            }
-        }
-
-        // Función para publicar un comentario
+        // Comments (localStorage)
         function submitComment() {
-            const content = commentText.value.trim();
-            if (!content) {
-                alert('Por favor escribe un comentario');
-                return;
-            }
-            
-            const name = commentName.value.trim() || "Anónimo";
-            const avatar = name.charAt(0).toUpperCase();
-            
-            const comment = {
-                author: name,
-                avatar: avatar,
-                date: getFormattedDate(),
-                content: content,
-                rating: currentRating
-            };
-            
-            saveComment(comment);
-            renderComments();
-            
-            // Resetear formulario
-            commentText.value = '';
-            commentName.value = '';
-            resetRating();
-            
-            // Mostrar mensaje de éxito
-            alert('¡Comentario publicado con éxito!');
+            const content = commentText.value.trim(); if (!content) { alert('Por favor escribe un comentario'); return; }
+            const name = commentName.value.trim() || 'Anónimo'; const avatar = name.charAt(0).toUpperCase();
+            const comment = { author:name, avatar, date: getFormattedDate(), content, rating: currentRating };
+            saveComment(comment); renderComments(); commentText.value=''; commentName.value=''; resetRating(); alert('¡Comentario publicado con éxito!');
         }
-
-        // Función para guardar comentario en localStorage
-        function saveComment(comment) {
-            let comments = JSON.parse(localStorage.getItem('productComments')) || [];
-            comments.unshift(comment);
-            localStorage.setItem('productComments', JSON.stringify(comments));
-        }
-
-        // Función para cargar comentarios
-        function loadComments() {
-            return JSON.parse(localStorage.getItem('productComments')) || [];
-        }
-
-        // Función para mostrar comentarios
+        function saveComment(comment) { let comments = JSON.parse(localStorage.getItem('productComments')) || []; comments.unshift(comment); localStorage.setItem('productComments', JSON.stringify(comments)); }
+        function loadComments() { return JSON.parse(localStorage.getItem('productComments')) || []; }
         function renderComments() {
-            const comments = loadComments();
-            commentsList.innerHTML = '';
-            
-            if (comments.length === 0) {
-                commentsList.innerHTML = '<div class="no-comments">Sé el primero en dejar un comentario...</div>';
-                return;
-            }
-            
+            const comments = loadComments(); commentsList.innerHTML = '';
+            if (comments.length === 0) { commentsList.innerHTML = '<div class="no-comments">Sé el primero en dejar un comentario...</div>'; return; }
             comments.forEach(comment => {
-                const commentCard = document.createElement('div');
-                commentCard.className = 'comment-card';
-                
-                // Generar estrellas de calificación
+                const card = document.createElement('div'); card.className='comment-card animate-on-scroll in-view';
                 let ratingHTML = '';
-                if (comment.rating > 0) {
-                    ratingHTML = '<div class="comment-rating">';
-                    for (let i = 1; i <= 5; i++) {
-                        ratingHTML += `<i class="fas fa-star ${i <= comment.rating ? 'active' : ''}"></i>`;
-                    }
-                    ratingHTML += '</div>';
-                }
-                
-                commentCard.innerHTML = `
-                    <div class="comment-header">
-                        <div class="comment-avatar">${comment.avatar}</div>
-                        <div>
-                            <div class="comment-author">${comment.author}</div>
-                            <div class="comment-date">${comment.date}</div>
-                        </div>
-                    </div>
+                if (comment.rating > 0) { ratingHTML = '<div class="comment-rating">'; for (let i=1;i<=5;i++) ratingHTML += `<i class="fas fa-star ${i<=comment.rating? 'active':''}"></i>`; ratingHTML += '</div>'; }
+                card.innerHTML = `
+                    <div class="comment-header"><div class="comment-avatar">${comment.avatar}</div><div><div class="comment-author">${comment.author}</div><div class="comment-date">${comment.date}</div></div></div>
                     <div class="comment-content">${comment.content}</div>
                     ${ratingHTML}
                 `;
-                
-                commentsList.appendChild(commentCard);
+                commentsList.appendChild(card);
             });
         }
-
-        // Función para obtener fecha formateada
         function getFormattedDate() {
-            const now = new Date();
-            const months = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'];
+            const now = new Date(); const months = ['Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'];
             return `${now.getDate()} de ${months[now.getMonth()]}, ${now.getFullYear()}`;
         }
+        function handleRating(e) { const value = parseInt(e.target.dataset.value); currentRating = value; ratingStars.forEach((s, idx)=> s.classList.toggle('active', idx < value)); }
+        function resetRating() { currentRating = 0; ratingStars.forEach(s => s.classList.remove('active')); }
 
-        // Función para manejar calificación con estrellas
-        function handleRating(e) {
-            const value = parseInt(e.target.getAttribute('data-value'));
-            currentRating = value;
-            
-            ratingStars.forEach((star, index) => {
-                if (index < value) {
-                    star.classList.add('active');
-                } else {
-                    star.classList.remove('active');
-                }
-            });
-        }
-
-        // Función para resetear calificación
-        function resetRating() {
-            currentRating = 0;
-            ratingStars.forEach(star => {
-                star.classList.remove('active');
-            });
-        }
-
-        // Event listeners
-        document.addEventListener('DOMContentLoaded', function() {
-            // Botones de productos
-            document.querySelectorAll('.buy-button').forEach(button => {
-                button.addEventListener('click', function() {
-                    const productId = this.getAttribute('data-product');
-                    openModal(productId);
-                });
-            });
-            
-            document.querySelectorAll('.details-button').forEach(button => {
-                button.addEventListener('click', function() {
-                    const productId = this.getAttribute('data-product');
-                    openModal(productId);
-                });
-            });
-            
-            // Botón para cerrar modal
-            closeModalBtn.addEventListener('click', closeModal);
-            
-            // Cerrar modal al hacer clic fuera del contenido
-            window.addEventListener('click', function(event) {
-                if (event.target === modal) {
-                    closeModal();
-                }
-            });
-            
-            // Cerrar modal con tecla ESC
-            document.addEventListener('keydown', function(e) {
-                if (e.key === "Escape" && modal.style.display === 'flex') {
-                    closeModal();
-                }
-            });
-            
-            // Navegación a secciones
-            document.querySelectorAll('nav a').forEach(link => {
-                link.addEventListener('click', function(e) {
-                    const href = this.getAttribute('href');
-                    if (href.startsWith('#')) {
-                        e.preventDefault();
-                        const sectionId = href.substring(1);
-                        scrollToSection(sectionId);
-                    }
-                });
-            });
-            
-            // Enlaces de productos en el footer
-            document.querySelectorAll('.product-link').forEach(link => {
-                link.addEventListener('click', function(e) {
-                    e.preventDefault();
-                    const productId = this.getAttribute('data-product');
-                    openModal(productId);
-                });
-            });
-            
-            // Enlace "Ver Productos" en el hero
-            document.querySelector('.cta-button').addEventListener('click', function(e) {
-                e.preventDefault();
-                scrollToSection('products');
-            });
-            
-            // Botón para enviar comentario
-            commentSubmitBtn.addEventListener('click', submitComment);
-            
-            // Calificación con estrellas
-            ratingStars.forEach(star => {
-                star.addEventListener('click', handleRating);
-            });
-            
-            // Cargar comentarios al inicio
-            renderComments();
-        });
     </script>
 </body>
 </html>
