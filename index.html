@@ -131,11 +131,6 @@
         @keyframes modalIn { to { transform: translateY(0) scale(1); } }
         .modal-header { padding:1rem 1.2rem; display:flex; align-items:center; justify-content:space-between; background:linear-gradient(135deg,var(--primary),var(--secondary)); color:white; }
         .close-modal { background:none; border:none; color:white; font-size:1.6rem; cursor:pointer; }
-
-        /* Floating support */
-        .support-fab { position:fixed; right:20px; bottom:20px; width:56px; height:56px; border-radius:50%; background: linear-gradient(180deg,#25d366,#128c7e); color:white; display:flex; align-items:center; justify-content:center; box-shadow: 0 14px 40px rgba(18,124,120,0.16); z-index:1400; cursor:pointer; transition: transform .22s ease; }
-        .support-fab:hover { transform: translateY(-6px); }
-
         /* Animate on scroll utility */
         .animate-on-scroll { opacity:0; transform: translateY(18px); transition: opacity .7s ease, transform .7s cubic-bezier(.2,.9,.2,1); will-change: transform, opacity; }
         .in-view { opacity:1; transform: translateY(0); }
@@ -335,11 +330,6 @@
             </div>
         </div>
     </div>
-
-    <div class="support-fab" id="supportFab" title="Soporte">
-        <i class="fab fa-whatsapp"></i>
-    </div>
-
     <footer>
         <div class="footer-container">
             <div class="footer-column">
@@ -448,11 +438,6 @@
             closeModalBtn.addEventListener('click', closeModal);
             window.addEventListener('click', (ev) => { if (ev.target === modal) closeModal(); });
             document.addEventListener('keydown', (ev) => { if (ev.key === 'Escape' && modal.classList.contains('open')) closeModal(); });
-
-            // Support fab
-            document.getElementById('supportFab').addEventListener('click', () => {
-                window.open('https://wa.me/34600111222', '_blank');
-            });
 
             // Comment system
             commentSubmitBtn.addEventListener('click', submitComment);
